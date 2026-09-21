@@ -1,7 +1,4 @@
 ---
-import { url, isActive } from '../../lib/paths';
-
-
 const links = [
     { label: 'Project', href: '/project' },
     { label: 'Milestones', href: '/milestones' },
@@ -11,6 +8,14 @@ const links = [
 ];
 
 const repo = 'https://github.com/pei-alinha/';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const url = (path: string) => `${base}${path === '/' ? '/' : path}`;
+const isActive = (path: string) => {
+    const target = url(path).replace(/\/$/, '') || '/';
+    return currentPath === target || (target !== '/' && currentPath.startsWith(`${target}/`));
+};
 ---
 <header class="border-b border-line">
     <nav aria-label="Main" class="shell flex h-16 items-center gap-14 md:h-22">
@@ -21,7 +26,7 @@ const repo = 'https://github.com/pei-alinha/';
                 links.map((link) => (
                         <a
                                 href={url(link.href)}
-                                aria-current={isActive(current, link.href) ? 'page' : undefined}
+                                aria-current={isActive(link.href) ? 'page' : undefined}
                                 class="axis-link text-sm"
                         >
                             {link.label}
@@ -54,7 +59,7 @@ const repo = 'https://github.com/pei-alinha/';
                 links.map((link) => (
                         <a
                                 href={url(link.href)}
-                                aria-current={isActive(current, link.href) ? 'page' : undefined}
+                                aria-current={isActive(link.href) ? 'page' : undefined}
                                 class="flex min-h-15 items-center border-b border-line font-display text-3xl font-medium tracking-[-0.03em]"
                         >
                             {link.label}

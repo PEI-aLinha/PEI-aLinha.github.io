@@ -1,0 +1,17 @@
+---
+interface Props {
+    animated?: boolean;
+    strong?: boolean;
+    delay?: number;
+    class?: string;
+}
+
+const { animated = false, strong = false, delay = 0, class: className = '' } = Astro.props;
+---
+
+<div
+        class:list={['h-px w-full', strong ? 'bg-text' : 'bg-line', className]}
+        data-rule={animated ? '' : undefined}
+        style={delay ? `transition-delay:${delay}ms` : undefined}
+>
+</div>
