@@ -1,3 +1,10 @@
+:root {
+  --space-section: clamp(3.5rem, 2.5rem + 4vw, 7rem);
+  --space-gutter: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
+  --rail: 200px;
+  --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
