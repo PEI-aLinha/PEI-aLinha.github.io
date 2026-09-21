@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+    --color-background: #FBFBFA;
+    --color-surface: #F2F1EF;
+    --color-text: #161615;
+    --color-muted: #6C6C66;
+    --color-line: #DCDBD6;
+    --color-brand: #161615;
+    --color-accent: #161615;
+    --font-display: "Archivo", sans-serif;
+    --font-body: "Archivo", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+}
