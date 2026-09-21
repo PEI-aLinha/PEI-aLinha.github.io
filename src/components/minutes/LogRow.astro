@@ -1,0 +1,53 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { url } from '../../lib/paths';
+
+interface Props {
+    entry: CollectionEntry<'minutes'>
+    first?: boolean;
+}
+
+const { entry, first = false } = Astro.props;
+const { index, date, subject, attendees, summary, scheduled } = entry.data;
+
+const formatted = date
+    .toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' })
+    .replace(/ (\w)/g, (m) => m.toUpperCase());
+const id = `#${String(index).padStart(2, '0')}`;
+const Tag = scheduled ? 'div' : 'a';
+---
+
+<Tag
+        href={scheduled ? undefined : url(`/minutes/${entry.id}`)}
+        data-reveal
+        class:list={[
+            '-mx-6 block px-6 py-8',
+            first ? 'border-t border-text' : 'border-t border-line',
+            !scheduled && 'transition-colors duration-300 hover:bg-surface',
+        ]}
+>
+    <!-- Date left, index right, a leader rule spanning the gap: a ledger line. -->
+    <div class="flex items-baseline gap-5">
+        <span class:list={['meta', !scheduled && 'meta-on']}>{formatted}</span>
+        <span class="h-px flex-1 -translate-y-1 bg-line" aria-hidden="true"></span>
+        <span class:list={['meta', !scheduled && 'meta-on']}>{id}</span>
+    </div>
+
+    <p
+            class:list={[
+                'mt-5 font-display text-2xl font-medium tracking-[-0.025em]',
+                scheduled && 'text-muted',
+            ]}
+    >
+        {subject}
+    </p>
+
+    <p class="meta mt-3.5">{scheduled ? 'Scheduled' : attendees.join(' · ')}</p>
+
+    <div class="mt-4.5 flex flex-col gap-4 md:flex-row md:items-center md:gap-10">
+        {summary && <p class="max-w-2xl text-base leading-[1.5] text-muted">{summary}</p>}
+        <span class:list={['meta md:ml-auto', !scheduled && 'meta-on']}>
+      {scheduled ? 'Pending' : 'View minute →'}
+    </span>
+    </div>
+</Tag>
