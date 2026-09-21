@@ -60,6 +60,7 @@ const docs = defineCollection({
     ]),
     milestone: z.string().optional(),
     state: z.string(),
+    file: z.string().optional(),
     href: z.string().optional(),
     format: z.string().default('MD'),
     order: z.number().default(0),
