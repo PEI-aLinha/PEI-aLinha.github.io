@@ -1,0 +1,80 @@
+---
+import { url, isActive } from '../../lib/paths';
+
+
+const links = [
+    { label: 'Project', href: '/project' },
+    { label: 'Milestones', href: '/milestones' },
+    { label: 'Minutes', href: '/minutes' },
+    { label: 'Team', href: '/team' },
+    { label: 'Documentation', href: '/documentation' },
+];
+
+const repo = 'https://github.com/pei-alinha/';
+---
+<header class="border-b border-line">
+    <nav aria-label="Main" class="shell flex h-16 items-center gap-14 md:h-22">
+        <a href={url('/')} class="font-display text-lg font-semibold tracking-[-0.03em]">aLinha</a>
+
+        <div class="hidden flex-1 items-center gap-9 md:flex">
+            {
+                links.map((link) => (
+                        <a
+                                href={url(link.href)}
+                                aria-current={isActive(current, link.href) ? 'page' : undefined}
+                                class="axis-link text-sm"
+                        >
+                            {link.label}
+                        </a>
+                ))
+            }
+        </div>
+
+        <a href={repo} rel="noopener noreferrer" target="_blank" class="axis-link meta meta-on ml-auto hidden md:inline-flex">
+            GitHub ↗
+        </a>
+
+        <button
+                type="button"
+                id="nav-toggle"
+                aria-expanded="false"
+                aria-controls="nav-panel"
+                class="ml-auto flex h-11 w-11 flex-col items-end justify-center gap-1.5 md:hidden"
+        >
+            <span class="sr-only">Menu</span>
+            <span class="block h-px w-6 bg-text" aria-hidden="true"></span>
+            <span class="block h-px w-4 bg-text" aria-hidden="true"></span>
+        </button>
+    </nav>
+
+    <div id="nav-panel" hidden class="shell border-t border-line pb-10 md:hidden">
+        <p class="meta pt-8">Menu</p>
+        <div class="mt-6 flex flex-col">
+            {
+                links.map((link) => (
+                        <a
+                                href={url(link.href)}
+                                aria-current={isActive(current, link.href) ? 'page' : undefined}
+                                class="flex min-h-15 items-center border-b border-line font-display text-3xl font-medium tracking-[-0.03em]"
+                        >
+                            {link.label}
+                        </a>
+                ))
+            }
+        </div>
+        <a href={repo} rel="noopener noreferrer" target="_blank" class="axis-link meta meta-on mt-7 inline-flex">
+            GitHub ↗
+        </a>
+    </div>
+</header>
+
+<script>
+    const toggle = document.getElementById('nav-toggle');
+    const panel = document.getElementById('nav-panel');
+
+    toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!open));
+        panel?.toggleAttribute('hidden', open);
+    });
+</script>
