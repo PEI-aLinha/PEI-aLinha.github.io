@@ -1,17 +1,15 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import Problem from '../components/home/Problem.astro';
+import Approach from '../components/home/Approach.astro';
+import Capabilities from '../components/home/Capabilities.astro';
+import Progress from '../components/home/Progress.astro';
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Microsite</title>
-  </head>
-  <body>
-    <main class="grid min-h-screen place-items-center bg-slate-950 text-white">
-      <h1 class="text-4xl font-bold">Microsite</h1>
-    </main>
-  </body>
-</html>
+<BaseLayout title="aLinha">
+  <Hero />
+  <Problem />
+  <Approach />
+  <Capabilities />
+  <Progress />
+</BaseLayout>

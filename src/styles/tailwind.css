@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+
+/* Design tokens. The future visual identity replaces the values here and
+   nowhere else: --color-brand and --color-accent are deliberately separate
+   from --color-text so a brand hue can land without touching any layout. */
+@theme {
+  --color-background: #FBFBFA;
+  --color-surface: #F2F1EF;
+  --color-text: #161615;
+  --color-muted: #6C6C66;
+  --color-line: #DCDBD6;
+  --color-line-soft: #CFCEC8;
+  --color-brand: #161615;
+  --color-accent: #161615;
+
+  --font-display: "Archivo", "Helvetica Neue", sans-serif;
+  --font-body: "Archivo", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --text-hero: clamp(2.875rem, 1rem + 7vw, 8.25rem);
+  --text-title: clamp(2.5rem, 1.4rem + 3.6vw, 4.75rem);
+  --text-section: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
+  --text-sub: clamp(1.5rem, 1.2rem + 0.9vw, 2.125rem);
+  --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+
+  --space-section: clamp(3.5rem, 2.5rem + 4vw, 7rem);
+  --space-gutter: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
+  --rail: 200px;
+
+  --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
+}

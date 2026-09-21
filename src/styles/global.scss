@@ -1,0 +1,133 @@
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-text);
+  outline-offset: 6px;
+}
+
+/* ---- The alignment axis: link underline grows from the axis-facing edge ---- */
+.axis-link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: var(--color-text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 340ms var(--ease-align);
+  }
+
+  &:hover::after,
+  &:focus-visible::after,
+  &[aria-current]::after {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- Reveal-on-entry. Base state is always the FINAL, aligned state, so
+   reduced motion and no-JS both render correctly with nothing to undo. ---- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateX(-18px);
+    transition: opacity 850ms var(--ease-align), transform 850ms var(--ease-align);
+  }
+  [data-rule] {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1050ms var(--ease-align);
+  }
+  [data-fill] {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1200ms var(--ease-align);
+  }
+  [data-draw] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1300ms var(--ease-align);
+  }
+  [data-seg] {
+    opacity: 0.2;
+    transform: translate(var(--dx, -40px), var(--dy, -8px)) rotate(var(--rot, -1.4deg));
+    transition: opacity 1200ms var(--ease-align), transform 1200ms var(--ease-align);
+  }
+  [data-reveal].is-aligned,
+  [data-seg].is-aligned {
+    opacity: 1;
+    transform: none;
+  }
+  [data-rule].is-aligned { transform: scaleX(1); }
+  [data-fill].is-aligned { transform: scaleY(1); }
+  [data-draw].is-aligned { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .axis-link::after { transition: none; }
+}
+
+/* ---- The rail: metadata column on desktop, inline label on mobile.
+   Its inner edge IS the alignment axis every section hangs off. ---- */
+.rail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 4rem;
+
+  > * {
+    min-width: 0;
+  }
+}
+@media (min-width: 768px) {
+  .rail-grid {
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+  }
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.meta-on { color: var(--color-text); }
+
+.shell {
+  padding-inline: var(--space-gutter);
+}
+
+.prose-alinha {
+  > * + * { margin-top: 1.25rem; }
+
+  h2 {
+    margin-top: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+
+  ul { padding-left: 1.25rem; list-style: disc; }
+  li + li { margin-top: 0.5rem; }
+  a { text-decoration: underline; text-underline-offset: 4px; }
+}

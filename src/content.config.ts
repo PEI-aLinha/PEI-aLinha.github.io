@@ -1,40 +1,69 @@
-import { defineCollection, z } from 'astro:content'
-import { glob } from 'astro/loaders'
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const status = z.enum(['planned', 'in-progress', 'done']);
 
 const milestones = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/milestones' }),
-    schema: z.object({
-        number: z.number(),
-        title: z.string(),
-        status: z.enum(['planned', 'in-progress', 'done']),
-        start: z.date(),
-        end: z.date(),
-        summary: z.string(),
-        deliverables: z.array(z.object({ title: z.string(), status: z.string()})).default([]),
-    }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/milestones' }),
+  schema: z.object({
+    number: z.number(),
+    title: z.string(),
+    status,
+    start: z.date(),
+    end: z.date(),
+    summary: z.string(),
+    deliverables: z.array(z.object({ title: z.string(), status: z.string() })).default([]),
+    presentations: z.array(z.object({ title: z.string(), href: z.string().optional() })).default([]),
+    reports: z.array(z.object({ title: z.string(), href: z.string().optional() })).default([]),
+  }),
 });
 
 const minutes = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/minutes' }),
-    schema: z.object({
-        index: z.number(),
-        date: z.date(),
-        summary: z.string(),
-        deliverables: z.array(z.object({ title: z.string(), status: z.string()})).default([]),
-    }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/minutes' }),
+  schema: z.object({
+    index: z.number(),
+    date: z.date(),
+    subject: z.string(),
+    attendees: z.array(z.string()).default([]),
+    summary: z.string().optional(),
+    scheduled: z.boolean().default(false),
+  }),
 });
 
 const team = defineCollection({
-    loader: glob({ pattern: '**/*.md', base: './src/content/team' }),
-    schema: z.object({
-        name: z.string(),
-        initials: z.string(),
-        role: z.string(),
-        focus: z.string().optional(),
-        github: z.string().url().optional(),
-        linkedin: z.string().url().optional(),
-        order: z.number(),
-    }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/team' }),
+  schema: z.object({
+    name: z.string(),
+    initials: z.string(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    role: z.string(),
+    focus: z.string().optional(),
+    github: z.string().url().optional(),
+    linkedin: z.string().url().optional(),
+    order: z.number(),
+  }),
 });
 
-export const collections = { milestones, minutes, team };
+const docs = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/docs' }),
+  schema: z.object({
+    title: z.string(),
+    category: z.enum([
+      'vision',
+      'architecture',
+      'requirements',
+      'presentations',
+      'reports',
+      'research',
+      'compliance',
+    ]),
+    milestone: z.string().optional(),
+    state: z.string(),
+    href: z.string().optional(),
+    format: z.string().default('MD'),
+    order: z.number().default(0),
+  }),
+});
+
+export const collections = { milestones, minutes, team, docs };
