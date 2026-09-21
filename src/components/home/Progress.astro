@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+import SectionHeader from '../ui/SectionHeader.astro';
+import LinkArrow from '../ui/LinkArrow.astro';
+import { url } from '../../lib/paths';
+
+const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
+
+const monthYear = (d: Date) =>
+    d.toLocaleDateString('pt-PT', { month: 'short', year: 'numeric' });
+
+/* Progress is the filled portion of the axis: how far the phases have run. */
+const reached = milestones.filter((m) => m.data.status !== 'planned').length;
+const fill = milestones.length ? (reached / milestones.length) * 100 : 0;
+---
+<section aria-labelledby="progress-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
+    <div><SectionHeader number="04" label="Where we are" /></div>
+
+    <div>
+        <h2
+                id="progress-heading"
+                data-reveal
+                class="mb-12 font-display font-medium tracking-[-0.03em] md:mb-16"
+                style="font-size: var(--text-section); line-height: 1.12;"
+        >
+            Project progress
+        </h2>
+
+        <!-- Desktop: horizontal timeline. Mobile: a vertical spine. -->
+        <ol class="hidden md:flex">
+            {
+                milestones.map((m) => {
+                    const active = m.data.status !== 'planned';
+                    return (
+                            <li class="flex-1 pr-6">
+                                <p class:list={['meta', active && 'meta-on']}>
+                                    {String(m.data.number).padStart(2, '0')}
+                                </p>
+                                <div class="my-4 flex items-center">
+                <span
+                        class:list={[
+                            'block h-1.5 w-1.5 shrink-0 rounded-full',
+                            active ? 'bg-text' : 'border border-text',
+                        ]}
+                        aria-hidden="true"
+                />
+                                    <span
+                                            class:list={['block h-px flex-1', active ? 'bg-text' : 'bg-line']}
+                                            data-rule={active ? '' : undefined}
+                                            aria-hidden="true"
+                                    />
+                                </div>
+                                <p class:list={['text-xl font-medium tracking-[-0.02em]', !active && 'text-muted']}>
+                                    {m.data.title}
+                                </p>
+                                <p class="meta mt-2.5">{monthYear(m.data.start)} — {monthYear(m.data.end)}</p>
+                                <p class:list={['meta mt-1.5', active && 'meta-on']}>
+                                    {active ? 'In progress' : 'Planned'}
+                                </p>
+                            </li>
+                    );
+                })
+            }
+        </ol>
+
+        <div class="flex gap-5 md:hidden">
+            <div class="relative w-px shrink-0 bg-line" aria-hidden="true">
+                <span class="absolute inset-x-0 top-0 block w-px bg-text" data-fill style={`height:${fill}%`}></span>
+            </div>
+            <ol class="flex flex-1 flex-col gap-8">
+                {
+                    milestones.map((m) => {
+                        const active = m.data.status !== 'planned';
+                        return (
+                                <li>
+                                    <p class:list={['meta', active && 'meta-on']}>
+                                        {String(m.data.number).padStart(2, '0')} · {active ? 'In progress' : 'Planned'}
+                                    </p>
+                                    <p class:list={['mt-2 text-lg font-medium tracking-[-0.02em]', !active && 'text-muted']}>
+                                        {m.data.title}
+                                    </p>
+                                    <p class="meta mt-1.5">{monthYear(m.data.start)} — {monthYear(m.data.end)}</p>
+                                </li>
+                        );
+                    })
+                }
+            </ol>
+        </div>
+
+        <div class="mt-12"><LinkArrow href={url('/milestones')}>All milestones</LinkArrow></div>
+    </div>
+</section>

@@ -1,0 +1,91 @@
+---
+interface Props {
+    /** "wide" for the desktop bracket, "spine" for the mobile vertical form. */
+    variant?: 'wide' | 'spine';
+}
+const { variant = 'wide' } = Astro.props;
+
+const inputs = ['ASSETS', 'SYSTEMS', 'POLICIES', 'EVIDENCE', 'REQUIREMENTS'];
+const outputs = ['UNDERSTAND', 'ASSESS', 'GUIDE', 'EVOLVE'];
+---
+{
+    variant === 'wide' ? (
+    <svg
+            viewBox="0 0 1060 300"
+            class="hidden h-auto w-full max-w-[1000px] md:block"
+            role="img"
+            aria-label="Assets, systems, policies, evidence and requirements converge into aLinha, which produces understand, assess, guide and evolve."
+    >
+        <g font-family="var(--font-mono)" font-size="11.5" letter-spacing="1.4" fill="var(--color-muted)">
+            {inputs.map((label, i) => (
+                    <text x="128" y={44 + i * 55} text-anchor="end">{label}</text>
+            ))}
+            {outputs.map((label, i) => (
+                    <text x="700" y={44 + i * 55}>{label}</text>
+            ))}
+        </g>
+
+        <g fill="none" stroke="var(--color-text)" stroke-width="1">
+            {inputs.map((_, i) => (
+                    <path d={`M146 ${40 + i * 55} H392`} pathLength="1" data-draw style={`transition-delay:${50 + i * 70}ms`} />
+            ))}
+            <path d="M392 40 V260" pathLength="1" data-draw style="transition-delay:450ms" />
+            <path d="M392 150 H492" pathLength="1" data-draw style="transition-delay:580ms" />
+            <rect x="492" y="132" width="98" height="36" />
+            <path d="M590 150 H646" pathLength="1" data-draw style="transition-delay:720ms" />
+            <path d="M646 40 V205" pathLength="1" data-draw style="transition-delay:800ms" />
+            {outputs.map((_, i) => (
+                    <path d={`M646 ${40 + i * 55} H690`} pathLength="1" data-draw style={`transition-delay:${880 + i * 60}ms`} />
+            ))}
+        </g>
+
+        <text
+                x="541"
+                y="155"
+                text-anchor="middle"
+                font-family="var(--font-display)"
+                font-size="17"
+                font-weight="600"
+                letter-spacing="-0.4"
+                fill="var(--color-text)">aLinha</text>
+    </svg>
+        ) : (
+    <svg
+            viewBox="0 0 342 560"
+            class="h-auto w-full max-w-[342px] md:hidden"
+            role="img"
+            aria-label="Assets, systems, policies, evidence and requirements converge into aLinha, which produces understand, assess, guide and evolve."
+    >
+        <g font-family="var(--font-mono)" font-size="11" letter-spacing="1.3" fill="var(--color-muted)">
+            {inputs.map((label, i) => (
+                    <text x="0" y={16 + i * 36}>{label}</text>
+            ))}
+            {outputs.map((label, i) => (
+                    <text x="176" y={404 + i * 48}>{label}</text>
+            ))}
+        </g>
+
+        <g fill="none" stroke="var(--color-text)" stroke-width="1">
+            {inputs.map((_, i) => (
+                    <path d={`M124 ${12 + i * 36} H160`} pathLength="1" data-draw style={`transition-delay:${50 + i * 70}ms`} />
+            ))}
+            <path d="M160 12 V236" pathLength="1" data-draw style="transition-delay:450ms" />
+            <rect x="111" y="236" width="98" height="36" />
+            <path d="M160 272 V544" pathLength="1" data-draw style="transition-delay:700ms" />
+            {outputs.map((_, i) => (
+                    <path d={`M160 ${400 + i * 48} H168`} pathLength="1" data-draw style={`transition-delay:${860 + i * 50}ms`} />
+            ))}
+        </g>
+
+        <text
+                x="160"
+                y="259"
+                text-anchor="middle"
+                font-family="var(--font-display)"
+                font-size="17"
+                font-weight="600"
+                letter-spacing="-0.4"
+                fill="var(--color-text)">aLinha</text>
+    </svg>
+        )
+    }
