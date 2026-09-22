@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import SectionHeader from '../../ui/SectionHeader.astro';
-import LinkArrow from '../../ui/LinkArrow.astro';
-import { url } from '../../../lib/paths';
+import SectionHeader from '../ui/SectionHeader.astro';
+import LinkArrow from '../ui/LinkArrow.astro';
+import { url } from '../../lib/paths';
 
 const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
 

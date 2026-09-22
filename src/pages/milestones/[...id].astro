@@ -1,0 +1,144 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../components/layouts/BaseLayout.astro';
+import StatusDot from '../../components/ui/StatusDot.astro';
+import Rule from '../../components/ui/Rule.astro';
+import { url } from '../../lib/paths';
+
+export const getStaticPaths = (async () => {
+  const milestones = await getCollection('milestones');
+  return milestones.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { number, title, status, start, end, summary, deliverables, presentations, reports } = entry.data;
+const { Content } = await render(entry);
+
+const all = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
+const position = all.findIndex((m) => m.id === entry.id);
+const previous = all[position - 1];
+const next = all[position + 1];
+
+const monthYear = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+const padded = String(number).padStart(2, '0');
+---
+<BaseLayout title={`Milestone ${padded} — ${title}`} description={summary}>
+  <div class="shell pt-14">
+    <a href={url('/milestones')} class="axis-link meta meta-on inline-flex min-h-11 items-center">← Milestones</a>
+  </div>
+
+  <div class="shell rail-grid pt-12 pb-18">
+    <div>
+      <p class="meta meta-on">Milestone {padded}</p>
+      <div class="mt-4"><StatusDot status={status} /></div>
+      <p class="meta mt-4">{monthYear(start)} — {monthYear(end)}</p>
+    </div>
+
+    <div>
+      <h1
+        data-reveal
+        class="font-display font-semibold tracking-[-0.045em]"
+        style="font-size: var(--text-title); line-height: 1;"
+      >
+        {title}
+      </h1>
+
+      <Rule animated strong class="mt-11" />
+
+      <p class="mt-9 max-w-2xl leading-[1.5]" style="font-size: var(--text-sub);">{summary}</p>
+
+      <div class="prose-alinha mt-6 max-w-2xl text-lg leading-[1.62] text-muted">
+        <Content />
+      </div>
+    </div>
+  </div>
+
+  <div class="shell rail-grid pb-24">
+    <div></div>
+    <div class="grid gap-14 md:grid-cols-2 md:gap-20">
+      <section aria-labelledby="deliverables-heading">
+        <h2 id="deliverables-heading" class="meta meta-on mb-1">Deliverables</h2>
+        {
+          deliverables.map((item) => (
+            <div class="flex items-center gap-4 border-t border-line py-4.5 last:border-b">
+              <span class="flex-1 text-base">{item.title}</span>
+              <span class="meta">{item.status}</span>
+            </div>
+          ))
+        }
+
+        <h2 class="meta meta-on mt-12 mb-1">Presentations</h2>
+        {
+          presentations.length === 0 ? (
+            <p class="border-y border-line py-4.5"><span class="meta">Nothing yet</span></p>
+          ) : (
+            presentations.map((item) => (
+              <div class="flex items-center gap-4 border-t border-line py-4.5 last:border-b">
+                <span class="flex-1 text-base">{item.title}</span>
+                <span class="meta meta-on">{item.href ? 'PDF ↗' : '—'}</span>
+              </div>
+            ))
+          )
+        }
+      </section>
+
+      <section aria-labelledby="reports-heading">
+        <h2 id="reports-heading" class="meta meta-on mb-1">Reports</h2>
+        {
+          reports.length === 0 ? (
+            <p class="border-y border-line py-4.5"><span class="meta">Nothing yet</span></p>
+          ) : (
+            reports.map((item) => (
+              <div class="flex items-center gap-4 border-t border-line py-4.5 last:border-b">
+                <span class="flex-1 text-base">{item.title}</span>
+                <span class="meta">{item.href ? 'PDF ↗' : '—'}</span>
+              </div>
+            ))
+          )
+        }
+
+        <h2 class="meta meta-on mt-12 mb-1">Related</h2>
+        <a href={url('/minutes')} class="flex items-center gap-4 border-t border-line py-4.5 transition-colors duration-300 hover:bg-surface">
+          <span class="flex-1 text-base">Meeting minutes</span><span class="meta">→</span>
+        </a>
+        <a href={url('/project')} class="flex items-center gap-4 border-t border-line py-4.5 transition-colors duration-300 hover:bg-surface">
+          <span class="flex-1 text-base">Project — context and problem</span><span class="meta">→</span>
+        </a>
+        <a href={url('/documentation')} class="flex items-center gap-4 border-y border-line py-4.5 transition-colors duration-300 hover:bg-surface">
+          <span class="flex-1 text-base">Documentation index</span><span class="meta">→</span>
+        </a>
+      </section>
+    </div>
+  </div>
+
+  <div class="shell rail-grid pb-24">
+    <div></div>
+    <nav aria-label="Milestone" class="flex items-start gap-8 border-t border-line pt-8">
+      <div class="flex-1">
+        <p class="meta">Previous</p>
+        {
+          previous ? (
+            <a href={url(`/milestones/${previous.id}`)} class="axis-link mt-2 inline-block text-lg font-medium">
+              ← {String(previous.data.number).padStart(2, '0')} {previous.data.title}
+            </a>
+          ) : (
+            <p class="mt-2 text-lg text-muted">—</p>
+          )
+        }
+      </div>
+      <div class="flex-1 text-right">
+        <p class="meta">Next</p>
+        {
+          next ? (
+            <a href={url(`/milestones/${next.id}`)} class="axis-link mt-2 inline-block text-lg font-medium">
+              {String(next.data.number).padStart(2, '0')} {next.data.title} →
+            </a>
+          ) : (
+            <p class="mt-2 text-lg text-muted">—</p>
+          )
+        }
+      </div>
+    </nav>
+  </div>
+</BaseLayout>

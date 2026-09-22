@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../components/layouts/BaseLayout.astro';
+import PageHeader from '../../components/global/PageHeader.astro';
+import MilestoneRow from '../../components/milestones/MilestonesRow.astro';
+
+const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
+const reached = milestones.filter((m) => m.data.status !== 'planned').length;
+const fill = milestones.length ? (reached / milestones.length) * 100 : 0;
+---
+<BaseLayout title="Milestones" description="The four phases of the aLinha project lifecycle.">
+  <PageHeader
+    label="Project lifecycle"
+    title="Milestones"
+    lead="Four phases across the academic year. Each entry is a content record — deliverables, dates and status are read from it, not typed into this page."
+  />
+
+  <div class="shell rail-grid pb-26">
+    <div class="hidden justify-end pt-1.5 md:flex">
+      <div class="relative w-px self-stretch bg-line" aria-hidden="true">
+        <span class="absolute inset-x-0 top-0 block w-px bg-text" data-fill style={`height:${fill}%`}></span>
+      </div>
+    </div>
+
+    <div>
+      {
+        milestones.map((entry, i) => (
+          <MilestoneRow entry={entry} first={i === 0} last={i === milestones.length - 1} />
+        ))
+      }
+      <p class="meta mt-10">
+        {milestones.length} milestones · content collection
+        <span class="normal-case tracking-normal">src/content/milestones/</span>
+      </p>
+    </div>
+  </div>
+</BaseLayout>

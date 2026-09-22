@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../components/layouts/BaseLayout.astro';
+import Rule from '../components/ui/Rule.astro';
+import PendingBlock from '../components/ui/PendingBlock.astro';
+
+const sections = [
+  { id: 's01', number: '01', title: 'Context' },
+  { id: 's02', number: '02', title: 'Problem' },
+  { id: 's03', number: '03', title: 'Vision' },
+  { id: 's04', number: '04', title: 'Approach' },
+  { id: 's05', number: '05', title: 'Objectives' },
+  { id: 's06', number: '06', title: 'Scope' },
+  { id: 's07', number: '07', title: 'Architecture' },
+];
+
+const problems = [
+  ['Fragmentation', 'No single place where the security context of the organisation is described.'],
+  ['Translation cost', 'Regulatory language has to be re-interpreted against technical reality by hand, every time.'],
+  ['Staleness', 'A point-in-time assessment starts decaying the day it is signed.'],
+  ['Actionability', 'Findings arrive as a list of non-conformities, not as work a team can schedule.'],
+];
+
+const approach = [
+  ['01 — Understand', 'Model the organisation: units, systems, assets, infrastructure, ownership and the policies already in force.'],
+  ['02 — Assess', 'Map that model onto requirements, and evaluate where evidence supports a claim and where it does not.'],
+  ['03 — Guide', 'Produce recommendations with reasoning attached, prioritised by risk and by effort.'],
+  ['04 — Evolve', 'Re-evaluate as the organisation and the regulatory set change, so the posture stays current.'],
+];
+
+const objectives = [
+  ['O1', "Represent an organisation's security context in a structured, queryable model."],
+  ['O2', 'Map that model against a requirement set, starting with NIS2, without binding the platform to it.'],
+  ['O3', 'Identify and explain compliance gaps in terms the responsible team can act on.'],
+  ['O4', 'Reduce the cost and specialist dependency of reaching and holding a compliant posture.'],
+];
+
+const inScope = [
+  'Organisation and asset modelling',
+  'Requirement mapping and gap analysis',
+  'Guidance and prioritisation',
+  'Evidence references and re-evaluation',
+];
+
+const outOfScope = [
+  'Acting as a certifying authority',
+  'Replacing legal advice',
+  'Live intrusion detection or monitoring',
+  '[TO BE CONFIRMED IN ELABORATION]',
+];
+
+const facts = [
+  ['Course', 'Projeto em Engenharia Informática'],
+  ['Institution', 'Universidade de Aveiro'],
+  ['Year', '2026 / 2027'],
+  ['Phase', 'Inception'],
+];
+---
+<BaseLayout
+  title="Project"
+  description="Context, problem, vision, approach, objectives, scope and architecture of the aLinha project."
+>
+  <div class="shell rail-grid pt-16 pb-18 md:pt-26">
+    <div><p class="meta">The project</p></div>
+    <div>
+      <h1
+        data-reveal
+        class="max-w-5xl font-display font-semibold tracking-[-0.045em]"
+        style="font-size: var(--text-title); line-height: 1;"
+      >
+        Understanding, assessing and sustaining information-security compliance.
+      </h1>
+
+      <Rule animated strong class="mt-12" />
+
+      <dl class="mt-7 flex flex-wrap gap-x-16 gap-y-6">
+        {
+          facts.map(([term, value]) => (
+            <div>
+              <dt class="meta">{term}</dt>
+              <dd class="mt-2 text-[0.9375rem]">{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+
+  <div class="shell rail-grid pb-26">
+    <nav aria-label="Sections" class="self-start md:sticky md:top-10">
+      <p class="meta mb-5">Contents</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-3 md:flex-col">
+        {
+          sections.map((section) => (
+            <li>
+              <a href={`#${section.id}`} class="axis-link text-sm">
+                {section.number} {section.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex flex-col">
+      <section id="s01" aria-labelledby="h01" class="scroll-mt-10 border-b border-line pb-16">
+        <p class="meta">01</p>
+        <h2 id="h01" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Context
+        </h2>
+        <p class="mb-4.5 max-w-2xl text-lg leading-[1.62]">
+          Organisations across the EU are being brought inside a widening regulatory perimeter.
+          NIS2 is the immediate case being studied, but it is one instance of a pattern:
+          obligations that are continuous, evidence-based, and written against an organisation as a
+          whole rather than against any single system.
+        </p>
+        <p class="max-w-2xl text-lg leading-[1.62] text-muted">
+          Most organisations meet this with consultants, spreadsheets and a periodic audit. That is
+          expensive, it ages badly, and it tells you about the organisation you were, not the one
+          you are.
+        </p>
+      </section>
+
+      <section id="s02" aria-labelledby="h02" class="scroll-mt-10 border-b border-line py-16">
+        <p class="meta">02</p>
+        <h2 id="h02" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Problem
+        </h2>
+        <p class="mb-8 max-w-2xl text-lg leading-[1.62]">
+          The information needed to answer “are we compliant?” already exists inside the
+          organisation. It is simply fragmented across teams, formats and tools, with no shared
+          model connecting a requirement to the asset, control and evidence that satisfy it.
+        </p>
+        <dl class="max-w-2xl">
+          {
+            problems.map(([term, body]) => (
+              <div class="flex flex-col gap-1 border-t border-line py-3.5 last:border-b md:flex-row md:gap-6">
+                <dt class="meta md:w-43">{term}</dt>
+                <dd class="flex-1 text-base leading-[1.5]">{body}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section id="s03" aria-labelledby="h03" class="scroll-mt-10 border-b border-line py-16">
+        <p class="meta">03</p>
+        <h2 id="h03" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Vision
+        </h2>
+        <p class="max-w-2xl leading-[1.5]" style="font-size: var(--text-lead);">
+          A person responsible for security should be able to open one place and see, honestly,
+          where the organisation stands — and what to do next.
+        </p>
+        <p class="mt-6 max-w-2xl text-lg leading-[1.62] text-muted">
+          Not a certificate. A living alignment between what the organisation is and what it is
+          required to be.
+        </p>
+      </section>
+
+      <section id="s04" aria-labelledby="h04" class="scroll-mt-10 border-b border-line py-16">
+        <p class="meta">04</p>
+        <h2 id="h04" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Approach
+        </h2>
+        <dl class="max-w-3xl">
+          {
+            approach.map(([term, body]) => (
+              <div class="flex flex-col gap-1 border-t border-line py-4.5 last:border-b md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-12">
+                <dt class="meta meta-on">{term}</dt>
+                <dd class="text-[1.0625rem] leading-[1.55]">{body}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <section id="s05" aria-labelledby="h05" class="scroll-mt-10 border-b border-line py-16">
+        <p class="meta">05</p>
+        <h2 id="h05" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Objectives
+        </h2>
+        <ul class="flex max-w-2xl flex-col gap-4">
+          {
+            objectives.map(([key, body]) => (
+              <li class="flex gap-5">
+                <span class="meta pt-1">{key}</span>
+                <span class="text-[1.0625rem] leading-[1.55]">{body}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section id="s06" aria-labelledby="h06" class="scroll-mt-10 border-b border-line py-16">
+        <p class="meta">06</p>
+        <h2 id="h06" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Scope
+        </h2>
+        <div class="flex max-w-3xl flex-col gap-10 md:flex-row md:gap-14">
+          <div class="flex-1">
+            <p class="meta meta-on border-b border-text pb-3.5">In scope</p>
+            {inScope.map((item) => <p class="border-b border-line py-3.5 text-base">{item}</p>)}
+          </div>
+          <div class="flex-1">
+            <p class="meta border-b border-line pb-3.5">Out of scope</p>
+            {outOfScope.map((item) => <p class="border-b border-line py-3.5 text-base text-muted">{item}</p>)}
+          </div>
+        </div>
+      </section>
+
+      <section id="s07" aria-labelledby="h07" class="scroll-mt-10 pt-16">
+        <p class="meta">07</p>
+        <h2 id="h07" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
+          Architecture
+        </h2>
+        <PendingBlock when="Elaboration">
+          The architecture is not yet defined. This section is deliberately left open: it will be
+          written once the elaboration phase settles the platform's decomposition, and will carry
+          diagrams, component responsibilities and the data model.
+        </PendingBlock>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

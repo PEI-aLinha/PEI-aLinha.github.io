@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../components/layouts/BaseLayout.astro';
+import PageHeader from '../components/global/PageHeader.astro';
+
+const docs = await getCollection('docs');
+
+const categories = [
+  { key: 'vision', label: 'Vision' },
+  { key: 'architecture', label: 'Architecture' },
+  { key: 'requirements', label: 'Requirements' },
+  { key: 'presentations', label: 'Presentations' },
+  { key: 'reports', label: 'Reports' },
+  { key: 'research', label: 'Research' },
+  { key: 'compliance', label: 'Compliance references' },
+] as const;
+
+const grouped = categories.map((category) => ({
+  ...category,
+  items: docs
+    .filter((doc) => doc.data.category === category.key)
+    .sort((a, b) => a.data.order - b.data.order),
+}));
+---
+<BaseLayout title="Documentation" description="Every document the aLinha project produces, in one index.">
+  <PageHeader
+    label="Project record"
+    title="Documentation"
+    lead="Everything the project produces, in one index — grouped by kind, dated, and tied to the milestone that produced it."
+  />
+
+  <div class="shell rail-grid pb-24">
+    <aside aria-label="Categories" class="self-start md:sticky md:top-10">
+      <p class="meta mb-5">Categories</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-3 md:flex-col">
+        {
+          categories.map((category) => (
+            <li>
+              <a href={`#${category.key}`} class="axis-link text-sm">{category.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+
+    <div>
+      {
+        grouped.map((group) => (
+          <section id={group.key} class="mb-14 scroll-mt-10">
+            <div class="mb-1 flex items-baseline gap-5">
+              <h2 class="meta meta-on font-normal">{group.label}</h2>
+              <span class="h-px flex-1 bg-line" aria-hidden="true" />
+              <span class="meta">{String(group.items.length).padStart(2, '0')}</span>
+            </div>
+
+            {group.items.length === 0 ? (
+              <p class="border-y border-line py-5">
+                <span class="meta">Nothing yet — expected in a later phase</span>
+              </p>
+            ) : (
+              group.items.map((doc) => {
+                const resource = doc.data.file ?? doc.data.href;
+                const external = Boolean(resource?.startsWith('http'));
+                const Tag = resource ? 'a' : 'div';
+                return (
+                  <Tag
+                    href={resource}
+                    rel={external ? 'noopener noreferrer' : undefined}
+                    target={external ? '_blank' : undefined}
+                    data-reveal
+                    class:list={[
+                      '-mx-6 grid items-center gap-2 border-t border-line px-6 py-5 last:border-b',
+                      'xl:grid-cols-[minmax(0,1fr)_150px_120px_90px] xl:gap-8',
+                      resource && 'transition-colors duration-300 hover:bg-surface',
+                    ]}
+                  >
+                    <span class="text-lg">{doc.data.title}</span>
+                    <span class="meta">{doc.data.milestone ?? '—'}</span>
+                    <span class="meta">{doc.data.state}</span>
+                    <span class:list={['meta md:text-right', resource && 'meta-on']}>
+                      {resource ? `${doc.data.format} ↗` : '—'}
+                    </span>
+                  </Tag>
+                );
+              })
+            )}
+          </section>
+        ))
+      }
+
+      <div class="mt-14 flex items-center gap-6">
+        <p class="meta">Managed content</p>
+        <span class="h-px flex-1 bg-line" aria-hidden="true"></span>
+        <code class="font-mono text-[0.8125rem] text-muted">Pages CMS · documents · categories · files</code>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

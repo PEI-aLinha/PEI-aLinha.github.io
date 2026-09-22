@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../components/layouts/BaseLayout.astro';
+import Rule from '../../components/ui/Rule.astro';
+import { url } from '../../lib/paths';
+
+export const getStaticPaths = (async () => {
+  const minutes = await getCollection('minutes', ({ data }) => !data.scheduled);
+  return minutes.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { index, date, subject, attendees } = entry.data;
+const { Content } = await render(entry);
+
+const padded = `#${String(index).padStart(2, '0')}`;
+const formatted = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+---
+<BaseLayout title={`${padded} — ${subject}`} description={`Meeting minute ${padded}: ${subject}.`}>
+  <div class="shell pt-14">
+    <a href={url('/minutes')} class="axis-link meta meta-on inline-flex min-h-11 items-center">← Minutes</a>
+  </div>
+
+  <div class="shell rail-grid pt-12 pb-24">
+    <div>
+      <p class="meta meta-on">{padded}</p>
+      <p class="meta mt-4">{formatted}</p>
+    </div>
+
+    <div>
+      <h1
+        data-reveal
+        class="max-w-3xl font-display font-semibold tracking-[-0.045em]"
+        style="font-size: var(--text-title); line-height: 1;"
+      >
+        {subject}
+      </h1>
+
+      <Rule animated strong class="mt-11" />
+
+      <div class="mt-8">
+        <p class="meta">Attendees</p>
+        <p class="meta meta-on mt-2.5">{attendees.join(' · ')}</p>
+      </div>
+
+      <div class="prose-alinha mt-12 max-w-2xl text-lg leading-[1.62]">
+        <Content />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
