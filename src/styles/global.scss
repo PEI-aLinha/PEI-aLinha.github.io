@@ -5,7 +5,27 @@
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html { scroll-behavior: smooth; overflow-x: clip; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  scrollbar-color: var(--color-brand) var(--color-surface);
+  scrollbar-width: thin;
+}
+
+/* The page scrollbar follows the aLinha palette and keeps its geometry quiet. */
+html::-webkit-scrollbar { width: 10px; height: 10px; }
+html::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-inline-start: 1px solid var(--color-line-soft);
+}
+html::-webkit-scrollbar-thumb {
+  min-height: 3rem;
+  background: var(--color-brand);
+  border: 2px solid var(--color-surface);
+}
+html::-webkit-scrollbar-thumb:hover { background: var(--color-signal); }
+html::-webkit-scrollbar-corner { background: var(--color-surface); }
+
 body {
   background: var(--color-background);
   color: var(--color-text);

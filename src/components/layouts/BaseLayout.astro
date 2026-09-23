@@ -3,6 +3,7 @@ import '../../styles/tailwind.css';
 import '../../styles/global.scss';
 import Nav from '../global/Nav.astro';
 import Footer from '../global/Footer.astro';
+import ScrollToTop from '../ui/ScrollToTop.astro';
 
 interface Props {
     title: string;
@@ -59,6 +60,7 @@ const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
     <slot />
 </main>
 <Footer />
+<ScrollToTop />
 
 <script>
     import { initAlignment } from '../../scripts/align';

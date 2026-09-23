@@ -11,11 +11,17 @@ const secondaryLinks = [
     { label: 'Documentation', href: '/documentation' },
 ];
 
-const supporters = [
+const aettua = {
+    name: 'AETTUA — Associação de Eletrónica, Telecomunicações e Telemática da UA',
+    src: '/images/logos/aettua.png',
+    width: 486,
+    href: 'https://aettua.pt',
+};
+
+const institutionalSupporters = [
     { name: 'Universidade de Aveiro', src: '/images/logos/ua.png', width: 345, href: 'https://www.ua.pt' },
     { name: 'IEETA', src: '/images/logos/ieeta.png', width: 287, href: 'https://www.ieeta.pt' },
     { name: 'LASI — Laboratório Associado de Sistemas Inteligentes', src: '/images/logos/lasi.png', width: 192 },
-    { name: 'AETTUA — Associação de Eletrónica, Telecomunicações e Telemática da UA', src: '/images/logos/aettua.png', width: 486 },
 ];
 ---
 
@@ -23,10 +29,25 @@ const supporters = [
         class="footer-map relative mt-auto overflow-hidden border-t border-line"
         style={`--map-light: url(${url('/images/footer/map-light.webp')}); --map-dark: url(${url('/images/footer/map-dark.png')});`}
 >
-    <div class="shell relative flex flex-wrap items-center justify-between gap-8 py-10 border-b border-line">
-        <ul class="flex flex-wrap items-center gap-x-12 gap-y-6">
+    <div class="supporter-strip border-b border-line">
+        <div class="supporter-strip__inner shell">
+            <a
+                    href={aettua.href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    class="supporter-strip__aettua"
+            >
+                <img
+                        src={url(aettua.src)}
+                        alt={aettua.name}
+                        width={aettua.width}
+                        height="128"
+                        loading="lazy"
+                />
+            </a>
+            <ul class="supporter-strip__institutions">
             {
-                supporters.map((s) => {
+                institutionalSupporters.map((s) => {
                     const Tag = s.href ? 'a' : 'span';
                     return (
                         <li>
@@ -34,7 +55,7 @@ const supporters = [
                                     href={s.href}
                                     rel={s.href ? 'noopener noreferrer' : undefined}
                                     target={s.href ? '_blank' : undefined}
-                                    class="block opacity-85 transition-opacity duration-300 hover:opacity-100"
+                                    class="supporter-logo"
                             >
                                 <img
                                         src={url(s.src)}
@@ -42,14 +63,14 @@ const supporters = [
                                         width={s.width}
                                         height="128"
                                         loading="lazy"
-                                        class="h-9 w-auto md:h-11"
                                 />
                             </Tag>
                         </li>
                     );
                 })
             }
-        </ul>
+            </ul>
+        </div>
     </div>
     <div class="pointer-events-none absolute -right-10 -bottom-16 opacity-[0.06]" aria-hidden="true">
         <AlignmentMark variant="compact" class="h-[220px] w-[220px]" />
@@ -129,5 +150,98 @@ const supporters = [
         background-color: var(--color-background);
         opacity: 0.55;
         z-index: -1;
+    }
+
+    .supporter-strip {
+        position: relative;
+        isolation: isolate;
+        background: color-mix(in oklab, var(--color-background) 94%, transparent);
+    }
+
+    .supporter-strip::before {
+        content: '';
+        position: absolute;
+        inset: 0 0 auto;
+        height: 4px;
+        background: linear-gradient(to right, #00a1ca 0 50%, #ff7a45 50% 100%);
+    }
+
+    .supporter-strip__inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        min-height: 132px;
+        padding-block: 1.5rem;
+    }
+
+    .supporter-strip__aettua {
+        display: flex;
+        justify-content: center;
+        padding-inline: 2rem;
+        opacity: 0.9;
+        transition: opacity 300ms;
+    }
+
+    .supporter-strip__aettua:hover,
+    .supporter-logo:hover {
+        opacity: 1;
+    }
+
+    .supporter-strip__aettua img {
+        width: auto;
+        height: clamp(2.5rem, 4.4vw, 4rem);
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .supporter-strip__institutions {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: clamp(0.75rem, 2vw, 2.5rem);
+        padding-inline: clamp(0.75rem, 2vw, 2rem);
+    }
+
+    .supporter-strip__institutions li {
+        display: flex;
+        min-width: 0;
+        justify-content: center;
+    }
+
+    .supporter-logo {
+        display: block;
+        opacity: 0.85;
+        transition: opacity 300ms;
+    }
+
+    .supporter-logo img {
+        width: auto;
+        height: clamp(2rem, 3.2vw, 3.25rem);
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    @media (max-width: 767px) {
+        .supporter-strip__inner {
+            min-height: 96px;
+            padding-block: 1rem;
+        }
+
+        .supporter-strip__aettua {
+            padding-inline: 0.5rem;
+        }
+
+        .supporter-strip__aettua img {
+            height: clamp(1.75rem, 7vw, 2.75rem);
+        }
+
+        .supporter-strip__institutions {
+            gap: 0.5rem;
+            padding-inline: 0.5rem;
+        }
+
+        .supporter-logo img {
+            height: clamp(1.5rem, 6vw, 2.25rem);
+        }
     }
 </style>
