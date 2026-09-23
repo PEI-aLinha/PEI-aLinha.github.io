@@ -26,6 +26,15 @@ const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+        (function () {
+            var stored = localStorage.getItem('theme');
+            var theme = stored === 'dark' || stored === 'light'
+                ? stored
+                : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />

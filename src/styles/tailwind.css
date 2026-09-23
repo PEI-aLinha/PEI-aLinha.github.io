@@ -30,3 +30,28 @@
 
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
 }
+
+/* Dark mode overrides. Same token names, new values — nothing else changes. */
+:root[data-theme="dark"] {
+  --color-background: #161615;
+  --color-surface: #201F1D;
+  --color-text: #F2F1EF;
+  --color-muted: #9A9A93;
+  --color-line: #34332F;
+  --color-line-soft: #2A2925;
+  --color-brand: #F2F1EF;
+  --color-accent: #F2F1EF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: #161615;
+    --color-surface: #201F1D;
+    --color-text: #F2F1EF;
+    --color-muted: #9A9A93;
+    --color-line: #34332F;
+    --color-line-soft: #2A2925;
+    --color-brand: #F2F1EF;
+    --color-accent: #F2F1EF;
+  }
+}
