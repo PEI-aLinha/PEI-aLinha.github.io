@@ -3,13 +3,13 @@
     <path d="M4 7 H20" class="signal" />
     <path d="M9 12 H20 M12 17 H20" class="ink" />
     <style>
-        .axis { stroke: #2D4BFF; }
-        .signal { stroke: #FF5A3D; }
-        .ink { stroke: #111827; }
+        .axis { stroke: #0B4F4A; }
+        .signal { stroke: #AEB3B8; }
+        .ink { stroke: #202124; }
         @media (prefers-color-scheme: dark) {
-            .axis { stroke: #7182FF; }
-            .signal { stroke: #FF735A; }
-            .ink { stroke: #F4F0E8; }
+            .axis { stroke: #0B4F4A; }
+            .signal { stroke: #AEB3B8; }
+            .ink { stroke: #202124; }
         }
     </style>
 </svg>

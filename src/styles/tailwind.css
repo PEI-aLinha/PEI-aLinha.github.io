@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
-/* aLinha identity: warm paper + petroleum + restrained terracotta. */
+/* aLinha identity: white canvas + green and silver. */
 @theme {
-  --color-paper: #F3EEE5;
-  --color-paper-deep: #E7DFD2;
-  --color-paper-soft: #F9F6F0;
-  --color-ink: #17201F;
-  --color-ink-soft: #48504D;
+  --color-paper: #FFFFFF;
+  --color-paper-deep: #E5E7E9;
+  --color-paper-soft: #F7F7F8;
+  --color-ink: #202124;
+  --color-ink-soft: #555A5F;
 
-  --color-brand: #1E5552;
-  --color-brand-deep: #153C3A;
-  --color-brand-soft: #D5E2DD;
+  --color-brand: #0B4F4A;
+  --color-brand-deep: #063632;
+  --color-brand-soft: #D2E4E1;
 
-  --color-signal: #D95D3F;
-  --color-signal-soft: #F1D7CD;
+  --color-signal: #92989E;
+  --color-signal-soft: #E9EBED;
 
-  --color-white: #FFFDF9;
-  --color-line: #CBC2B5;
-  --color-line-soft: #DDD5CA;
-  --color-line-strong: #17201F;
+  --color-white: #FFFFFF;
+  --color-line: #C4C7CA;
+  --color-line-soft: #E1E3E5;
+  --color-line-strong: #202124;
 
-  --color-background: #F3EEE5;
-  --color-surface: #F9F6F0;
-  --color-text: #17201F;
-  --color-text-soft: #48504D;
-  --color-muted: #6B6258;
+  --color-background: #FFFFFF;
+  --color-surface: #F7F7F8;
+  --color-text: #202124;
+  --color-text-soft: #555A5F;
+  --color-muted: #6F7479;
 
   --font-display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
@@ -40,40 +40,4 @@
   --space-gutter: clamp(1.5rem, 0.65rem + 4.2vw, 6rem);
   --rail: 200px;
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-:root[data-theme="dark"] {
-  --color-background: #121A19;
-  --color-surface: #182421;
-  --color-text: #F3EEE5;
-  --color-text-soft: #C9D0CD;
-  --color-muted: #A8B2AE;
-  --color-line: #344542;
-  --color-line-soft: #293936;
-  --color-line-strong: #F3EEE5;
-
-  --color-brand: #78AAA5;
-  --color-brand-deep: #0F2B29;
-  --color-brand-soft: #223B38;
-
-  --color-signal: #E27A60;
-  --color-signal-soft: #472A23;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-background: #121A19;
-    --color-surface: #182421;
-    --color-text: #F3EEE5;
-    --color-text-soft: #C9D0CD;
-    --color-muted: #A8B2AE;
-    --color-line: #344542;
-    --color-line-soft: #293936;
-    --color-line-strong: #F3EEE5;
-    --color-brand: #78AAA5;
-    --color-brand-deep: #0F2B29;
-    --color-brand-soft: #223B38;
-    --color-signal: #E27A60;
-    --color-signal-soft: #472A23;
-  }
 }
