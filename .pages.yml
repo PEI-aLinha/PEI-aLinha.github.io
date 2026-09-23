@@ -253,9 +253,9 @@ content:
           template: "{primary}.md"
           field: create
         view:
-          fields: [name, role, order]
+          fields: [name, group, role, order]
           primary: name
-          sort: [order, name, role]
+          sort: [order, name, group, role]
           search: [name, role, focus]
           default:
             sort: order
@@ -265,6 +265,19 @@ content:
             label: Name
             type: string
             required: true
+          - name: group
+            label: Group
+            type: select
+            required: true
+            options:
+              values:
+                - { name: student, label: Student }
+                - { name: advisor, label: Advisor }
+                - { name: collaborator, label: Collaborator }
+          - name: affiliation
+            label: Affiliation
+            type: string
+            description: "Shown for advisors and collaborators, e.g. DETI · Universidade de Aveiro"
           - name: initials
             label: Initials
             type: string

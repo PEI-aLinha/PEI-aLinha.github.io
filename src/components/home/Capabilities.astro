@@ -1,0 +1,52 @@
+---
+import SectionHeader from "../ui/SectionHeader.astro"
+import LinkArrow from "../ui/LinkArrow.astro"
+import { url } from "../../lib/paths"
+
+const pillars = [
+    {
+        number: '01',
+        title: 'Assess',
+        body: "Understand the organisation's maturity and identify gaps.",
+    },
+    {
+        number: '02',
+        title: 'Organise',
+        body: 'Keep requirements, policies and evidence connected.',
+    },
+    {
+        number: '03',
+        title: 'Support',
+        body: 'Help teams prioritise actions and prepare compliance workflows.',
+    },
+];
+---
+
+<section aria-labelledby="capabilities-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
+    <div>
+        <SectionHeader number="02" label="What we're building" />
+        <h2 id="capabilities-heading" class="sr-only">What we're building</h2>
+    </div>
+
+    <div class="flex flex-col">
+        {
+            pillars.map((step, i) => (
+                    <div
+                            class:list={[
+                                'grid gap-4 py-10 md:grid-cols-[300px_minmax(0,1fr)] md:gap-12',
+                                i === 0 ? 'border-t-0 pt-0 md:pt-0' : 'border-t border-line',
+                            ]}
+                            data-reveal
+                    >
+                        <p class="meta meta-on">
+                            {step.number} — {step.title}
+                        </p>
+                        <p class="max-w-lg text-xl leading-[1.5]">{step.body}</p>
+                    </div>
+            ))
+        }
+        <div class="mt-4 border-t border-line pt-10">
+            <LinkArrow href={url('/project')}>Explore the project</LinkArrow>
+        </div>
+    </div>
+</section>

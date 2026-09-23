@@ -1,8 +1,9 @@
 ---
+import Logo from '../ui/Logo.astro';
+
 const links = [
     { label: 'Project', href: '/project' },
-    { label: 'Milestones', href: '/milestones' },
-    { label: 'Minutes', href: '/minutes' },
+    { label: 'Progress', href: '/milestones' },
     { label: 'Team', href: '/team' },
     { label: 'Documentation', href: '/documentation' },
 ];
@@ -19,7 +20,7 @@ const isActive = (path: string) => {
 ---
 <header class="border-b border-line">
     <nav aria-label="Main" class="shell flex h-16 items-center gap-14 md:h-22">
-        <a href={url('/')} class="font-display text-lg font-semibold tracking-[-0.03em]">aLinha</a>
+        <a href={url('/')} class="text-lg" aria-label="aLinha — home"><Logo /></a>
 
         <div class="hidden flex-1 items-center gap-9 md:flex">
             {
@@ -35,7 +36,7 @@ const isActive = (path: string) => {
             }
         </div>
 
-        <a href={repo} rel="noopener noreferrer" target="_blank" class="axis-link meta meta-on ml-auto hidden md:inline-flex">
+        <a href={repo} rel="noopener noreferrer" target="_blank" aria-label="GitHub — opens in a new tab" class="axis-link meta meta-on ml-auto hidden md:inline-flex">
             GitHub ↗
         </a>
 
@@ -67,19 +68,35 @@ const isActive = (path: string) => {
                 ))
             }
         </div>
-        <a href={repo} rel="noopener noreferrer" target="_blank" class="axis-link meta meta-on mt-7 inline-flex">
+        <a href={repo} rel="noopener noreferrer" target="_blank" aria-label="GitHub — opens in a new tab" class="axis-link meta meta-on mt-7 inline-flex">
             GitHub ↗
         </a>
     </div>
 </header>
 
 <script>
-    const toggle = document.getElementById('nav-toggle');
+    const toggle = document.getElementById('nav-toggle') as HTMLButtonElement | null;
     const panel = document.getElementById('nav-panel');
+
+    const closeMenu = () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        panel?.setAttribute('hidden', '');
+    };
 
     toggle?.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         toggle.setAttribute('aria-expanded', String(!open));
         panel?.toggleAttribute('hidden', open);
+    });
+
+    panel?.addEventListener('click', (event) => {
+        if ((event.target as HTMLElement).tagName === 'A') closeMenu();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+            closeMenu();
+            toggle.focus();
+        }
     });
 </script>

@@ -1,0 +1,42 @@
+---
+import Rule from '../ui/Rule.astro';
+import LinkArrow from '../ui/LinkArrow.astro';
+import { url } from '../../lib/paths';
+
+const frameworks = ['NIS2', 'GDPR', 'EU AI Act', 'SOC-CMM'];
+---
+<section aria-labelledby="intro-heading" class="shell rail-grid pt-16 pb-[var(--space-section)] md:pt-26">
+    <div>
+        <p class="meta">CISO-as-a-Service</p>
+    </div>
+
+    <div>
+        <h1
+                id="intro-heading"
+                data-reveal
+                class="max-w-5xl font-display font-semibold tracking-[-0.05em]"
+                style="font-size: var(--text-hero); line-height: 0.95;"
+        >
+            Everything aligned.
+        </h1>
+
+        <Rule animated strong class="mt-12" />
+
+        <p class="mt-9 max-w-3xl leading-[1.45]" style="font-size: var(--text-lead);" data-reveal>
+            We are building a CISO-as-a-Service platform to help Portuguese SMEs understand, organise
+            and manage cybersecurity compliance.
+        </p>
+
+        <p class="meta mt-5">Projeto em Engenharia Informática · Universidade de Aveiro · 2026/27</p>
+
+        <div class="mt-10 flex flex-col gap-8 md:flex-row md:items-center md:gap-14">
+            <ul class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Regulatory frameworks covered">
+                {frameworks.map((name) => <li class="meta meta-on">{name}</li>)}
+            </ul>
+            <div class="flex gap-8 md:ml-auto">
+                <LinkArrow href={url('/project')}>The project</LinkArrow>
+                <LinkArrow href={url('/team')}>The team</LinkArrow>
+            </div>
+        </div>
+    </div>
+</section>

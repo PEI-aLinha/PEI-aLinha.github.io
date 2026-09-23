@@ -11,7 +11,7 @@ interface Props {
 
 const {
     title,
-    description = 'aLinha — making information-security compliance clearer, continuous and actionable. Software engineering project, Universidade de Aveiro.',
+    description = 'aLinha is a university engineering project exploring a CISO-as-a-Service platform for cybersecurity compliance workflows in Portuguese SMEs.',
 } = Astro.props;
 
 const pageTitle = title === 'aLinha' ? 'aLinha' : `${title} — aLinha`;
@@ -44,8 +44,9 @@ const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
     />
 </head>
 <body class="flex min-h-screen flex-col bg-background text-text">
+<a href="#main-content" class="skip-link">Skip to content</a>
 <Nav />
-<main class="flex-1">
+<main id="main-content" class="flex-1">
     <slot />
 </main>
 <Footer />

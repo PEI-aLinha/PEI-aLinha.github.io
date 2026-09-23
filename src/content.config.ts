@@ -34,6 +34,8 @@ const team = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/team' }),
   schema: z.object({
     name: z.string(),
+    group: z.enum(['student', 'advisor', 'collaborator']).default('student'),
+    affiliation: z.string().optional(),
     initials: z.string(),
     image: z.string().optional(),
     imageAlt: z.string().optional(),

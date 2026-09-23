@@ -11,7 +11,7 @@ const { entry, first = false } = Astro.props;
 const { index, date, subject, attendees, summary, scheduled } = entry.data;
 
 const formatted = date
-    .toLocaleDateString('pt-PT', { day: '2-digit', month: 'short', year: 'numeric' })
+    .toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
     .replace(/ (\w)/g, (m) => m.toUpperCase());
 const id = `#${String(index).padStart(2, '0')}`;
 const Tag = scheduled ? 'div' : 'a';

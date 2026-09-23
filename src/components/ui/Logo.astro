@@ -1,0 +1,29 @@
+---
+/* The aLinha mark: three uneven rules brought flush against one axis.
+   Everything the platform does is making unequal inputs line up. */
+interface Props {
+    /** "full" renders mark + wordmark, "mark" renders the symbol alone. */
+    variant?: 'full' | 'mark';
+    class?: string;
+}
+
+const { variant = 'full', class: className = '' } = Astro.props;
+---
+<span class:list={['inline-flex items-center gap-2.5', className]}>
+    <svg
+            viewBox="0 0 24 24"
+            class="h-[1.1em] w-[1.1em] shrink-0"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden={variant === 'full' ? 'true' : undefined}
+            role={variant === 'mark' ? 'img' : undefined}
+            aria-label={variant === 'mark' ? 'aLinha' : undefined}
+    >
+        <path d="M3 2 V22" />
+        <path d="M3 6 H21" />
+        <path d="M3 12 H13" />
+        <path d="M3 18 H17" />
+    </svg>
+    {variant === 'full' && <span class="font-display font-semibold tracking-[-0.03em]">aLinha</span>}
+</span>

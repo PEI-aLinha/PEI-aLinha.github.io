@@ -1,91 +1,46 @@
 ---
-import { getCollection } from 'astro:content';
-import SectionHeader from '../ui/SectionHeader.astro';
-import LinkArrow from '../ui/LinkArrow.astro';
+import type { CollectionEntry } from 'astro:content';
+import StatusDot from '../ui/StatusDot.astro';
 import { url } from '../../lib/paths';
 
-const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
+interface Props {
+    entry: CollectionEntry<'milestones'>;
+    first?: boolean;
+    last?: boolean;
+}
 
-const monthYear = (d: Date) =>
-    d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+const { entry, first = false, last = false } = Astro.props;
+const { number, title, status, start, end, summary, deliverables } = entry.data;
 
-const reached = milestones.filter((m) => m.data.status !== 'planned').length;
-const fill = milestones.length ? (reached / milestones.length) * 100 : 0;
+const monthYear = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+const padded = String(number).padStart(2, '0');
 ---
-<section aria-labelledby="progress-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
-    <div><SectionHeader number="04" label="Where we are" /></div>
+<a
+        href={url(`/milestones/${entry.id}`)}
+        data-reveal
+        class:list={[
+            '-mx-6 grid gap-4 px-6 py-9 transition-colors duration-300 hover:bg-surface md:grid-cols-[120px_minmax(0,1fr)_160px] md:gap-10',
+            first ? 'border-t border-text' : 'border-t border-line',
+            last && 'border-b border-line',
+        ]}
+>
+    <p class:list={['meta', status !== 'planned' && 'meta-on']}>Phase {padded}</p>
 
     <div>
-        <h2
-                id="progress-heading"
-                data-reveal
-                class="mb-12 font-display font-medium tracking-[-0.03em] md:mb-16"
-                style="font-size: var(--text-section); line-height: 1.12;"
+        <p
+                class:list={[
+                    'font-display text-2xl font-medium tracking-[-0.025em]',
+                    status === 'planned' && 'text-muted',
+                ]}
         >
-            Project progress
-        </h2>
-
-        <!-- Desktop: horizontal timeline. Mobile: a vertical spine. -->
-        <ol class="hidden md:flex">
-            {
-                milestones.map((m) => {
-                    const active = m.data.status !== 'planned';
-                    return (
-                            <li class="flex-1 pr-6">
-                                <p class:list={['meta', active && 'meta-on']}>
-                                    {String(m.data.number).padStart(2, '0')}
-                                </p>
-                                <div class="my-4 flex items-center">
-                <span
-                        class:list={[
-                            'block h-1.5 w-1.5 shrink-0 rounded-full',
-                            active ? 'bg-text' : 'border border-text',
-                        ]}
-                        aria-hidden="true"
-                />
-                                    <span
-                                            class:list={['block h-px flex-1', active ? 'bg-text' : 'bg-line']}
-                                            data-rule={active ? '' : undefined}
-                                            aria-hidden="true"
-                                    />
-                                </div>
-                                <p class:list={['text-xl font-medium tracking-[-0.02em]', !active && 'text-muted']}>
-                                    {m.data.title}
-                                </p>
-                                <p class="meta mt-2.5">{monthYear(m.data.start)} — {monthYear(m.data.end)}</p>
-                                <p class:list={['meta mt-1.5', active && 'meta-on']}>
-                                    {active ? 'In progress' : 'Planned'}
-                                </p>
-                            </li>
-                    );
-                })
-            }
-        </ol>
-
-        <div class="flex gap-5 md:hidden">
-            <div class="relative w-px shrink-0 bg-line" aria-hidden="true">
-                <span class="absolute inset-x-0 top-0 block w-px bg-text" data-fill style={`height:${fill}%`}></span>
-            </div>
-            <ol class="flex flex-1 flex-col gap-8">
-                {
-                    milestones.map((m) => {
-                        const active = m.data.status !== 'planned';
-                        return (
-                                <li>
-                                    <p class:list={['meta', active && 'meta-on']}>
-                                        {String(m.data.number).padStart(2, '0')} · {active ? 'In progress' : 'Planned'}
-                                    </p>
-                                    <p class:list={['mt-2 text-lg font-medium tracking-[-0.02em]', !active && 'text-muted']}>
-                                        {m.data.title}
-                                    </p>
-                                    <p class="meta mt-1.5">{monthYear(m.data.start)} — {monthYear(m.data.end)}</p>
-                                </li>
-                        );
-                    })
-                }
-            </ol>
-        </div>
-
-        <div class="mt-12"><LinkArrow href={url('/milestones')}>All milestones</LinkArrow></div>
+            {title}
+        </p>
+        <p class="mt-3 max-w-2xl text-base leading-[1.55] text-muted">{summary}</p>
+        {deliverables.length > 0 && <p class="meta mt-4">{deliverables.length} deliverables</p>}
     </div>
-</section>
+
+    <div class="flex flex-col gap-3 md:items-end">
+        <StatusDot status={status} />
+        <p class="meta">{monthYear(start)} — {monthYear(end)}</p>
+    </div>
+</a>

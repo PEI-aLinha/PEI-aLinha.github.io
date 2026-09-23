@@ -19,8 +19,27 @@ body {
 }
 
 :focus-visible {
-  outline: 1px solid var(--color-text);
+  outline: 2px solid var(--color-text);
   outline-offset: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--color-background);
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &:focus-visible {
+    top: 1rem;
+  }
 }
 
 /* ---- The alignment axis: link underline grows from the axis-facing edge ---- */
@@ -111,7 +130,7 @@ body {
 
 .meta {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-muted);
