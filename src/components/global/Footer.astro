@@ -26,8 +26,7 @@ const institutionalSupporters = [
 ---
 
 <footer
-        class="footer-map relative mt-auto overflow-hidden border-t border-line"
-        style={`--map-light: url(${url('/images/footer/map-light.webp')}); --map-dark: url(${url('/images/footer/map-dark.png')});`}
+        class="footer-panel relative mt-auto overflow-hidden border-t border-line"
 >
     <div class="supporter-strip border-b border-line">
         <div class="supporter-strip__inner shell">
@@ -102,44 +101,16 @@ const institutionalSupporters = [
 </footer>
 
 <style>
-    .footer-map {
-        background-image: var(--map-light);
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+    .footer-panel {
+        background-color: var(--color-brand-soft);
     }
 
-    :root[data-theme='dark'] .footer-map {
-        background-image: var(--map-dark);
-    }
-
-    @media (prefers-color-scheme: dark) {
-        :root:not([data-theme='light']) .footer-map {
-            background-image: var(--map-dark);
-        }
-    }
-
-    .footer-map::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: color-mix(in oklab, var(--color-brand) 35%, transparent);
-        mix-blend-mode: multiply;
-        pointer-events: none;
-    }
-
-    :root[data-theme='dark'] .footer-map::before,
-    :root:not([data-theme='light']) .footer-map::before {
-        mix-blend-mode: screen;
-        background: color-mix(in oklab, var(--color-brand) 25%, transparent);
-    }
-
-    .footer-map > .shell {
+    .footer-panel > .shell {
         position: relative;
         isolation: isolate;
     }
 
-    .footer-map > .shell::before {
+    .footer-panel > .shell::before {
         content: '';
         position: absolute;
         top: 0;
@@ -155,7 +126,7 @@ const institutionalSupporters = [
     .supporter-strip {
         position: relative;
         isolation: isolate;
-        background: color-mix(in oklab, var(--color-background) 94%, transparent);
+        background: var(--color-background);
     }
 
     .supporter-strip::before {
