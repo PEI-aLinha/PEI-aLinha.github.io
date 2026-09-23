@@ -1,21 +1,39 @@
 @import "tailwindcss";
 
 
-/* Design tokens. The future visual identity replaces the values here and
-   nowhere else: --color-brand and --color-accent are deliberately separate
-   from --color-text so a brand hue can land without touching any layout. */
+/* Design tokens. aLinha brand system: warm paper canvas, cobalt as the
+   primary brand hue (alignment/structure/resolved state), coral as a
+   scarce signal hue (misalignment/attention/transition). Semantic names
+   (background/surface/text/muted/line) map onto the palette so existing
+   utility classes keep working; brand/signal tokens are additive. */
 @theme {
-  --color-background: #FBFBFA;
-  --color-surface: #F2F1EF;
-  --color-text: #161615;
-  --color-muted: #6C6C66;
-  --color-line: #DCDBD6;
-  --color-line-soft: #CFCEC8;
-  --color-brand: #161615;
-  --color-accent: #161615;
+  --color-paper: #F4F0E8;
+  --color-paper-soft: #EAE5DB;
+  --color-ink: #111827;
+  --color-ink-soft: #30394B;
 
-  --font-display: "Archivo", "Helvetica Neue", sans-serif;
-  --font-body: "Archivo", "Helvetica Neue", sans-serif;
+  --color-brand: #2D4BFF;
+  --color-brand-deep: #2036BD;
+  --color-brand-soft: #E1E5FF;
+
+  --color-signal: #FF5A3D;
+  --color-signal-soft: #FFE1D8;
+
+  --color-white: #FFFFFF;
+
+  --color-line: #CFC9BD;
+  --color-line-strong: #111827;
+  --color-line-soft: #DAD4C6;
+
+  /* legacy semantic aliases used throughout existing components */
+  --color-background: #F4F0E8;
+  --color-surface: #EAE5DB;
+  --color-text: #111827;
+  --color-text-soft: #30394B;
+  --color-muted: #6B6355;
+
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", sans-serif;
+  --font-body: "IBM Plex Sans", "Helvetica Neue", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --text-hero: clamp(2.875rem, 1rem + 7vw, 8.25rem);
@@ -31,27 +49,42 @@
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark mode overrides. Same token names, new values — nothing else changes. */
+/* Dark mode overrides. Not an inversion: cobalt/coral shift lighter and
+   the canvas becomes deep navy-ink rather than a swapped paper tone. */
 :root[data-theme="dark"] {
-  --color-background: #161615;
-  --color-surface: #201F1D;
-  --color-text: #F2F1EF;
-  --color-muted: #9A9A93;
-  --color-line: #34332F;
-  --color-line-soft: #2A2925;
-  --color-brand: #F2F1EF;
-  --color-accent: #F2F1EF;
+  --color-background: #0E1220;
+  --color-surface: #171C2D;
+  --color-text: #F4F0E8;
+  --color-text-soft: #D7D2C4;
+  --color-muted: #AEB3C0;
+  --color-line: #2A3148;
+  --color-line-strong: #F4F0E8;
+  --color-line-soft: #232A42;
+
+  --color-brand: #7182FF;
+  --color-brand-deep: #4D61F2;
+  --color-brand-soft: #222A56;
+
+  --color-signal: #FF735A;
+  --color-signal-soft: #41241F;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-background: #161615;
-    --color-surface: #201F1D;
-    --color-text: #F2F1EF;
-    --color-muted: #9A9A93;
-    --color-line: #34332F;
-    --color-line-soft: #2A2925;
-    --color-brand: #F2F1EF;
-    --color-accent: #F2F1EF;
+    --color-background: #0E1220;
+    --color-surface: #171C2D;
+    --color-text: #F4F0E8;
+    --color-text-soft: #D7D2C4;
+    --color-muted: #AEB3C0;
+    --color-line: #2A3148;
+    --color-line-strong: #F4F0E8;
+    --color-line-soft: #232A42;
+
+    --color-brand: #7182FF;
+    --color-brand-deep: #4D61F2;
+    --color-brand-soft: #222A56;
+
+    --color-signal: #FF735A;
+    --color-signal-soft: #41241F;
   }
 }

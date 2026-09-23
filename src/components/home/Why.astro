@@ -1,21 +1,26 @@
 ---
-import SectionHeader from '../ui/SectionHeader.astro';
+import AlignmentRule from '../brand/AlignmentRule.astro';
 ---
 
-<section aria-labelledby="why-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
-    <div><SectionHeader number="01" label="Why" /></div>
+<section aria-labelledby="why-heading" class="bg-ink text-white py-[var(--space-section)]">
+    <div class="shell">
+        <div class="flex items-start justify-between gap-8">
+            <span class="font-display text-[clamp(4rem,10vw,9rem)] font-semibold leading-none tracking-[-0.04em] text-white/15" aria-hidden="true">01</span>
+            <p class="meta pt-3 text-white/60">Why</p>
+        </div>
 
-    <div>
         <h2
             id="why-heading"
             data-reveal
-            class="mb-8 max-w-3xl font-display font-medium tracking-[-0.03em]"
-            style="font-size: var(--text-section); line-height: 1.12;"
+            class="mt-2 max-w-3xl font-display font-medium tracking-[-0.03em]"
+            style="font-size: var(--text-section); line-height: 1.1;"
         >
-            Why aLinha?
+            Why <span class="text-signal">aLinha</span>?
         </h2>
 
-        <p class="max-w-2xl text-xl leading-[1.5]" data-reveal>
+        <AlignmentRule tone="brand" animated class="my-8 max-w-md" />
+
+        <p class="max-w-2xl text-xl leading-[1.5] text-white/85" data-reveal>
             Cybersecurity compliance can require specialised knowledge, continuous evidence
             management and significant resources. For smaller organisations, keeping everything
             aligned can quickly become difficult.

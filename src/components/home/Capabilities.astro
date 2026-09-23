@@ -1,5 +1,4 @@
 ---
-import SectionHeader from "../ui/SectionHeader.astro"
 import LinkArrow from "../ui/LinkArrow.astro"
 import { url } from "../../lib/paths"
 
@@ -8,45 +7,59 @@ const pillars = [
         number: '01',
         title: 'Assess',
         body: "Understand the organisation's maturity and identify gaps.",
+        surface: 'bg-background',
+        fg: '',
     },
     {
         number: '02',
         title: 'Organise',
         body: 'Keep requirements, policies and evidence connected.',
+        surface: 'bg-brand-soft',
+        fg: '',
     },
     {
         number: '03',
         title: 'Support',
         body: 'Help teams prioritise actions and prepare compliance workflows.',
+        surface: 'bg-brand text-white',
+        fg: 'text-white',
     },
 ];
 ---
 
-<section aria-labelledby="capabilities-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
-    <div>
-        <SectionHeader number="02" label="What we're building" />
+<section aria-labelledby="capabilities-heading" class="border-t border-line py-[var(--space-section)]">
+    <div class="shell">
+        <div class="flex items-baseline justify-between">
+            <p class="meta meta-on">02 — What we're building</p>
+        </div>
         <h2 id="capabilities-heading" class="sr-only">What we're building</h2>
     </div>
 
-    <div class="flex flex-col">
+    <div class="mt-8 grid gap-px border-y border-line bg-line md:grid-cols-3">
         {
             pillars.map((step, i) => (
-                    <div
-                            class:list={[
-                                'grid gap-4 py-10 md:grid-cols-[300px_minmax(0,1fr)] md:gap-12',
-                                i === 0 ? 'border-t-0 pt-0 md:pt-0' : 'border-t border-line',
-                            ]}
-                            data-reveal
-                    >
-                        <p class="meta meta-on">
-                            {step.number} — {step.title}
-                        </p>
-                        <p class="max-w-lg text-xl leading-[1.5]">{step.body}</p>
+                    <div class:list={['group flex flex-col gap-6 p-8 md:p-10', step.surface]} data-reveal>
+                        <span class="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-none tracking-[-0.03em]" aria-hidden="true">
+                            {step.number}
+                        </span>
+                        <h3 class="font-display text-2xl font-medium tracking-[-0.02em]">{step.title}</h3>
+                        <p class:list={['max-w-sm text-base leading-[1.5]', step.fg ? 'opacity-90' : 'text-text-soft']}>{step.body}</p>
+                        <div class="mt-auto flex items-center">
+                            <span
+                                    class:list={[
+                                        'align-snap h-px w-16',
+                                        i === 0 ? 'bg-signal' : step.fg ? 'bg-white' : 'bg-brand',
+                                    ]}
+                                    style={`--snap-offset:${-10 - i * 4}px`}
+                                    aria-hidden="true"
+                            ></span>
+                        </div>
                     </div>
             ))
         }
-        <div class="mt-4 border-t border-line pt-10">
-            <LinkArrow href={url('/project')}>Explore the project</LinkArrow>
-        </div>
+    </div>
+
+    <div class="shell mt-10">
+        <LinkArrow href={url('/project')}>Explore the project</LinkArrow>
     </div>
 </section>

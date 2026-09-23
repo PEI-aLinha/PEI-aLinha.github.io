@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '../components/layouts/BaseLayout.astro';
-import Rule from '../components/ui/Rule.astro';
 import PendingBlock from '../components/ui/PendingBlock.astro';
-import LinkArrow from '../components/ui/LinkArrow.astro';
+import AlignmentField from '../components/brand/AlignmentField.astro';
 import { url } from '../lib/paths';
 
 const sections = [
@@ -48,25 +47,26 @@ const facts = [
   title="Project"
   description="Building a CISO-as-a-Service platform for Portuguese SMEs — what aLinha is, what it does, and its scope."
 >
-  <div class="shell rail-grid pt-16 pb-18 md:pt-26">
-    <div><p class="meta">The project</p></div>
-    <div>
+  <div class="relative overflow-hidden bg-ink pt-16 pb-18 text-white md:pt-26">
+    <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[36%] opacity-90 md:block">
+      <AlignmentField variant="hero" class="h-full w-full [--color-signal:var(--color-signal)] [--color-text:#ffffff66] [--color-brand:var(--color-brand)]" />
+    </div>
+    <div class="shell relative">
+      <p class="meta text-white/60">Project / 2026—27</p>
       <h1
         data-reveal
-        class="max-w-5xl font-display font-semibold tracking-[-0.045em]"
+        class="mt-4 max-w-3xl font-display font-semibold tracking-[-0.045em]"
         style="font-size: var(--text-title); line-height: 1;"
       >
-        Building a CISO-as-a-Service platform for Portuguese SMEs.
+        Building a <span class="text-brand">CISO-as-a-Service</span> platform.
       </h1>
 
-      <Rule animated strong class="mt-12" />
-
-      <dl class="mt-7 flex flex-wrap gap-x-16 gap-y-6">
+      <dl class="mt-10 flex flex-wrap gap-x-16 gap-y-6">
         {
           facts.map(([term, value]) => (
             <div>
-              <dt class="meta">{term}</dt>
-              <dd class="mt-2 text-[0.9375rem]">{value}</dd>
+              <dt class="meta text-white/50">{term}</dt>
+              <dd class="mt-2 text-[0.9375rem] text-white/90">{value}</dd>
             </div>
           ))
         }
@@ -75,7 +75,7 @@ const facts = [
   </div>
 
   <div class="shell rail-grid pb-26">
-    <nav aria-label="Sections" class="self-start md:sticky md:top-10">
+    <nav aria-label="Sections" class="self-start lg:sticky lg:top-10">
       <p class="meta mb-5">Contents</p>
       <ul class="flex flex-wrap gap-x-6 gap-y-3 md:flex-col">
         {
@@ -96,22 +96,27 @@ const facts = [
         <h2 id="h-project" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
           The project
         </h2>
-        <p class="mb-4.5 max-w-2xl text-lg leading-[1.62]">
+        <p class="mb-6 max-w-2xl text-xl leading-[1.5]">
           Cybersecurity compliance — under the NIS2 Directive, the GDPR and, increasingly, the EU
           AI Act — is difficult for organisations without a dedicated security officer. Most SMEs
           have no such role, no security budget and no in-house expertise to interpret what is
           required.
         </p>
-        <p class="mb-4.5 max-w-2xl text-lg leading-[1.62] text-muted">
-          aLinha explores how a shared CISO-as-a-Service model can reduce that operational burden.
-          The platform is intended to support assessment, evidence management and incident-reporting
-          workflows for a service provider working across several client organisations.
+        <p class="my-6 max-w-xl border-l-2 border-signal pl-5 font-display text-xl font-medium leading-[1.3] text-brand">
+          A shared CISO, structured for organisations that could never afford one alone.
         </p>
-        <p class="max-w-2xl text-lg leading-[1.62] text-muted">
-          AI is used to draft, prioritise and explain — it assists the workflow rather than replacing
-          it. Accountability stays with the organisation's own designated person, and outputs are
-          reviewed by people before they reach the client.
-        </p>
+        <div class="mt-4.5 grid gap-6 md:grid-cols-2">
+          <p class="max-w-md text-base leading-[1.6] text-text-soft">
+            aLinha explores how a shared CISO-as-a-Service model can reduce that operational burden.
+            The platform is intended to support assessment, evidence management and incident-reporting
+            workflows for a service provider working across several client organisations.
+          </p>
+          <p class="max-w-md text-base leading-[1.6] text-text-soft">
+            AI is used to draft, prioritise and explain — it assists the workflow rather than replacing
+            it. Accountability stays with the organisation's own designated person, and outputs are
+            reviewed by people before they reach the client.
+          </p>
+        </div>
       </section>
 
       <section id="building" aria-labelledby="h-building" class="scroll-mt-10 border-b border-line py-16">
@@ -119,16 +124,27 @@ const facts = [
         <h2 id="h-building" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
           What we're building
         </h2>
-        <dl class="max-w-3xl">
+        <div class="max-w-3xl">
           {
-            capabilities.map(([term, body]) => (
-              <div class="flex flex-col gap-1 border-t border-line py-4.5 last:border-b md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-12">
-                <dt class="meta meta-on">{term}</dt>
-                <dd class="text-[1.0625rem] leading-[1.55]">{body}</dd>
+            capabilities.map(([term, body], i) => (
+              <div
+                class:list={['flex flex-col gap-3 border-t border-line py-6 last:border-b', i % 2 === 1 && 'md:pl-16']}
+                data-reveal
+              >
+                <div class="flex items-baseline gap-4">
+                  <span class="meta text-brand">{String(i + 1).padStart(2, '0')}</span>
+                  <p class="meta meta-on">{term}</p>
+                </div>
+                <p class="max-w-xl text-[1.0625rem] leading-[1.55] text-text-soft">{body}</p>
+                <span
+                  class="h-px bg-brand"
+                  style={`width:${40 + i * 24}px`}
+                  aria-hidden="true"
+                ></span>
               </div>
             ))
           }
-        </dl>
+        </div>
         <p class="mt-8 max-w-2xl text-base leading-relaxed text-muted">
           Two user types: the <strong class="font-medium text-text">provider</strong>, who operates
           the service and reviews its outputs, and the <strong class="font-medium text-text">client</strong>,
@@ -141,14 +157,18 @@ const facts = [
         <h2 id="h-scope" data-reveal class="mt-4.5 mb-6 font-display font-medium tracking-[-0.03em]" style="font-size: var(--text-sub);">
           Scope
         </h2>
-        <div class="flex max-w-3xl flex-col gap-10 md:flex-row md:gap-14">
-          <div class="flex-1">
-            <p class="meta meta-on border-b border-text pb-3.5">In scope</p>
-            {inScope.map((item) => <p class="border-b border-line py-3.5 text-base">{item}</p>)}
+        <div class="grid max-w-3xl gap-px border border-line bg-line md:grid-cols-2">
+          <div class="bg-brand p-6 text-white sm:p-8">
+            <p class="meta text-white/70">✓ In scope</p>
+            <div class="mt-4 flex flex-col">
+              {inScope.map((item) => <p class="border-t border-white/20 py-3.5 text-base first:border-t-0">{item}</p>)}
+            </div>
           </div>
-          <div class="flex-1">
-            <p class="meta border-b border-line pb-3.5">Out of scope</p>
-            {outOfScope.map((item) => <p class="border-b border-line py-3.5 text-base text-muted">{item}</p>)}
+          <div class="bg-surface p-6 sm:p-8">
+            <p class="meta">✕ Out of scope</p>
+            <div class="mt-4 flex flex-col">
+              {outOfScope.map((item) => <p class="border-t border-line py-3.5 text-base text-muted first:border-t-0">{item}</p>)}
+            </div>
           </div>
         </div>
       </section>

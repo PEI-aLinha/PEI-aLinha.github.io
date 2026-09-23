@@ -1,0 +1,26 @@
+---
+/* Decorative alignment glyph for section/graphic use (not navigation —
+   see ui/Logo.astro for the wordmark lockup). Two offset segments
+   terminating on one cobalt axis. */
+interface Props {
+    variant?: 'compact' | 'inline';
+    class?: string;
+}
+
+const { variant = 'inline', class: className = '' } = Astro.props;
+const size = variant === 'compact' ? 28 : 18;
+---
+<svg
+        viewBox="0 0 28 28"
+        width={size}
+        height={size}
+        class:list={['shrink-0', className]}
+        fill="none"
+        stroke-width="2"
+        stroke-linecap="square"
+        aria-hidden="true"
+>
+    <path d="M22 3 V25" stroke="var(--color-brand)" />
+    <path d="M6 10 H22" stroke="var(--color-signal)" />
+    <path d="M12 18 H22" stroke="currentColor" />
+</svg>

@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import SectionHeader from '../ui/SectionHeader.astro';
 import LinkArrow from '../ui/LinkArrow.astro';
 import { url } from '../../lib/paths';
 
@@ -14,15 +13,47 @@ const current =
     milestones[milestones.length - 1];
 
 const statusLabel = { planned: 'Next up', 'in-progress': 'Currently', done: 'Latest completed' } as const;
+const currentIndex = current ? milestones.findIndex((m) => m.id === current.id) : -1;
 ---
-<section aria-labelledby="progress-heading" class="shell rail-grid border-t border-line py-[var(--space-section)]">
-    <div><SectionHeader number="03" label={current ? statusLabel[current.data.status] : 'Status'} /></div>
+<section aria-labelledby="progress-heading" class="bg-brand-soft py-[var(--space-section)]">
+    <div class="shell">
+        <div class="flex items-baseline justify-between">
+            <p class="meta meta-on">03 — {current ? statusLabel[current.data.status] : 'Status'}</p>
+            {current && <p class="meta">{currentIndex + 1}/{milestones.length}</p>}
+        </div>
 
-    <div>
+        {
+            milestones.length > 0 && (
+                <ol class="mt-8 flex items-center gap-0" aria-label="Project milestones">
+                    {milestones.map((m, i) => {
+                        const reached = i <= currentIndex;
+                        return (
+                            <li class="flex flex-1 items-center last:flex-none">
+                                <span
+                                        class:list={[
+                                            'meta shrink-0',
+                                            reached ? 'meta-on text-brand' : '',
+                                        ]}
+                                >
+                                    {String(m.data.number).padStart(2, '0')}
+                                </span>
+                                {i < milestones.length - 1 && (
+                                    <span
+                                            class:list={['mx-2 h-px flex-1', reached ? 'bg-brand' : 'bg-line-strong/25']}
+                                            aria-hidden="true"
+                                    ></span>
+                                )}
+                            </li>
+                        );
+                    })}
+                </ol>
+            )
+        }
+
         <h2
                 id="progress-heading"
                 data-reveal
-                class="mb-8 font-display font-medium tracking-[-0.03em]"
+                class="mt-10 max-w-3xl font-display font-medium tracking-[-0.03em]"
                 style="font-size: var(--text-section); line-height: 1.12;"
         >
             {current?.data.title}
@@ -31,7 +62,7 @@ const statusLabel = { planned: 'Next up', 'in-progress': 'Currently', done: 'Lat
         {
             current && (
                 <>
-                    <p class="max-w-2xl text-lg leading-[1.62] text-muted" data-reveal>
+                    <p class="mt-4 max-w-2xl text-lg leading-[1.62] text-text-soft" data-reveal>
                         {current.data.summary}
                     </p>
                     <p class="meta meta-on mt-6">

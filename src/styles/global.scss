@@ -1,3 +1,8 @@
+/* Non-namespaced custom properties (--rail, --space-*, --ease-align) are
+   not auto-exposed as runtime vars by Tailwind's @theme (only --color-*,
+   --font-*, --text-* etc. namespaces are) — declare them here so
+   var(--rail) etc. resolve wherever they're used directly in CSS/arbitrary
+   Tailwind values. */
 :root {
   --space-section: clamp(3.5rem, 2.5rem + 4vw, 7rem);
   --space-gutter: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
@@ -55,7 +60,7 @@ body {
     bottom: 0;
     height: 1px;
     width: 100%;
-    background: var(--color-text);
+    background: var(--color-brand);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 340ms var(--ease-align);
@@ -139,6 +144,18 @@ body {
 
 .shell {
   padding-inline: var(--space-gutter);
+}
+
+/* ---- Alignment-motif hover: a segment that starts offset and snaps
+   to its resting position on hover/focus. Used by capability panels
+   and other small interactive line details. ---- */
+.align-snap {
+  transform: translateX(var(--snap-offset, -14px));
+  transition: transform 340ms var(--ease-align);
+}
+.group:hover .align-snap,
+.group:focus-visible .align-snap {
+  transform: translateX(0);
 }
 
 .prose-alinha {

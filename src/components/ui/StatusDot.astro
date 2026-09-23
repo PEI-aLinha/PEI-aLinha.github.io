@@ -11,9 +11,9 @@ const text = { planned: 'Planned', 'in-progress': 'In progress', done: 'Done' }[
   <span
           class:list={[
               'block h-1.5 w-1.5 rounded-full',
-              filled ? 'bg-text' : 'border border-muted',
+              status === 'done' ? 'bg-brand' : filled ? 'bg-signal' : 'border border-muted',
           ]}
           aria-hidden="true"
   ></span>
-    {label && <span class:list={['meta', filled && 'meta-on']}>{text}</span>}
+    {label && <span class:list={['meta', filled && 'meta-on', status === 'done' && 'text-brand']}>{text}</span>}
 </span>

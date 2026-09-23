@@ -1,9 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2">
-    <path d="M3 2 V22 M3 6 H21 M3 12 H13 M3 18 H17" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2.25" stroke-linecap="square">
+    <path d="M20 2 V22" class="axis" />
+    <path d="M4 7 H20" class="signal" />
+    <path d="M9 12 H20 M12 17 H20" class="ink" />
     <style>
-        path { stroke: #161615; }
+        .axis { stroke: #2D4BFF; }
+        .signal { stroke: #FF5A3D; }
+        .ink { stroke: #111827; }
         @media (prefers-color-scheme: dark) {
-            path { stroke: #FBFBFA; }
+            .axis { stroke: #7182FF; }
+            .signal { stroke: #FF735A; }
+            .ink { stroke: #F4F0E8; }
         }
     </style>
 </svg>

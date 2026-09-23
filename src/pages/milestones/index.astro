@@ -20,7 +20,8 @@ const fill = milestones.length ? (reached / milestones.length) * 100 : 0;
   <div class="shell rail-grid pb-26">
     <div class="hidden justify-end pt-1.5 md:flex">
       <div class="relative w-px self-stretch bg-line" aria-hidden="true">
-        <span class="absolute inset-x-0 top-0 block w-px bg-text" data-fill style={`height:${fill}%`}></span>
+        <span class="absolute -left-1 -top-1 block h-2 w-2 bg-signal"></span>
+        <span class="absolute inset-x-0 top-0 block w-px bg-brand" data-fill style={`height:${fill}%`}></span>
       </div>
     </div>
 

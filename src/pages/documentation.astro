@@ -30,7 +30,7 @@ const grouped = categories.map((category) => ({
   />
 
   <div class="shell rail-grid pb-24">
-    <aside aria-label="Categories" class="self-start md:sticky md:top-10">
+    <aside aria-label="Categories" class="self-start lg:sticky lg:top-10">
       <p class="meta mb-5">Categories</p>
       <ul class="flex flex-wrap gap-x-6 gap-y-3 md:flex-col">
         {
@@ -77,7 +77,7 @@ const grouped = categories.map((category) => ({
                     <span class="text-lg">{doc.data.title}</span>
                     <span class="meta">{doc.data.milestone ?? '—'}</span>
                     <span class="meta">{doc.data.state}</span>
-                    <span class:list={['meta md:text-right', resource && 'meta-on']}>
+                    <span class:list={['meta md:text-right', resource && 'meta-on text-brand']}>
                       {resource ? `${doc.data.format} ↗` : '—'}
                     </span>
                   </Tag>
