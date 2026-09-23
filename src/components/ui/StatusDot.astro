@@ -10,7 +10,7 @@ const text = { planned: 'Planned', 'in-progress': 'In progress', done: 'Done' }[
 <span class="flex items-center gap-2">
   <span
           class:list={[
-              'block h-1.5 w-1.5 rounded-full',
+              'block h-1.5 w-3',
               status === 'done' ? 'bg-brand' : filled ? 'bg-signal' : 'border border-muted',
           ]}
           aria-hidden="true"

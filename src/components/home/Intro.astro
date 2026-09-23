@@ -5,7 +5,7 @@ import { url } from '../../lib/paths';
 
 const frameworks = ['NIS2', 'GDPR', 'EU AI Act', 'SOC-CMM'];
 ---
-<section aria-labelledby="intro-heading" class="shell grid min-h-[620px] items-center gap-14 py-14 md:grid-cols-[minmax(0,1.02fr)_minmax(340px,.98fr)] md:gap-[7vw] md:py-20">
+<section aria-labelledby="intro-heading" class="hero shell grid min-h-[620px] items-center gap-14 py-14 md:grid-cols-[minmax(0,1.02fr)_minmax(340px,.98fr)] md:gap-[7vw] md:py-20">
   <div>
     <p class="meta text-signal">CISO-as-a-Service · PEI 2026/27</p>
     <h1 id="intro-heading" data-reveal class="mt-4 max-w-4xl font-display font-semibold tracking-[-0.065em]" style="font-size:var(--text-hero);line-height:.9">
@@ -25,10 +25,16 @@ const frameworks = ['NIS2', 'GDPR', 'EU AI Act', 'SOC-CMM'];
     </ul>
   </div>
 
-  <div class="relative min-h-[330px] overflow-hidden bg-brand md:min-h-[390px]" aria-hidden="true">
+  <div class="hero-visual relative min-h-[330px] overflow-hidden bg-brand md:min-h-[390px]" aria-hidden="true">
     <p class="meta absolute left-7 top-7 z-10 text-white/60">Misaligned → aligned</p>
     <div class="absolute inset-x-5 top-16 md:inset-x-8 md:top-14">
       <AlignmentField variant="hero" class="h-full w-full [--color-brand:#FFFFFF] [--color-text:#FFFFFF] [--color-signal:var(--color-signal)]" />
     </div>
   </div>
 </section>
+
+<style>
+  .hero { position:relative; }
+  .hero-visual { background:linear-gradient(145deg,var(--color-brand-deep),var(--color-brand) 55%,var(--color-signal)); box-shadow:18px 18px 0 var(--color-silver-soft); }
+  .hero-visual::after { content:''; position:absolute; width:15rem; height:1px; right:-3rem; bottom:3rem; background:rgb(255 255 255 / .4); transform:rotate(-18deg); }
+</style>

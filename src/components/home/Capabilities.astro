@@ -6,7 +6,7 @@ const functions = [
   { number: '04', title: 'Indicators', body: 'Track open gaps, evidence status, compliance coverage and relevant deadlines.', verb: 'Monitor' },
 ];
 ---
-<section aria-labelledby="functions-heading" class="border-y border-line bg-surface py-[var(--space-section)]">
+<section aria-labelledby="functions-heading" class="border-y border-line bg-brand-soft/45 py-[var(--space-section)]">
   <div class="shell">
     <div class="grid gap-4 md:grid-cols-[200px_minmax(0,1fr)] md:gap-12">
       <p class="meta text-signal">Main functionalities</p>
@@ -21,9 +21,9 @@ const functions = [
         <article data-reveal class:list={[
           'group flex min-h-[250px] flex-col p-7 md:p-8',
           i === 0 && 'bg-background',
-          i === 1 && 'bg-brand-soft',
-          i === 2 && 'bg-background',
-          i === 3 && 'bg-brand text-white',
+          i === 1 && 'bg-silver-soft',
+          i === 2 && 'bg-brand-soft',
+          i === 3 && 'bg-brand-deep text-white',
         ]}>
           <span class:list={['font-mono text-xs font-medium tracking-[.1em]', i === 3 ? 'text-signal-soft' : 'text-signal']}>{item.number}</span>
           <div class="my-8 flex items-center" aria-hidden="true">

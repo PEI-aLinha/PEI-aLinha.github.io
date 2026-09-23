@@ -4,11 +4,11 @@
     <path d="M9 12 H20 M12 17 H20" class="ink" />
     <style>
         .axis { stroke: #0B4F4A; }
-        .signal { stroke: #AEB3B8; }
+        .signal { stroke: #168C80; }
         .ink { stroke: #202124; }
         @media (prefers-color-scheme: dark) {
             .axis { stroke: #0B4F4A; }
-            .signal { stroke: #AEB3B8; }
+            .signal { stroke: #168C80; }
             .ink { stroke: #202124; }
         }
     </style>

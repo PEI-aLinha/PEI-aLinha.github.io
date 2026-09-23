@@ -1,23 +1,22 @@
 <button type="button" class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
   <svg viewBox="0 -6 32 48" width="32" height="48" aria-hidden="true">
-    <line x1="16" y1="0" x2="16" y2="4" stroke="currentColor" stroke-width="1" opacity=".5" />
-    <rect x="12" y="4" width="8" height="4" fill="currentColor" opacity=".7" />
+    <line class="lamp-fixture" x1="16" y1="0" x2="16" y2="4" stroke-width="1" />
+    <rect class="lamp-fixture" x="12" y="4" width="8" height="4" />
     <path
       class="lamp-bulb"
       d="M12 8s-3 4-3 8c0 4 3 6 7 6s7-2 7-6c0-4-3-8-3-8Z"
-      stroke="currentColor"
       stroke-width="1.5"
     />
     <ellipse class="lamp-glow" cx="16" cy="15" rx="5" ry="5" />
-    <path class="lamp-filament" d="m14 18 .5-6 1.5 3 1.5-3 .5 6" stroke="#92989e" stroke-width="1" fill="none" />
+    <path class="lamp-filament" d="m14 18 .5-6 1.5 3 1.5-3 .5 6" stroke-width="1" fill="none" />
     <ellipse class="lamp-shine" cx="13" cy="13" rx="1.5" ry="2" fill="white" />
-    <g class="lamp-rays" stroke="#c4c7ca" stroke-width=".5">
+    <g class="lamp-rays" stroke-width=".5">
       <line x1="6" y1="10" x2="4" y2="8" /><line x1="5" y1="16" x2="2" y2="16" />
       <line x1="6" y1="21" x2="4" y2="23" /><line x1="26" y1="10" x2="28" y2="8" />
       <line x1="27" y1="16" x2="30" y2="16" /><line x1="26" y1="21" x2="28" y2="23" />
     </g>
-    <line class="lamp-cord" x1="16" y1="22" x2="16" y2="32" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".6" />
-    <circle class="lamp-pull" cx="16" cy="32" r="2" fill="currentColor" opacity=".6" />
+    <line class="lamp-cord" x1="16" y1="22" x2="16" y2="32" stroke-width="1.2" stroke-linecap="round" />
+    <circle class="lamp-pull" cx="16" cy="32" r="2" />
   </svg>
 </button>
 
@@ -29,7 +28,6 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    color: #000;
     cursor: pointer;
     user-select: none;
     touch-action: none;
@@ -38,16 +36,17 @@
   }
 
   .theme-toggle svg { overflow: visible; }
-  .lamp-bulb { fill: var(--color-muted); transition: fill 300ms ease; }
-  .lamp-glow { fill: #c4c7ca; opacity: 0; transition: opacity 300ms ease; }
-  .lamp-filament { opacity: .3; transition: opacity 200ms ease; }
+  .lamp-fixture { fill: #71685f; stroke: #71685f; opacity: .8; }
+  .lamp-bulb { fill: #9ca3a8; stroke: #5f6468; transition: fill 300ms ease, stroke 300ms ease; }
+  .lamp-glow { fill: #ffe69a; opacity: 0; transition: opacity 300ms ease; }
+  .lamp-filament { stroke: #a95012; opacity: .25; transition: opacity 200ms ease; }
   .lamp-shine { opacity: 0; transition: opacity 300ms ease; }
-  .lamp-rays { opacity: 0; transition: opacity 300ms ease; }
-  .lamp-cord { transform-box: fill-box; transform-origin: top center; }
-  .lamp-pull { cursor: grab; }
+  .lamp-rays { stroke: #e9a820; opacity: 0; transition: opacity 300ms ease; }
+  .lamp-cord { stroke:#71685f; opacity:.72; transform-box: fill-box; transform-origin: top center; }
+  .lamp-pull { fill:#71685f; opacity:.8; cursor: grab; }
   .theme-toggle[data-dragging] .lamp-pull { cursor: grabbing; }
 
-  :global(:root:not([data-theme='dark'])) .lamp-bulb { fill: #e8e0c8; }
+  :global(:root:not([data-theme='dark'])) .lamp-bulb { fill: #ffd166; stroke:#9a6712; }
   :global(:root:not([data-theme='dark'])) .lamp-glow { opacity: 1; }
   :global(:root:not([data-theme='dark'])) .lamp-filament { opacity: 1; }
   :global(:root:not([data-theme='dark'])) .lamp-shine { opacity: .6; }

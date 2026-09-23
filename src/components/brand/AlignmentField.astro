@@ -51,5 +51,5 @@ const segments = isHero
                 style={`--dx:${seg.dx}px; --dy:0px; --rot:${seg.rot}deg; transition-delay:${i * 90}ms`}
         />
     ))}
-    <circle cx={axisX} cy={segments[0].y} r="2.5" fill="var(--color-brand)" />
+    <line x1={axisX - 7} y1={segments[0].y} x2={axisX + 7} y2={segments[0].y} stroke="var(--color-brand)" stroke-width="3" />
 </svg>
