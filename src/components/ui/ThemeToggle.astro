@@ -1,0 +1,149 @@
+<button type="button" class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+  <svg viewBox="0 -6 32 48" width="32" height="48" aria-hidden="true">
+    <line x1="16" y1="0" x2="16" y2="4" stroke="currentColor" stroke-width="1" opacity=".5" />
+    <rect x="12" y="4" width="8" height="4" fill="currentColor" opacity=".7" />
+    <path
+      class="lamp-bulb"
+      d="M12 8s-3 4-3 8c0 4 3 6 7 6s7-2 7-6c0-4-3-8-3-8Z"
+      stroke="currentColor"
+      stroke-width="1.5"
+    />
+    <ellipse class="lamp-glow" cx="16" cy="15" rx="5" ry="5" />
+    <path class="lamp-filament" d="m14 18 .5-6 1.5 3 1.5-3 .5 6" stroke="#e67e22" stroke-width="1" fill="none" />
+    <ellipse class="lamp-shine" cx="13" cy="13" rx="1.5" ry="2" fill="white" />
+    <g class="lamp-rays" stroke="#ffeaa7" stroke-width=".5">
+      <line x1="6" y1="10" x2="4" y2="8" /><line x1="5" y1="16" x2="2" y2="16" />
+      <line x1="6" y1="21" x2="4" y2="23" /><line x1="26" y1="10" x2="28" y2="8" />
+      <line x1="27" y1="16" x2="30" y2="16" /><line x1="26" y1="21" x2="28" y2="23" />
+    </g>
+    <line class="lamp-cord" x1="16" y1="22" x2="16" y2="32" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".6" />
+    <circle class="lamp-pull" cx="16" cy="32" r="2" fill="currentColor" opacity=".6" />
+  </svg>
+</button>
+
+<style>
+  .theme-toggle {
+    display: flex;
+    width: 2rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #000;
+    cursor: pointer;
+    user-select: none;
+    touch-action: none;
+    background: transparent;
+    border: 0;
+  }
+
+  .theme-toggle svg { overflow: visible; }
+  .lamp-bulb { fill: var(--color-muted); transition: fill 300ms ease; }
+  .lamp-glow { fill: #ffeaa7; opacity: 0; transition: opacity 300ms ease; }
+  .lamp-filament { opacity: .3; transition: opacity 200ms ease; }
+  .lamp-shine { opacity: 0; transition: opacity 300ms ease; }
+  .lamp-rays { opacity: 0; transition: opacity 300ms ease; }
+  .lamp-cord { transform-box: fill-box; transform-origin: top center; }
+  .lamp-pull { cursor: grab; }
+  .theme-toggle[data-dragging] .lamp-pull { cursor: grabbing; }
+
+  :global(:root:not([data-theme='dark'])) .lamp-bulb { fill: #e8e0c8; }
+  :global(:root:not([data-theme='dark'])) .lamp-glow { opacity: 1; }
+  :global(:root:not([data-theme='dark'])) .lamp-filament { opacity: 1; }
+  :global(:root:not([data-theme='dark'])) .lamp-shine { opacity: .6; }
+  :global(:root:not([data-theme='dark'])) .lamp-rays { opacity: .4; }
+</style>
+
+<script>
+  const setupThemeToggle = (button: HTMLButtonElement) => {
+    if (button.dataset.ready) return;
+    button.dataset.ready = 'true';
+
+    const cord = button.querySelector<SVGLineElement>('.lamp-cord');
+    const pull = button.querySelector<SVGCircleElement>('.lamp-pull');
+    let dragging = false;
+    let startY = 0;
+    let distance = 0;
+    let suppressClick = false;
+
+    const sync = () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      const label = dark ? 'Switch to light mode' : 'Switch to dark mode';
+      button.setAttribute('aria-label', label);
+      button.title = label;
+    };
+
+    const changeTheme = (x: number, y: number) => {
+      const root = document.documentElement;
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.style.setProperty('--reveal-x', `${x}px`);
+      root.style.setProperty('--reveal-y', `${y}px`);
+
+      const apply = () => {
+        root.dataset.theme = next;
+        localStorage.setItem('theme', next);
+        document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach((item) => {
+          const label = next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+          item.setAttribute('aria-label', label);
+          item.title = label;
+        });
+      };
+
+      if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.startViewTransition(apply);
+      } else {
+        apply();
+      }
+    };
+
+    const resetCord = () => {
+      if (!cord || !pull) return;
+      const options: KeyframeAnimationOptions = { duration: 450, easing: 'cubic-bezier(.2, 1.8, .4, 1)', fill: 'forwards' };
+      cord.animate([{ transform: `scaleY(${1 + distance / 10})` }, { transform: 'scaleY(1)' }], options);
+      pull.animate([{ transform: `translateY(${distance}px)` }, { transform: 'translateY(0)' }], options);
+      cord.style.transform = '';
+      pull.style.transform = '';
+    };
+
+    pull?.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      dragging = true;
+      startY = event.clientY;
+      distance = 0;
+      button.dataset.dragging = '';
+      pull.setPointerCapture(event.pointerId);
+    });
+
+    pull?.addEventListener('pointermove', (event) => {
+      if (!dragging || !cord || !pull) return;
+      distance = Math.max(0, Math.min(event.clientY - startY, 16));
+      cord.style.transform = `scaleY(${1 + distance / 10})`;
+      pull.style.transform = `translateY(${distance}px)`;
+    });
+
+    pull?.addEventListener('pointerup', (event) => {
+      if (!dragging) return;
+      dragging = false;
+      delete button.dataset.dragging;
+      resetCord();
+      if (distance > 8) {
+        suppressClick = true;
+        const rect = button.getBoundingClientRect();
+        changeTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      }
+      pull.releasePointerCapture(event.pointerId);
+    });
+
+    button.addEventListener('click', (event) => {
+      if (suppressClick) {
+        suppressClick = false;
+        return;
+      }
+      changeTheme(event.clientX || button.getBoundingClientRect().left + button.offsetWidth / 2, event.clientY || button.getBoundingClientRect().top + button.offsetHeight / 2);
+    });
+
+    sync();
+  };
+
+  document.querySelectorAll<HTMLButtonElement>('.theme-toggle').forEach(setupThemeToggle);
+</script>

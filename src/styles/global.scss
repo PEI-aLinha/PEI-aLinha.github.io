@@ -67,3 +67,25 @@ body {
   [data-draw].is-aligned { stroke-dashoffset: 0; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .axis-link::after { transition: none; } }
+
+/* Circular reveal from the lamp when changing color theme. */
+::view-transition-new(root) {
+  animation: theme-reveal 600ms ease-in-out forwards;
+  z-index: 2;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+
+::view-transition-image-pair(root) { isolation: isolate; }
+
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
+  to { clip-path: circle(150% at var(--reveal-x, 50%) var(--reveal-y, 50%)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root), ::view-transition-old(root) { animation: none; }
+}
