@@ -1,90 +1,79 @@
 @import "tailwindcss";
 
-
-/* Design tokens. aLinha brand system: warm paper canvas, cobalt as the
-   primary brand hue (alignment/structure/resolved state), coral as a
-   scarce signal hue (misalignment/attention/transition). Semantic names
-   (background/surface/text/muted/line) map onto the palette so existing
-   utility classes keep working; brand/signal tokens are additive. */
+/* aLinha identity: warm paper + petroleum + restrained terracotta. */
 @theme {
-  --color-paper: #F4F0E8;
-  --color-paper-soft: #EAE5DB;
-  --color-ink: #111827;
-  --color-ink-soft: #30394B;
+  --color-paper: #F3EEE5;
+  --color-paper-deep: #E7DFD2;
+  --color-paper-soft: #F9F6F0;
+  --color-ink: #17201F;
+  --color-ink-soft: #48504D;
 
-  --color-brand: #2D4BFF;
-  --color-brand-deep: #2036BD;
-  --color-brand-soft: #E1E5FF;
+  --color-brand: #1E5552;
+  --color-brand-deep: #153C3A;
+  --color-brand-soft: #D5E2DD;
 
-  --color-signal: #FF5A3D;
-  --color-signal-soft: #FFE1D8;
+  --color-signal: #D95D3F;
+  --color-signal-soft: #F1D7CD;
 
-  --color-white: #FFFFFF;
+  --color-white: #FFFDF9;
+  --color-line: #CBC2B5;
+  --color-line-soft: #DDD5CA;
+  --color-line-strong: #17201F;
 
-  --color-line: #CFC9BD;
-  --color-line-strong: #111827;
-  --color-line-soft: #DAD4C6;
+  --color-background: #F3EEE5;
+  --color-surface: #F9F6F0;
+  --color-text: #17201F;
+  --color-text-soft: #48504D;
+  --color-muted: #6B6258;
 
-  /* legacy semantic aliases used throughout existing components */
-  --color-background: #F4F0E8;
-  --color-surface: #EAE5DB;
-  --color-text: #111827;
-  --color-text-soft: #30394B;
-  --color-muted: #6B6355;
-
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", sans-serif;
-  --font-body: "IBM Plex Sans", "Helvetica Neue", sans-serif;
+  --font-display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
-  --text-hero: clamp(2.875rem, 1rem + 7vw, 8.25rem);
-  --text-title: clamp(2.5rem, 1.4rem + 3.6vw, 4.75rem);
-  --text-section: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem);
-  --text-sub: clamp(1.5rem, 1.2rem + 0.9vw, 2.125rem);
-  --text-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  --text-hero: clamp(3.4rem, 1.25rem + 7.7vw, 7.5rem);
+  --text-title: clamp(2.8rem, 1.4rem + 4vw, 5.4rem);
+  --text-section: clamp(2rem, 1.25rem + 2.2vw, 3.4rem);
+  --text-sub: clamp(1.55rem, 1.2rem + 1vw, 2.3rem);
+  --text-lead: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
 
-  --space-section: clamp(3.5rem, 2.5rem + 4vw, 7rem);
-  --space-gutter: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
+  --space-section: clamp(3.75rem, 2.5rem + 4vw, 7rem);
+  --space-gutter: clamp(1.5rem, 0.65rem + 4.2vw, 6rem);
   --rail: 200px;
-
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark mode overrides. Not an inversion: cobalt/coral shift lighter and
-   the canvas becomes deep navy-ink rather than a swapped paper tone. */
 :root[data-theme="dark"] {
-  --color-background: #0E1220;
-  --color-surface: #171C2D;
-  --color-text: #F4F0E8;
-  --color-text-soft: #D7D2C4;
-  --color-muted: #AEB3C0;
-  --color-line: #2A3148;
-  --color-line-strong: #F4F0E8;
-  --color-line-soft: #232A42;
+  --color-background: #121A19;
+  --color-surface: #182421;
+  --color-text: #F3EEE5;
+  --color-text-soft: #C9D0CD;
+  --color-muted: #A8B2AE;
+  --color-line: #344542;
+  --color-line-soft: #293936;
+  --color-line-strong: #F3EEE5;
 
-  --color-brand: #7182FF;
-  --color-brand-deep: #4D61F2;
-  --color-brand-soft: #222A56;
+  --color-brand: #78AAA5;
+  --color-brand-deep: #0F2B29;
+  --color-brand-soft: #223B38;
 
-  --color-signal: #FF735A;
-  --color-signal-soft: #41241F;
+  --color-signal: #E27A60;
+  --color-signal-soft: #472A23;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-background: #0E1220;
-    --color-surface: #171C2D;
-    --color-text: #F4F0E8;
-    --color-text-soft: #D7D2C4;
-    --color-muted: #AEB3C0;
-    --color-line: #2A3148;
-    --color-line-strong: #F4F0E8;
-    --color-line-soft: #232A42;
-
-    --color-brand: #7182FF;
-    --color-brand-deep: #4D61F2;
-    --color-brand-soft: #222A56;
-
-    --color-signal: #FF735A;
-    --color-signal-soft: #41241F;
+    --color-background: #121A19;
+    --color-surface: #182421;
+    --color-text: #F3EEE5;
+    --color-text-soft: #C9D0CD;
+    --color-muted: #A8B2AE;
+    --color-line: #344542;
+    --color-line-soft: #293936;
+    --color-line-strong: #F3EEE5;
+    --color-brand: #78AAA5;
+    --color-brand-deep: #0F2B29;
+    --color-brand-soft: #223B38;
+    --color-signal: #E27A60;
+    --color-signal-soft: #472A23;
   }
 }

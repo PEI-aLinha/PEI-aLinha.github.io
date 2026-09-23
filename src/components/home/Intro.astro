@@ -5,44 +5,30 @@ import { url } from '../../lib/paths';
 
 const frameworks = ['NIS2', 'GDPR', 'EU AI Act', 'SOC-CMM'];
 ---
-<section aria-labelledby="intro-heading" class="relative overflow-hidden pt-14 pb-[var(--space-section)] md:pt-20">
-    <div class="shell flex items-baseline justify-between">
-        <p class="meta">CISO-as-a-Service</p>
-        <p class="meta">2026/27</p>
+<section aria-labelledby="intro-heading" class="shell grid min-h-[620px] items-center gap-14 py-14 md:grid-cols-[minmax(0,1.02fr)_minmax(340px,.98fr)] md:gap-[7vw] md:py-20">
+  <div>
+    <p class="meta text-signal">CISO-as-a-Service · PEI 2026/27</p>
+    <h1 id="intro-heading" data-reveal class="mt-4 max-w-4xl font-display font-semibold tracking-[-0.065em]" style="font-size:var(--text-hero);line-height:.9">
+      Everything<br /><span class="text-brand">aligned.</span>
+    </h1>
+    <p class="mt-8 max-w-2xl leading-[1.6] text-text-soft" style="font-size:var(--text-lead)" data-reveal>
+      aLinha is a CISO-as-a-Service platform designed to support cybersecurity compliance workflows for Portuguese SMEs.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-x-9 gap-y-4">
+      <LinkArrow href={url('/project')}>Discover the project</LinkArrow>
+      <LinkArrow href={url('/documentation')}>Documentation</LinkArrow>
     </div>
 
-    <div class="relative mt-10 grid gap-4 md:grid-cols-[1fr_minmax(0,34%)] md:items-stretch md:gap-0">
-        <h1
-                id="intro-heading"
-                data-reveal
-                class="shell max-w-4xl font-display font-semibold tracking-[-0.05em] md:pr-10"
-                style="font-size: var(--text-hero); line-height: 0.92;"
-        >
-            Everything<br />
-            <span class="text-brand">aligned.</span>
-        </h1>
+    <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2" aria-label="Frameworks and references">
+      {frameworks.map((name) => <li class="meta meta-on">{name}</li>)}
+    </ul>
+  </div>
 
-        <div class="relative min-h-[220px] bg-brand px-8 py-10 text-white md:min-h-0">
-            <AlignmentField variant="hero" class="max-w-[280px] [--color-signal:var(--color-signal)] [--color-text:#fff] [--color-brand:#fff]" />
-        </div>
+  <div class="relative min-h-[330px] overflow-hidden bg-brand md:min-h-[390px]" aria-hidden="true">
+    <p class="meta absolute left-7 top-7 z-10 text-white/60">Misaligned → aligned</p>
+    <div class="absolute inset-x-5 top-16 md:inset-x-8 md:top-14">
+      <AlignmentField variant="hero" class="h-full w-full [--color-brand:#F3EEE5] [--color-text:#F3EEE5] [--color-signal:var(--color-signal)]" />
     </div>
-
-    <div class="shell mt-10">
-        <p class="max-w-3xl leading-[1.45]" style="font-size: var(--text-lead);" data-reveal>
-            We are building a CISO-as-a-Service platform to help Portuguese SMEs understand, organise
-            and manage cybersecurity compliance.
-        </p>
-
-        <p class="meta mt-5">Projeto em Engenharia Informática · Universidade de Aveiro · 2026/27</p>
-
-        <div class="mt-10 flex flex-col gap-8 md:flex-row md:items-center md:gap-14">
-            <ul class="flex flex-wrap gap-x-6 gap-y-2" aria-label="Regulatory frameworks covered">
-                {frameworks.map((name) => <li class="meta meta-on">{name}</li>)}
-            </ul>
-            <div class="flex gap-8 md:ml-auto">
-                <LinkArrow href={url('/project')}>The project</LinkArrow>
-                <LinkArrow href={url('/team')}>The team</LinkArrow>
-            </div>
-        </div>
-    </div>
+  </div>
 </section>

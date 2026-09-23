@@ -1,20 +1,11 @@
-/* Non-namespaced custom properties (--rail, --space-*, --ease-align) are
-   not auto-exposed as runtime vars by Tailwind's @theme (only --color-*,
-   --font-*, --text-* etc. namespaces are) — declare them here so
-   var(--rail) etc. resolve wherever they're used directly in CSS/arbitrary
-   Tailwind values. */
 :root {
-  --space-section: clamp(3.5rem, 2.5rem + 4vw, 7rem);
-  --space-gutter: clamp(1.5rem, 0.5rem + 4vw, 7.5rem);
+  --space-section: clamp(3.75rem, 2.5rem + 4vw, 7rem);
+  --space-gutter: clamp(1.5rem, 0.65rem + 4.2vw, 6rem);
   --rail: 200px;
   --ease-align: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: clip;
-}
-
+html { scroll-behavior: smooth; overflow-x: clip; }
 body {
   background: var(--color-background);
   color: var(--color-text);
@@ -23,154 +14,56 @@ body {
   overflow-x: clip;
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-text);
-  outline-offset: 6px;
-}
+:focus-visible { outline: 2px solid var(--color-text); outline-offset: 5px; }
 
 .skip-link {
-  position: absolute;
-  top: -100%;
-  left: 1rem;
-  z-index: 100;
-  padding: 0.75rem 1.25rem;
-  background: var(--color-background);
-  color: var(--color-text);
-  border: 1px solid var(--color-text);
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-
-  &:focus-visible {
-    top: 1rem;
-  }
+  position: absolute; top: -100%; left: 1rem; z-index: 100;
+  padding: .75rem 1.25rem; background: var(--color-background); color: var(--color-text);
+  border: 1px solid var(--color-text); font-family: var(--font-mono); font-size: .8125rem;
+  letter-spacing: .08em; text-transform: uppercase;
+  &:focus-visible { top: 1rem; }
 }
 
-/* ---- The alignment axis: link underline grows from the axis-facing edge ---- */
+.shell { width: min(100%, 1440px); margin-inline: auto; padding-inline: var(--space-gutter); }
+
+.meta {
+  font-family: var(--font-mono); font-size: .8125rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--color-muted);
+}
+.meta-on { color: var(--color-text); }
+
 .axis-link {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 4px;
-
+  position: relative; display: inline-block; padding-bottom: 4px;
   &::after {
-    content: "";
-    position: absolute;
-    inset-inline-start: 0;
-    bottom: 0;
-    height: 1px;
-    width: 100%;
-    background: var(--color-brand);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 340ms var(--ease-align);
+    content: ""; position: absolute; inset-inline-start: 0; bottom: 0; height: 2px; width: 100%;
+    background: var(--color-brand); transform: scaleX(0); transform-origin: left;
+    transition: transform 300ms var(--ease-align);
   }
-
-  &:hover::after,
-  &:focus-visible::after,
-  &[aria-current]::after {
-    transform: scaleX(1);
-  }
+  &:hover::after, &:focus-visible::after, &[aria-current]::after { transform: scaleX(1); }
 }
 
-/* ---- Reveal-on-entry. Base state is always the FINAL, aligned state, so
-   reduced motion and no-JS both render correctly with nothing to undo. ---- */
+.rail-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.25rem 4rem; > * { min-width: 0; } }
+@media (min-width: 1024px) { .rail-grid { grid-template-columns: var(--rail) minmax(0,1fr); } }
+
+.prose-alinha {
+  > * + * { margin-top: 1.25rem; }
+  h2 { margin-top: 2.5rem; font-family: var(--font-display); font-size: 1.35rem; letter-spacing: -.02em; color: var(--color-text); }
+  ul, ol { padding-left: 1.25rem; }
+  ul { list-style: disc; } ol { list-style: decimal; }
+  li + li { margin-top: .5rem; }
+  a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 4px; }
+}
+
+/* Motion supports the alignment idea but is never required to understand content. */
 @media (prefers-reduced-motion: no-preference) {
-  [data-reveal] {
-    opacity: 0;
-    transform: translateX(-18px);
-    transition: opacity 850ms var(--ease-align), transform 850ms var(--ease-align);
-  }
-  [data-rule] {
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 1050ms var(--ease-align);
-  }
-  [data-fill] {
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 1200ms var(--ease-align);
-  }
-  [data-draw] {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1300ms var(--ease-align);
-  }
-  [data-seg] {
-    opacity: 0.2;
-    transform: translate(var(--dx, -40px), var(--dy, -8px)) rotate(var(--rot, -1.4deg));
-    transition: opacity 1200ms var(--ease-align), transform 1200ms var(--ease-align);
-  }
-  [data-reveal].is-aligned,
-  [data-seg].is-aligned {
-    opacity: 1;
-    transform: none;
-  }
+  [data-reveal] { opacity: 0; transform: translateY(10px); transition: opacity 650ms var(--ease-align), transform 650ms var(--ease-align); }
+  [data-rule] { transform: scaleX(0); transform-origin: left; transition: transform 950ms var(--ease-align); }
+  [data-fill] { transform: scaleY(0); transform-origin: top; transition: transform 1000ms var(--ease-align); }
+  [data-draw] { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1100ms var(--ease-align); }
+  [data-seg] { opacity: .25; transform: translate(var(--dx,-32px),var(--dy,-6px)); transition: opacity 900ms var(--ease-align), transform 900ms var(--ease-align); }
+  [data-reveal].is-aligned, [data-seg].is-aligned { opacity: 1; transform: none; }
   [data-rule].is-aligned { transform: scaleX(1); }
   [data-fill].is-aligned { transform: scaleY(1); }
   [data-draw].is-aligned { stroke-dashoffset: 0; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .axis-link::after { transition: none; }
-}
-
-/* ---- The rail: metadata column on desktop, inline label on mobile.
-   Its inner edge IS the alignment axis every section hangs off. ---- */
-.rail-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.25rem 4rem;
-
-  > * {
-    min-width: 0;
-  }
-}
-@media (min-width: 1024px) {
-  .rail-grid {
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-  }
-}
-
-.meta {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-}
-.meta-on { color: var(--color-text); }
-
-.shell {
-  padding-inline: var(--space-gutter);
-}
-
-/* ---- Alignment-motif hover: a segment that starts offset and snaps
-   to its resting position on hover/focus. Used by capability panels
-   and other small interactive line details. ---- */
-.align-snap {
-  transform: translateX(var(--snap-offset, -14px));
-  transition: transform 340ms var(--ease-align);
-}
-.group:hover .align-snap,
-.group:focus-visible .align-snap {
-  transform: translateX(0);
-}
-
-.prose-alinha {
-  > * + * { margin-top: 1.25rem; }
-
-  h2 {
-    margin-top: 2.5rem;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-text);
-  }
-
-  ul { padding-left: 1.25rem; list-style: disc; }
-  li + li { margin-top: 0.5rem; }
-  a { text-decoration: underline; text-underline-offset: 4px; }
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .axis-link::after { transition: none; } }

@@ -2,45 +2,18 @@
 import type { CollectionEntry } from 'astro:content';
 import StatusDot from '../ui/StatusDot.astro';
 import { url } from '../../lib/paths';
-
-interface Props {
-    entry: CollectionEntry<'milestones'>;
-    first?: boolean;
-    last?: boolean;
-}
-
+interface Props { entry: CollectionEntry<'milestones'>; first?: boolean; last?: boolean; }
 const { entry, first = false, last = false } = Astro.props;
-const { number, title, status, start, end, summary, deliverables } = entry.data;
-
-const monthYear = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-const padded = String(number).padStart(2, '0');
+const { number, title, status, start, end, summary } = entry.data;
+const range = `${start.toLocaleDateString('en-GB',{month:'short',year:'numeric'})} — ${end.toLocaleDateString('en-GB',{month:'short',year:'numeric'})}`;
 ---
-<a
-        href={url(`/milestones/${entry.id}`)}
-        data-reveal
-        class:list={[
-            '-mx-6 grid gap-4 px-6 py-9 transition-colors duration-300 hover:bg-surface md:grid-cols-[120px_minmax(0,1fr)_160px] md:gap-10',
-            first ? 'border-t border-text' : 'border-t border-line',
-            last && 'border-b border-line',
-        ]}
->
-    <p class:list={['meta', status !== 'planned' && 'meta-on text-brand']}>Phase {padded}</p>
-
-    <div>
-        <p
-                class:list={[
-                    'font-display text-2xl font-medium tracking-[-0.025em]',
-                    status === 'planned' && 'text-muted',
-                ]}
-        >
-            {title}
-        </p>
-        <p class="mt-3 max-w-2xl text-base leading-[1.55] text-muted">{summary}</p>
-        {deliverables.length > 0 && <p class="meta mt-4">{deliverables.length} deliverables</p>}
-    </div>
-
-    <div class="flex flex-col gap-3 md:items-end">
-        <StatusDot status={status} />
-        <p class="meta">{monthYear(start)} — {monthYear(end)}</p>
-    </div>
+<a href={url(`/milestones/${entry.id}`)} data-reveal class:list={[
+  'grid gap-4 py-6 transition-colors hover:bg-brand/5 md:grid-cols-[90px_minmax(0,1fr)_minmax(240px,1.2fr)_140px] md:items-center md:gap-7',
+  first ? 'border-t border-line' : 'border-t border-line',
+  last && 'border-b border-line',
+]}>
+  <p class="font-mono text-xs font-medium tracking-[.1em] text-brand">{String(number).padStart(2,'0')}</p>
+  <p class:list={['font-display text-xl font-semibold tracking-[-0.025em]', status === 'planned' && 'text-text-soft']}>{title}</p>
+  <p class="text-sm leading-relaxed text-text-soft">{summary}</p>
+  <div class="flex flex-col gap-2 md:items-end"><StatusDot status={status} /><p class="meta">{range}</p></div>
 </a>

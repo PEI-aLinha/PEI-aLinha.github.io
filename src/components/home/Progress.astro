@@ -3,75 +3,19 @@ import { getCollection } from 'astro:content';
 import LinkArrow from '../ui/LinkArrow.astro';
 import { url } from '../../lib/paths';
 
-const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
-
-const monthYear = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-
-const current =
-    milestones.find((m) => m.data.status === 'in-progress') ??
-    milestones.find((m) => m.data.status === 'planned') ??
-    milestones[milestones.length - 1];
-
-const statusLabel = { planned: 'Next up', 'in-progress': 'Currently', done: 'Latest completed' } as const;
+const milestones = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
+const current = milestones.find((m) => m.data.status === 'in-progress') ?? milestones.find((m) => m.data.status === 'planned') ?? milestones.at(-1);
 const currentIndex = current ? milestones.findIndex((m) => m.id === current.id) : -1;
 ---
-<section aria-labelledby="progress-heading" class="bg-brand-soft py-[var(--space-section)]">
-    <div class="shell">
-        <div class="flex items-baseline justify-between">
-            <p class="meta meta-on">03 — {current ? statusLabel[current.data.status] : 'Status'}</p>
-            {current && <p class="meta">{currentIndex + 1}/{milestones.length}</p>}
-        </div>
-
-        {
-            milestones.length > 0 && (
-                <ol class="mt-8 flex items-center gap-0" aria-label="Project milestones">
-                    {milestones.map((m, i) => {
-                        const reached = i <= currentIndex;
-                        return (
-                            <li class="flex flex-1 items-center last:flex-none">
-                                <span
-                                        class:list={[
-                                            'meta shrink-0',
-                                            reached ? 'meta-on text-brand' : '',
-                                        ]}
-                                >
-                                    {String(m.data.number).padStart(2, '0')}
-                                </span>
-                                {i < milestones.length - 1 && (
-                                    <span
-                                            class:list={['mx-2 h-px flex-1', reached ? 'bg-brand' : 'bg-line-strong/25']}
-                                            aria-hidden="true"
-                                    ></span>
-                                )}
-                            </li>
-                        );
-                    })}
-                </ol>
-            )
-        }
-
-        <h2
-                id="progress-heading"
-                data-reveal
-                class="mt-10 max-w-3xl font-display font-medium tracking-[-0.03em]"
-                style="font-size: var(--text-section); line-height: 1.12;"
-        >
-            {current?.data.title}
-        </h2>
-
-        {
-            current && (
-                <>
-                    <p class="mt-4 max-w-2xl text-lg leading-[1.62] text-text-soft" data-reveal>
-                        {current.data.summary}
-                    </p>
-                    <p class="meta meta-on mt-6">
-                        {monthYear(current.data.start)} — {monthYear(current.data.end)}
-                    </p>
-                </>
-            )
-        }
-
-        <div class="mt-10"><LinkArrow href={url('/milestones')}>View progress</LinkArrow></div>
+<section aria-labelledby="home-progress-heading" class="py-[var(--space-section)]">
+  <div class="shell">
+    <div class="grid items-center gap-7 border-y border-line py-8 md:grid-cols-[250px_minmax(0,1fr)_auto] md:gap-10">
+      <div>
+        <p class="meta text-signal">Current phase · {currentIndex + 1}/{milestones.length}</p>
+        <h2 id="home-progress-heading" class="mt-2 font-display text-2xl font-semibold tracking-[-0.03em]">{current?.data.title}</h2>
+      </div>
+      <p class="max-w-2xl text-base leading-relaxed text-text-soft">{current?.data.summary}</p>
+      <LinkArrow href={url('/milestones')}>View progress</LinkArrow>
     </div>
+  </div>
 </section>

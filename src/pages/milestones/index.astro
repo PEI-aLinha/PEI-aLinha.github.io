@@ -3,39 +3,13 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../components/layouts/BaseLayout.astro';
 import PageHeader from '../../components/global/PageHeader.astro';
 import MilestoneRow from '../../components/milestones/MilestonesRow.astro';
-import LinkArrow from '../../components/ui/LinkArrow.astro';
-import { url } from '../../lib/paths';
-
-const milestones = (await getCollection('milestones')).sort((a, b) => a.data.number - b.data.number);
-const reached = milestones.filter((m) => m.data.status !== 'planned').length;
-const fill = milestones.length ? (reached / milestones.length) * 100 : 0;
+const milestones = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
 ---
-<BaseLayout title="Milestones" description="The phases of the aLinha work plan, from requirements to deployment.">
-  <PageHeader
-    label="Project lifecycle"
-    title="Milestones"
-    lead={`${milestones.length} phases across the academic year, from requirements in October to deployment in May. Each entry is a content record — deliverables, dates and status are read from it, not typed into this page.`}
-  />
-
-  <div class="shell rail-grid pb-26">
-    <div class="hidden justify-end pt-1.5 md:flex">
-      <div class="relative w-px self-stretch bg-line" aria-hidden="true">
-        <span class="absolute -left-1 -top-1 block h-2 w-2 bg-signal"></span>
-        <span class="absolute inset-x-0 top-0 block w-px bg-brand" data-fill style={`height:${fill}%`}></span>
-      </div>
+<BaseLayout title="Progress" description="The six phases of the aLinha work plan, from requirements to deployment.">
+  <PageHeader label="Project lifecycle" title="Progress" lead="Six phases, from requirements and system design to validation and deployment." />
+  <section class="py-[var(--space-section)]">
+    <div class="shell">
+      {milestones.map((entry, i) => <MilestoneRow entry={entry} first={i===0} last={i===milestones.length-1} />)}
     </div>
-
-    <div>
-      {
-        milestones.map((entry, i) => (
-          <MilestoneRow entry={entry} first={i === 0} last={i === milestones.length - 1} />
-        ))
-      }
-      <p class="meta mt-10">
-        {milestones.length} phases · content collection
-        <span class="normal-case tracking-normal">src/content/milestones/</span>
-      </p>
-      <div class="mt-6"><LinkArrow href={url('/minutes')}>Meeting minutes</LinkArrow></div>
-    </div>
-  </div>
+  </section>
 </BaseLayout>

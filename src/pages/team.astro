@@ -4,45 +4,42 @@ import BaseLayout from '../components/layouts/BaseLayout.astro';
 import PageHeader from '../components/global/PageHeader.astro';
 import TeamRow from '../components/team/TeamRow.astro';
 
-const people = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+const people = (await getCollection('team')).sort((a,b) => a.data.order - b.data.order);
 const students = people.filter((p) => p.data.group === 'student');
-
 const supervision = [
   { label: 'Advisors', entries: people.filter((p) => p.data.group === 'advisor') },
   { label: 'Collaborators', entries: people.filter((p) => p.data.group === 'collaborator') },
 ].filter((section) => section.entries.length > 0);
 ---
 <BaseLayout title="Team" description="The students, advisors and collaborators behind aLinha.">
-  <PageHeader
-    label={`${students.length} students`}
-    title="Team"
-    lead="Meet the people designing and building aLinha, and those guiding it."
-  />
+  <PageHeader label="People" title="Team" lead="The students building aLinha, supported by the project advisors and collaborators." />
 
-  <div class="shell pb-24">
-    <ul class="grid min-w-0 grid-cols-1 gap-x-5 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-      {students.map((entry) => <TeamRow entry={entry} />)}
-    </ul>
+  <section class="py-[var(--space-section)]">
+    <div class="shell">
+      <div class="grid gap-4 md:grid-cols-[200px_minmax(0,1fr)] md:gap-12">
+        <p class="meta text-signal">Students · {String(students.length).padStart(2,'0')}</p>
+        <h2 class="font-display font-semibold tracking-[-0.04em]" style="font-size:var(--text-section);line-height:1.05">The project team.</h2>
+      </div>
 
-    <div class="mt-24 grid min-w-0 gap-14 md:grid-cols-2 md:gap-20">
-      {
-        supervision.map((section) => (
+      <ul class="mt-10 grid min-w-0 grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        {students.map((entry) => <TeamRow entry={entry} />)}
+      </ul>
+
+      <div class="mt-20 grid gap-14 md:grid-cols-2 md:gap-20">
+        {supervision.map((section) => (
           <section aria-labelledby={`${section.label.toLowerCase()}-heading`}>
-            <h2 id={`${section.label.toLowerCase()}-heading`} class="meta meta-on mb-1 text-brand">
-              {section.label}
-            </h2>
-            <ul>
+            <h2 id={`${section.label.toLowerCase()}-heading`} class="font-display text-xl font-semibold tracking-[-0.025em]">{section.label}</h2>
+            <ul class="mt-4 border-t border-line">
               {section.entries.map(({ data }) => (
-                <li data-reveal class="border-t border-line py-5 last:border-b">
-                  <p class="font-display text-2xl font-medium tracking-[-0.025em]">{data.name}</p>
-                  <p class="meta mt-2.5 break-words">{data.role}</p>
-                  {data.affiliation && <p class="meta mt-1.5 break-words">{data.affiliation}</p>}
+                <li data-reveal class="border-b border-line py-5">
+                  <p class="font-display text-xl font-semibold tracking-[-0.025em]">{data.name}</p>
+                  <p class="meta mt-2">{data.role}{data.affiliation ? ` · ${data.affiliation}` : ''}</p>
                 </li>
               ))}
             </ul>
           </section>
-        ))
-      }
+        ))}
+      </div>
     </div>
-  </div>
+  </section>
 </BaseLayout>

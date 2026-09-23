@@ -1,65 +1,40 @@
 ---
-import LinkArrow from "../ui/LinkArrow.astro"
-import { url } from "../../lib/paths"
-
-const pillars = [
-    {
-        number: '01',
-        title: 'Assess',
-        body: "Understand the organisation's maturity and identify gaps.",
-        surface: 'bg-background',
-        fg: '',
-    },
-    {
-        number: '02',
-        title: 'Organise',
-        body: 'Keep requirements, policies and evidence connected.',
-        surface: 'bg-brand-soft',
-        fg: '',
-    },
-    {
-        number: '03',
-        title: 'Support',
-        body: 'Help teams prioritise actions and prepare compliance workflows.',
-        surface: 'bg-brand text-white',
-        fg: 'text-white',
-    },
+const functions = [
+  { number: '01', title: 'Maturity & gaps', body: "Understand the organisation's current maturity and where the most relevant gaps are.", verb: 'Assess' },
+  { number: '02', title: 'Policies & evidence', body: 'Keep requirements, policies, procedures and supporting evidence connected.', verb: 'Organise' },
+  { number: '03', title: 'Incident reporting', body: 'Structure the information and workflow needed when an incident must be reported.', verb: 'Respond' },
+  { number: '04', title: 'Indicators', body: 'Track open gaps, evidence status, compliance coverage and relevant deadlines.', verb: 'Monitor' },
 ];
 ---
-
-<section aria-labelledby="capabilities-heading" class="border-t border-line py-[var(--space-section)]">
-    <div class="shell">
-        <div class="flex items-baseline justify-between">
-            <p class="meta meta-on">02 — What we're building</p>
-        </div>
-        <h2 id="capabilities-heading" class="sr-only">What we're building</h2>
+<section aria-labelledby="functions-heading" class="border-y border-line bg-surface py-[var(--space-section)]">
+  <div class="shell">
+    <div class="grid gap-4 md:grid-cols-[200px_minmax(0,1fr)] md:gap-12">
+      <p class="meta text-signal">Main functionalities</p>
+      <div>
+        <h2 id="functions-heading" class="font-display font-semibold tracking-[-0.045em]" style="font-size:var(--text-section);line-height:1.02">The core compliance workflow.</h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-text-soft">Assessment, evidence, incident response and monitoring — the core workflows aLinha brings together.</p>
+      </div>
     </div>
 
-    <div class="mt-8 grid gap-px border-y border-line bg-line md:grid-cols-3">
-        {
-            pillars.map((step, i) => (
-                    <div class:list={['group flex flex-col gap-6 p-8 md:p-10', step.surface]} data-reveal>
-                        <span class="font-display text-[clamp(2.5rem,5vw,3.5rem)] font-semibold leading-none tracking-[-0.03em]" aria-hidden="true">
-                            {step.number}
-                        </span>
-                        <h3 class="font-display text-2xl font-medium tracking-[-0.02em]">{step.title}</h3>
-                        <p class:list={['max-w-sm text-base leading-[1.5]', step.fg ? 'opacity-90' : 'text-text-soft']}>{step.body}</p>
-                        <div class="mt-auto flex items-center">
-                            <span
-                                    class:list={[
-                                        'align-snap h-px w-16',
-                                        i === 0 ? 'bg-signal' : step.fg ? 'bg-white' : 'bg-brand',
-                                    ]}
-                                    style={`--snap-offset:${-10 - i * 4}px`}
-                                    aria-hidden="true"
-                            ></span>
-                        </div>
-                    </div>
-            ))
-        }
+    <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 xl:grid-cols-4">
+      {functions.map((item, i) => (
+        <article data-reveal class:list={[
+          'group flex min-h-[250px] flex-col p-7 md:p-8',
+          i === 0 && 'bg-background',
+          i === 1 && 'bg-brand-soft',
+          i === 2 && 'bg-background',
+          i === 3 && 'bg-brand text-white',
+        ]}>
+          <span class:list={['font-mono text-xs font-medium tracking-[.1em]', i === 3 ? 'text-signal-soft' : 'text-signal']}>{item.number}</span>
+          <div class="my-8 flex items-center" aria-hidden="true">
+            <span class:list={['h-[2px] w-14', i === 3 ? 'bg-signal-soft' : 'bg-signal']}></span>
+            <span class:list={['h-[2px] w-8', i === 3 ? 'bg-white' : 'bg-brand']}></span>
+          </div>
+          <h3 class="font-display text-2xl font-semibold tracking-[-0.03em]">{item.title}</h3>
+          <p class:list={['mt-3 max-w-sm text-[0.95rem] leading-[1.55]', i === 3 ? 'text-white/80' : 'text-text-soft']}>{item.body}</p>
+          <p class:list={['meta mt-auto pt-7', i === 3 ? 'text-white/55' : '']}>{item.verb}</p>
+        </article>
+      ))}
     </div>
-
-    <div class="shell mt-10">
-        <LinkArrow href={url('/project')}>Explore the project</LinkArrow>
-    </div>
+  </div>
 </section>

@@ -27,6 +27,8 @@ const minutes = defineCollection({
     attendees: z.array(z.string()).default([]),
     summary: z.string().optional(),
     scheduled: z.boolean().default(false),
+    mode: z.enum(['markdown', 'pdf', 'hybrid']).default('markdown'),
+    pdf: z.string().optional(),
   }),
 });
 
@@ -51,15 +53,7 @@ const docs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/docs' }),
   schema: z.object({
     title: z.string(),
-    category: z.enum([
-      'vision',
-      'architecture',
-      'requirements',
-      'presentations',
-      'reports',
-      'research',
-      'compliance',
-    ]),
+    category: z.enum(['vision', 'architecture', 'requirements', 'presentations', 'reports', 'research', 'compliance']),
     milestone: z.string().optional(),
     state: z.string(),
     file: z.string().optional(),
