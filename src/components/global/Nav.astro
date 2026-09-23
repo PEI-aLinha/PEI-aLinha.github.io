@@ -38,17 +38,17 @@ const isActive = (path: string) => {
     </a>
 
     <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-panel" class="ml-auto flex h-11 w-11 flex-col items-end justify-center gap-1.5 md:hidden">
-      <span class="sr-only">Menu</span><span class="block h-px w-6 bg-text" aria-hidden="true"></span><span class="block h-px w-4 bg-brand" aria-hidden="true"></span>
+      <span class="sr-only">Menu</span><span class="nav-toggle-line block h-px w-6 bg-text" aria-hidden="true"></span><span class="nav-toggle-line block h-px w-4 bg-brand" aria-hidden="true"></span>
     </button>
   </nav>
 </header>
 
 <div id="nav-panel" hidden class="fixed inset-0 top-[4.5rem] z-40 flex flex-col bg-brand-deep pb-10 text-white md:hidden">
-    <div class="shell flex flex-1 flex-col overflow-y-auto pt-10">
+    <div class="mobile-menu-inner shell flex flex-1 flex-col overflow-y-auto pt-10">
       <p class="meta text-white/60">Menu</p>
       <div class="mt-6 flex flex-col">
         {links.map((link) => (
-          <a href={url(link.href)} aria-current={isActive(link.href) ? 'page' : undefined} class="flex min-h-16 items-center border-b border-white/20 font-display text-4xl font-medium tracking-[-0.03em]">
+          <a href={url(link.href)} aria-current={isActive(link.href) ? 'page' : undefined} class="mobile-menu-link flex min-h-16 items-center border-b border-white/20 font-display text-4xl font-medium tracking-[-0.03em]">
             {link.label}
           </a>
         ))}
@@ -67,13 +67,53 @@ const isActive = (path: string) => {
   .nav-link:hover::after, .nav-link:focus-visible::after, .nav-link[aria-current]::after { right:0; }
   .nav-link[aria-current] { color:var(--color-brand); }
   .github-link svg { width: 1.5rem; height: 1.5rem; }
+
+  #nav-panel {
+    opacity: 0;
+    transform: translateY(-0.75rem);
+    transition: opacity 320ms ease, transform 420ms var(--ease-align);
+  }
+  #nav-panel[data-open] { opacity: 1; transform: translateY(0); }
+  .mobile-menu-inner { transition: transform 420ms var(--ease-align); transform: translateY(-0.5rem); }
+  #nav-panel[data-open] .mobile-menu-inner { transform: translateY(0); }
+  .mobile-menu-link {
+    opacity: 0;
+    transform: translateX(-1rem);
+    transition: opacity 280ms ease, transform 400ms var(--ease-align);
+  }
+  #nav-panel[data-open] .mobile-menu-link { opacity: 1; transform: translateX(0); }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(1) { transition-delay: 60ms; }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(2) { transition-delay: 95ms; }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(3) { transition-delay: 130ms; }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(4) { transition-delay: 165ms; }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(5) { transition-delay: 200ms; }
+  .nav-toggle-line { transform-origin: right center; transition: transform 350ms var(--ease-align), width 350ms var(--ease-align), background-color 250ms ease; }
+  #nav-toggle[aria-expanded='true'] .nav-toggle-line:nth-of-type(2) { transform: translateY(3.75px) rotate(45deg); }
+  #nav-toggle[aria-expanded='true'] .nav-toggle-line:nth-of-type(3) { width: 1.5rem; transform: translateY(-3.75px) rotate(-45deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    #nav-panel, .mobile-menu-inner, .mobile-menu-link, .nav-toggle-line { transition: none; }
+  }
 </style>
 
 <script is:inline>
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('nav-panel');
-  const closeMenu = () => { toggle?.setAttribute('aria-expanded','false'); panel?.setAttribute('hidden',''); };
-  toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); panel?.toggleAttribute('hidden', open); });
+  let closeTimer;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const openMenu = () => {
+    window.clearTimeout(closeTimer);
+    panel?.removeAttribute('hidden');
+    toggle?.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => requestAnimationFrame(() => panel?.setAttribute('data-open', '')));
+  };
+  const closeMenu = () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    panel?.removeAttribute('data-open');
+    window.clearTimeout(closeTimer);
+    closeTimer = window.setTimeout(() => panel?.setAttribute('hidden', ''), reducedMotion ? 0 : 420);
+  };
+  toggle?.addEventListener('click', () => toggle.getAttribute('aria-expanded') === 'true' ? closeMenu() : openMenu());
   panel?.addEventListener('click', (event) => { if (event.target instanceof Element && event.target.closest('a')) closeMenu(); });
   document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); } });
 </script>
