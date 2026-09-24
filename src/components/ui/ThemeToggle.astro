@@ -92,10 +92,15 @@
 
       if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         root.dataset.themeTransitioning = '';
-        const transition = document.startViewTransition(apply);
-        transition.finished.finally(() => {
+        try {
+          const transition = document.startViewTransition(apply);
+          const clear = () => delete root.dataset.themeTransitioning;
+          transition.finished.finally(clear);
+          setTimeout(clear, 1000);
+        } catch {
           delete root.dataset.themeTransitioning;
-        });
+          apply();
+        }
       } else {
         apply();
       }
