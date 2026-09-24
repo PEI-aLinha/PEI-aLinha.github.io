@@ -1,6 +1,5 @@
 ---
 import Logo from '../ui/Logo.astro';
-import AlignmentMark from '../brand/AlignmentMark.astro';
 import { url } from '../../lib/paths';
 
 const currentYear = new Date().getFullYear();
@@ -71,10 +70,6 @@ const institutionalSupporters = [
             </ul>
         </div>
     </div>
-    <div class="pointer-events-none absolute -right-10 -bottom-16 opacity-[0.06]" aria-hidden="true">
-        <AlignmentMark variant="compact" class="h-[220px] w-[220px]" />
-    </div>
-
     <div class="shell relative grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_1fr_1fr_1fr] lg:gap-16">
         <div>
             <Logo class="text-2xl text-brand md:text-[2rem]" />

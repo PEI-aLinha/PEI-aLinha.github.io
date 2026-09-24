@@ -1,32 +1,14 @@
 ---
-/* The aLinha mark: three segments beginning at different offsets,
-   terminating on one shared axis. The most displaced segment is coral
-   (the misaligned/unresolved input); the axis they land on is petroleum
-   (the resolved, aligned state); the rest read in the current text color
-   so the mark stays legible in monochrome contexts. */
 interface Props {
-    /** "full" renders mark + wordmark, "mark" renders the symbol alone. */
-    variant?: 'full' | 'mark';
     class?: string;
 }
 
-const { variant = 'full', class: className = '' } = Astro.props;
+const { class: className = '' } = Astro.props;
 ---
-<span class:list={['inline-flex items-center gap-2.5', className]}>
-    <svg
-            viewBox="0 0 24 24"
-            class="h-[1.15em] w-[1.15em] shrink-0"
-            fill="none"
-            stroke-width="2.25"
-            stroke-linecap="square"
-            aria-hidden={variant === 'full' ? 'true' : undefined}
-            role={variant === 'mark' ? 'img' : undefined}
-            aria-label={variant === 'mark' ? 'aLinha' : undefined}
-    >
-        <path d="M20 2 V22" stroke="var(--color-brand)" />
-        <path d="M4 7 H20" stroke="var(--color-signal)" />
-        <path d="M9 12 H20" stroke="currentColor" />
-        <path d="M12 17 H20" stroke="currentColor" />
-    </svg>
-    {variant === 'full' && <span class="font-display font-semibold tracking-[-0.03em]">aLinha</span>}
-</span>
+<img
+    src={`${import.meta.env.BASE_URL}images/logos/alinha-logo-transparent.svg`}
+    alt="aLinha"
+    width="985"
+    height="404"
+    class:list={['block h-auto w-[7.5rem] md:w-[9rem]', className]}
+/>

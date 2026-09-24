@@ -167,15 +167,19 @@ body > footer { position: relative; z-index: 3; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .axis-link::after { transition: none; } }
 
 /* Circular reveal from the lamp when changing color theme. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* The UA default uses plus-lighter, which makes overlapping snapshots flash. */
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 ::view-transition-new(root) {
   animation: theme-reveal 600ms ease-in-out forwards;
   z-index: 2;
 }
 
-::view-transition-old(root) {
-  animation: none;
-  z-index: 1;
-}
+::view-transition-old(root) { z-index: 1; }
 
 ::view-transition-image-pair(root) { isolation: isolate; }
 

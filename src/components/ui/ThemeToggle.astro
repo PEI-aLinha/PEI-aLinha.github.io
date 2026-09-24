@@ -74,6 +74,8 @@
 
     const changeTheme = (x: number, y: number) => {
       const root = document.documentElement;
+      if (root.dataset.themeTransitioning !== undefined) return;
+
       const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
       root.style.setProperty('--reveal-x', `${x}px`);
       root.style.setProperty('--reveal-y', `${y}px`);
@@ -89,7 +91,11 @@
       };
 
       if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.startViewTransition(apply);
+        root.dataset.themeTransitioning = '';
+        const transition = document.startViewTransition(apply);
+        transition.finished.finally(() => {
+          delete root.dataset.themeTransitioning;
+        });
       } else {
         apply();
       }
