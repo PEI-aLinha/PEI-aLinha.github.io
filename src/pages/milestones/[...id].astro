@@ -11,38 +11,74 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { number, title, status, start, end, summary, deliverables, presentations, reports } = entry.data;
+const { number, title, status, start, end, summary, deliverables, canvaPresentation, presentations, reports } = entry.data;
 const { Content } = await render(entry);
 const all = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
 const pos = all.findIndex((m) => m.id === entry.id);
 const previous = all[pos-1]; const next = all[pos+1];
 const range = `${start.toLocaleDateString('en-GB',{month:'long',year:'numeric'})} — ${end.toLocaleDateString('en-GB',{month:'long',year:'numeric'})}`;
+const completedDeliverables = deliverables.filter((item) => item.status.toLowerCase() === 'done').length;
+const resourceGroups = [
+  { label: 'Presentations', items: presentations },
+  { label: 'Reports', items: reports },
+].filter((group) => group.items.length > 0);
 ---
 <BaseLayout title={`Phase ${String(number).padStart(2,'0')} — ${title}`} description={summary}>
   <header class="border-b border-line py-12 md:py-18">
     <div class="shell">
-      <a href={url('/milestones')} class="axis-link meta meta-on">← Progress</a>
+      <a href={url('/milestones')} class="axis-link meta meta-on">← Milestones</a>
       <div class="mt-8 flex flex-wrap items-center gap-5"><p class="meta text-signal">Phase {String(number).padStart(2,'0')} · {range}</p><StatusDot status={status} /></div>
       <h1 data-reveal class="mt-4 max-w-5xl font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">{title}</h1>
       <p class="mt-6 max-w-3xl text-lg leading-relaxed text-text-soft">{summary}</p>
     </div>
   </header>
 
+  {canvaPresentation && <section class="border-b border-line pb-[var(--space-section)] pt-10 md:pt-14" aria-labelledby="milestone-presentation">
+    <div class="shell">
+      <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p class="meta text-signal">Presentation</p>
+          <h2 id="milestone-presentation" class="mt-2 font-display text-2xl font-semibold tracking-[-0.03em]">{canvaPresentation.title}</h2>
+        </div>
+        <a href={canvaPresentation.embedUrl} target="_blank" rel="noopener noreferrer" class="axis-link meta meta-on">Open in Canva ↗</a>
+      </div>
+      <div class="canva-frame border border-line bg-surface">
+        <iframe
+          title={canvaPresentation.title}
+          src={canvaPresentation.embedUrl}
+          loading="lazy"
+          allow="fullscreen"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </div>
+  </section>}
+
   <section class="py-[var(--space-section)]">
-    <div class="shell grid gap-14 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:gap-20">
+    <div class="shell grid gap-14 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.2fr)] lg:gap-20">
       <div>
         <p class="meta text-signal">Focus</p>
         <div class="prose-alinha mt-5 max-w-2xl text-base leading-[1.7] text-text-soft"><Content /></div>
+        <dl class="mt-10 grid grid-cols-2 gap-px border border-line bg-line">
+          <div class="bg-surface p-5"><dt class="meta" style="color:var(--color-text-soft)">Schedule</dt><dd class="mt-2 text-sm leading-relaxed">{range}</dd></div>
+          <div class="bg-surface p-5"><dt class="meta" style="color:var(--color-text-soft)">Deliverables done</dt><dd class="mt-2 font-mono text-sm">{completedDeliverables} / {deliverables.length}</dd></div>
+        </dl>
       </div>
       <div>
         <p class="meta text-signal">Deliverables</p>
         <div class="mt-4 border-t border-line">
-          {deliverables.map((item) => <div class="grid grid-cols-[1fr_auto] gap-5 border-b border-line py-4"><span>{item.title}</span><span class="meta">{item.status}</span></div>)}
+          {deliverables.map((item, index) => <div class="grid grid-cols-[auto_1fr_auto] items-start gap-4 border-b border-line py-4">
+            <span class="font-mono text-xs text-muted">{String(index + 1).padStart(2, '0')}</span>
+            <span>{item.title}</span>
+            <span class="meta text-right">{item.status}</span>
+          </div>)}
         </div>
 
-        {(presentations.length > 0 || reports.length > 0) && <div class="mt-10 grid gap-8 md:grid-cols-2">
-          {presentations.length > 0 && <div><p class="meta">Presentations</p><div class="mt-3 border-t border-line">{presentations.map((item) => <a href={item.href} class="flex justify-between gap-4 border-b border-line py-4"><span>{item.title}</span><span class="meta">{item.href ? 'Open ↗' : '—'}</span></a>)}</div></div>}
-          {reports.length > 0 && <div><p class="meta">Reports</p><div class="mt-3 border-t border-line">{reports.map((item) => <a href={item.href} class="flex justify-between gap-4 border-b border-line py-4"><span>{item.title}</span><span class="meta">{item.href ? 'Open ↗' : '—'}</span></a>)}</div></div>}
+        {resourceGroups.length > 0 && <div class="mt-10 grid gap-8 md:grid-cols-2">
+          {resourceGroups.map((group) => <div><p class="meta">{group.label}</p><div class="mt-3 border-t border-line">{group.items.map((item) => item.href
+            ? <a href={item.href} class="axis-link flex justify-between gap-4 border-b border-line py-4"><span>{item.title}</span><span class="meta">Open ↗</span></a>
+            : <div class="flex justify-between gap-4 border-b border-line py-4 text-text-soft"><span>{item.title}</span><span class="meta">Pending</span></div>
+          )}</div></div>)}
         </div>}
       </div>
     </div>
@@ -53,3 +89,8 @@ const range = `${start.toLocaleDateString('en-GB',{month:'long',year:'numeric'})
     <div class="text-right">{next && <a href={url(`/milestones/${next.id}`)} class="axis-link text-sm">{next.data.title} →</a>}</div>
   </nav>
 </BaseLayout>
+
+<style>
+  .canva-frame { aspect-ratio: 16 / 9; overflow: hidden; box-shadow: 10px 10px 0 var(--color-silver-soft); }
+  .canva-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
+</style>

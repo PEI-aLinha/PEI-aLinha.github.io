@@ -219,6 +219,19 @@ content:
                   media: documents
                   categories: [document]
                   rename: safe
+          - name: canvaPresentation
+            label: Canva presentation
+            type: object
+            fields:
+              - name: title
+                label: Title
+                type: string
+                required: true
+              - name: embedUrl
+                label: Canva embed URL
+                type: string
+                required: true
+                description: "Use Canva's public URL ending in /view?embed."
           - name: reports
             label: Reports
             type: object

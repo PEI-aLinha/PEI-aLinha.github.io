@@ -23,7 +23,7 @@ test('mobile menu opens, is keyboard-dismissible, and remains accessible', async
 test('mobile navigation reaches a section and marks it as current', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Menu' }).click();
-  await page.locator('#nav-panel').getByRole('link', { name: 'Progress' }).click();
+  await page.locator('#nav-panel').getByRole('link', { name: 'Milestones' }).click();
 
   await expect(page).toHaveURL(/\/milestones$/);
   await expect(page.locator('#nav-panel a[href="/milestones"]')).toHaveAttribute('aria-current', 'page');

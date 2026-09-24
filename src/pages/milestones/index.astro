@@ -4,12 +4,58 @@ import BaseLayout from '../../components/layouts/BaseLayout.astro';
 import PageHeader from '../../components/global/PageHeader.astro';
 import MilestoneRow from '../../components/milestones/MilestonesRow.astro';
 const milestones = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
+const completed = milestones.filter((entry) => entry.data.status === 'done').length;
+const current = milestones.find((entry) => entry.data.status === 'in-progress');
+const progress = milestones.length ? Math.round((completed / milestones.length) * 100) : 0;
 ---
-<BaseLayout title="Progress" description="The six phases of the aLinha work plan, from requirements to deployment.">
-  <PageHeader label="Project lifecycle" title="Progress" lead="Six phases, from requirements and system design to validation and deployment." />
+<BaseLayout title="Milestones" description="The six milestones of the aLinha work plan, from requirements to deployment.">
+  <PageHeader label="Project lifecycle" title="Milestones" lead="Six connected milestones take aLinha from research and requirements to a validated, documented deployment." />
   <section class="py-[var(--space-section)]">
     <div class="shell">
-      {milestones.map((entry, i) => <MilestoneRow entry={entry} first={i===0} last={i===milestones.length-1} />)}
+      <div class="mb-12 grid gap-8 border-y border-line py-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-12">
+        <div>
+          <p class="meta text-signal">Current position</p>
+          <p class="mt-3 max-w-3xl font-display text-2xl font-medium tracking-[-0.035em] md:text-3xl">
+            {current ? `Phase ${String(current.data.number).padStart(2, '0')} — ${current.data.title}` : 'Planning complete'}
+          </p>
+        </div>
+        <div class="min-w-56">
+          <div class="flex items-end justify-between gap-8">
+            <span class="meta">Overall completion</span>
+            <span class="font-mono text-sm text-brand">{completed}/{milestones.length}</span>
+          </div>
+          <div class="mt-3 h-1 bg-line-soft" role="progressbar" aria-label="Overall milestone completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow={progress}>
+            <div class="h-full bg-brand" style={`width:${progress}%`}></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-5 hidden grid-cols-[90px_minmax(0,1fr)_minmax(240px,1.2fr)_140px] gap-7 px-0 md:grid">
+        <span class="meta">Phase</span><span class="meta">Milestone</span><span class="meta">Outcome</span><span class="meta text-right">Timing</span>
+      </div>
+      <div class="milestone-axis">
+        {milestones.map((entry, i) => <MilestoneRow entry={entry} first={i===0} last={i===milestones.length-1} />)}
+      </div>
+
+      <div class="mt-7 flex flex-wrap gap-x-7 gap-y-3" aria-label="Milestone status legend">
+        <span class="meta flex items-center gap-2"><i class="h-1.5 w-3 bg-brand" aria-hidden="true"></i>Done</span>
+        <span class="meta meta-on flex items-center gap-2"><i class="h-1.5 w-3 bg-signal" aria-hidden="true"></i>In progress</span>
+        <span class="meta flex items-center gap-2"><i class="h-1.5 w-3 border border-muted" aria-hidden="true"></i>Planned</span>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .milestone-axis { position: relative; }
+  @media (min-width: 768px) {
+    .milestone-axis::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 2.75rem;
+      width: 1px;
+      background: var(--color-line);
+      pointer-events: none;
+    }
+  }
+</style>

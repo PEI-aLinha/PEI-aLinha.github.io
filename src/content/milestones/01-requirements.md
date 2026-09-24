@@ -5,6 +5,9 @@ status: in-progress
 start: 2026-09-21
 end: 2026-10-31
 summary: Understand what SMEs need to comply with, and fix the scope of the MVP.
+canvaPresentation:
+  title: "MS1 presentation"
+  embedUrl: "https://www.canva.com/design/DAHWDUVlkxI/N4CuObnXdJv7pJVgNEWScg/view?embed"
 deliverables:
   - { title: "What a CISO does — requirements, flows, use cases", status: In progress }
   - { title: "State of the art and use-case comparison table", status: In progress }

@@ -30,3 +30,12 @@ file from **Document files** too when it is no longer used anywhere else.
 The same panel can create and update meeting minutes, milestones and team profiles. Milestones
 cannot be deleted from the panel accidentally, but their dates, status, deliverables,
 presentations and reports can be edited.
+
+To embed a Canva presentation in a milestone, add the following to its frontmatter using
+Canva's public embed URL:
+
+```yaml
+canvaPresentation:
+  title: "MS1 presentation"
+  embedUrl: "https://www.canva.com/design/DESIGN_ID/VIEW_ID/view?embed"
+```

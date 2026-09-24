@@ -5,7 +5,7 @@ const primaryPages = [
   ['/', 'aLinha'],
   ['/project', 'What is aLinha?'],
   ['/minutes', 'Minutes'],
-  ['/milestones', 'Progress'],
+  ['/milestones', 'Milestones'],
   ['/team', 'Team'],
   ['/documentation', 'Documentation'],
 ] as const;

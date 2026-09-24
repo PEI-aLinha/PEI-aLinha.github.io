@@ -13,6 +13,11 @@ const milestones = defineCollection({
     end: z.date(),
     summary: z.string(),
     deliverables: z.array(z.object({ title: z.string(), status: z.string() })).default([]),
+    // Optional public Canva deck rendered inline on the milestone detail page.
+    canvaPresentation: z.object({
+      title: z.string(),
+      embedUrl: z.string().url(),
+    }).optional(),
     presentations: z.array(z.object({ title: z.string(), href: z.string().optional() })).default([]),
     reports: z.array(z.object({ title: z.string(), href: z.string().optional() })).default([]),
   }),
