@@ -24,6 +24,22 @@ Production build:
 npm run build
 ```
 
+Run the complete quality suite (Astro/TypeScript checks, unit tests, production build, and browser tests):
+
+```bash
+npx playwright install chromium # first run only
+npm test
+```
+
+For faster feedback while developing:
+
+```bash
+npm run test:unit
+npm run test:unit:watch
+npm run test:integration # run after npm run build
+npm run test:e2e        # run after npm run build
+```
+
 ## Content
 
 Content is stored in `src/content/`:
