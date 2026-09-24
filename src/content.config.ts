@@ -9,8 +9,8 @@ const milestones = defineCollection({
     number: z.number(),
     title: z.string(),
     status,
-    start: z.date(),
-    end: z.date(),
+    start: z.date().optional(),
+    end: z.date().optional(),
     summary: z.string(),
     deliverables: z.array(z.object({ title: z.string(), status: z.string() })).default([]),
     // Optional public Canva deck rendered inline on the milestone detail page.

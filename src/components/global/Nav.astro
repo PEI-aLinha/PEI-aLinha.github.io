@@ -45,7 +45,7 @@ const isActive = (path: string) => {
 
 <div id="nav-panel" hidden class="fixed inset-0 top-[4.5rem] z-40 flex flex-col bg-brand-deep pb-10 text-white md:hidden">
     <div class="mobile-menu-inner shell flex flex-1 flex-col overflow-y-auto pt-10">
-      <p class="meta text-white/60">Menu</p>
+      <p class="mobile-menu-label meta">Menu</p>
       <div class="mt-6 flex flex-col">
         {links.map((link) => (
           <a href={url(link.href)} aria-current={isActive(link.href) ? 'page' : undefined} class="mobile-menu-link flex min-h-16 items-center border-b border-white/20 font-display text-4xl font-medium tracking-[-0.03em]">
@@ -76,6 +76,7 @@ const isActive = (path: string) => {
   }
   #nav-panel[data-open] { opacity: 1; transform: translateY(0); }
   .mobile-menu-inner { transition: transform 420ms var(--ease-align); transform: translateY(-0.5rem); }
+  .mobile-menu-label { color: rgb(255 255 255 / 75%); }
   #nav-panel[data-open] .mobile-menu-inner { transform: translateY(0); }
   .mobile-menu-link {
     opacity: 0;

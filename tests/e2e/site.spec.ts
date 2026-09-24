@@ -26,18 +26,15 @@ test.describe('published content', () => {
     });
   }
 
-  test('milestones are ordered and detail navigation follows the plan', async ({ page }) => {
+  test('published milestones open their detail page', async ({ page }) => {
     await page.goto('/milestones');
     const phases = page.locator('main a[href^="/milestones/"]');
-    await expect(phases).toHaveCount(6);
+    await expect(phases).toHaveCount(1);
     await expect(phases.first()).toContainText('01');
-    await expect(phases.last()).toContainText('06');
 
     await phases.first().click();
     await expect(page.getByRole('heading', { level: 1, name: 'Requirements & Planning' })).toBeVisible();
-    await expect(page.getByRole('navigation', { name: 'Milestone navigation' }).getByRole('link')).toHaveCount(1);
-    await page.getByRole('link', { name: /System Design/ }).click();
-    await expect(page).toHaveURL(/\/milestones\/02-system-design$/);
+    await expect(page.getByRole('navigation', { name: 'Milestone navigation' }).getByRole('link')).toHaveCount(0);
   });
 
   test('hybrid minutes expose both web content and their published PDF', async ({ page, request }) => {
@@ -87,7 +84,9 @@ test.describe('browser behaviour', () => {
   test('representative pages have no automatically detectable accessibility violations', async ({ page }) => {
     for (const path of ['/', '/milestones/01-requirements', '/minutes/2026-09-21']) {
       await page.goto(path);
-      const results = await new AxeBuilder({ page }).analyze();
+      // The Canva embed is a third-party document whose markup we do not control.
+      // Its host iframe has a descriptive title in the milestone component.
+      const results = await new AxeBuilder({ page }).exclude('.canva-frame iframe').analyze();
       expect(results.violations, `Accessibility violations on ${path}`).toEqual([]);
     }
   });

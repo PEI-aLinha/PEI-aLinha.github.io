@@ -11,23 +11,22 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { number, title, status, start, end, summary, deliverables, canvaPresentation, presentations, reports } = entry.data;
+const { number, title, status, summary, deliverables, canvaPresentation, presentations, reports } = entry.data;
 const { Content } = await render(entry);
 const all = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
 const pos = all.findIndex((m) => m.id === entry.id);
 const previous = all[pos-1]; const next = all[pos+1];
-const range = `${start.toLocaleDateString('en-GB',{month:'long',year:'numeric'})} — ${end.toLocaleDateString('en-GB',{month:'long',year:'numeric'})}`;
 const completedDeliverables = deliverables.filter((item) => item.status.toLowerCase() === 'done').length;
 const resourceGroups = [
-  { label: 'Presentations', items: presentations },
-  { label: 'Reports', items: reports },
+  { label: 'Presentations', items: presentations.filter((item) => item.href) },
+  { label: 'Reports', items: reports.filter((item) => item.href) },
 ].filter((group) => group.items.length > 0);
 ---
 <BaseLayout title={`Phase ${String(number).padStart(2,'0')} — ${title}`} description={summary}>
   <header class="border-b border-line py-12 md:py-18">
     <div class="shell">
       <a href={url('/milestones')} class="axis-link meta meta-on">← Milestones</a>
-      <div class="mt-8 flex flex-wrap items-center gap-5"><p class="meta text-signal">Phase {String(number).padStart(2,'0')} · {range}</p><StatusDot status={status} /></div>
+      <div class="mt-8 flex flex-wrap items-center gap-5"><p class="meta text-signal">Phase {String(number).padStart(2,'0')}</p><StatusDot status={status} /></div>
       <h1 data-reveal class="mt-4 max-w-5xl font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">{title}</h1>
       <p class="mt-6 max-w-3xl text-lg leading-relaxed text-text-soft">{summary}</p>
     </div>
@@ -59,8 +58,7 @@ const resourceGroups = [
       <div>
         <p class="meta text-signal">Focus</p>
         <div class="prose-alinha mt-5 max-w-2xl text-base leading-[1.7] text-text-soft"><Content /></div>
-        <dl class="mt-10 grid grid-cols-2 gap-px border border-line bg-line">
-          <div class="bg-surface p-5"><dt class="meta" style="color:var(--color-text-soft)">Schedule</dt><dd class="mt-2 text-sm leading-relaxed">{range}</dd></div>
+        <dl class="mt-10 border border-line">
           <div class="bg-surface p-5"><dt class="meta" style="color:var(--color-text-soft)">Deliverables done</dt><dd class="mt-2 font-mono text-sm">{completedDeliverables} / {deliverables.length}</dd></div>
         </dl>
       </div>
@@ -75,9 +73,8 @@ const resourceGroups = [
         </div>
 
         {resourceGroups.length > 0 && <div class="mt-10 grid gap-8 md:grid-cols-2">
-          {resourceGroups.map((group) => <div><p class="meta">{group.label}</p><div class="mt-3 border-t border-line">{group.items.map((item) => item.href
-            ? <a href={item.href} class="axis-link flex justify-between gap-4 border-b border-line py-4"><span>{item.title}</span><span class="meta">Open ↗</span></a>
-            : <div class="flex justify-between gap-4 border-b border-line py-4 text-text-soft"><span>{item.title}</span><span class="meta">Pending</span></div>
+          {resourceGroups.map((group) => <div><p class="meta">{group.label}</p><div class="mt-3 border-t border-line">{group.items.map((item) =>
+            <a href={item.href} class="axis-link flex justify-between gap-4 border-b border-line py-4"><span>{item.title}</span><span class="meta">Open ↗</span></a>
           )}</div></div>)}
         </div>}
       </div>
