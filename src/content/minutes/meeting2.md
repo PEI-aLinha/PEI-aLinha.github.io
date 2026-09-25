@@ -2,14 +2,10 @@
 index: 2
 date: 2026-09-23
 subject: Minute 02
-summary: >
-  The meeting focused on assigning responsibilities for the next project
-  milestone. The team reviewed completed setup tasks, distributed work on NIS2
-  research, visual identity, use cases, state of the art, architecture, and the
-  work plan, and agreed to define the presentation structure and remaining
-  project schedule in the next meetings.
+summary: The meeting focused on assigning tasks for the next milestone and
+  planning the remaining project work.
 scheduled: false
-mode: pdf
+mode: hybrid
 pdf: /documents/02-reuniao.pdf
 ---
 **23 September 2026 · 21:00 – 21:35**
