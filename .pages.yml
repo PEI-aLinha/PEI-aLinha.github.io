@@ -133,6 +133,24 @@ content:
           - name: scheduled
             label: Scheduled
             type: boolean
+          - name: mode
+            label: Minute format
+            type: select
+            required: true
+            default: markdown
+            options:
+              values:
+                - { name: markdown, label: Web page }
+                - { name: pdf, label: PDF only }
+                - { name: hybrid, label: Web page and PDF }
+          - name: pdf
+            label: Minutes PDF
+            type: file
+            description: Upload the original meeting minutes in PDF format.
+            options:
+              media: documents
+              categories: [document]
+              rename: safe
           - name: body
             label: Minutes
             type: rich-text
