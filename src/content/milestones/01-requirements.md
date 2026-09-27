@@ -14,7 +14,7 @@ deliverables:
   - title: Functional requirements for provider and client
     status: Done
   - title: Visual identity
-    status: In Done
+    status: Done
   - title: Project website
     status: Done
   - title: MS1 presentation
