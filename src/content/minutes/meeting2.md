@@ -7,6 +7,12 @@ summary: The meeting focused on assigning tasks for the next milestone and
 scheduled: false
 mode: hybrid
 pdf: /documents/02-reuniao.pdf
+attendees:
+  - Martim Gil
+  - Afonso Santos
+  - Inês Lourenço
+  - Tomás Xavier
+  - Íris Lucas
 ---
 **23 September 2026 · 21:00 – 21:35**
 
