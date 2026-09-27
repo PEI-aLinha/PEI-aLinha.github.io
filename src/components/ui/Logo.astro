@@ -1,0 +1,14 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+<img
+    src={`${import.meta.env.BASE_URL}images/logos/alinha-logo-transparent.svg`}
+    alt="aLinha"
+    width="985"
+    height="404"
+    class:list={['block h-auto w-[7.5rem] md:w-[9rem]', className]}
+/>
