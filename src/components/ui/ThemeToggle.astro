@@ -1,94 +1,89 @@
 <button type="button" class="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
-  <svg viewBox="0 0 32 44" width="32" height="44" aria-hidden="true">
-    <g class="axis-mark">
-      <line class="axis-segment axis-segment--top" x1="7" y1="7" x2="16" y2="7" />
-      <line class="axis-segment axis-segment--middle" x1="16" y1="12" x2="26" y2="12" />
-      <line class="axis-segment axis-segment--bottom" x1="10" y1="17" x2="16" y2="17" />
-      <line class="axis-spine" x1="16" y1="4" x2="16" y2="22" />
-      <circle class="axis-signal" cx="16" cy="12" r="3" />
-      <circle class="axis-halo" cx="16" cy="12" r="6" />
+  <svg viewBox="0 0 28 28" width="26" height="26" aria-hidden="true">
+    <g class="theme-icon theme-icon--moon">
+      <path d="M21.25 17.35A8.6 8.6 0 0 1 10.65 6.75a8.6 8.6 0 1 0 10.6 10.6Z" />
     </g>
-    <line class="toggle-stem" x1="16" y1="22" x2="16" y2="34" />
-    <circle class="toggle-handle" cx="16" cy="35" r="3" />
+    <g class="theme-icon theme-icon--sun">
+      <circle class="sun-core" cx="14" cy="14" r="5.25" />
+      <g class="sun-rays">
+        <circle cx="14" cy="3.5" r="1.25" />
+        <circle cx="21.4" cy="6.6" r="1.25" />
+        <circle cx="24.5" cy="14" r="1.25" />
+        <circle cx="21.4" cy="21.4" r="1.25" />
+        <circle cx="14" cy="24.5" r="1.25" />
+        <circle cx="6.6" cy="21.4" r="1.25" />
+        <circle cx="3.5" cy="14" r="1.25" />
+        <circle cx="6.6" cy="6.6" r="1.25" />
+      </g>
+    </g>
   </svg>
 </button>
 
 <style>
   .theme-toggle {
     display: flex;
-    width: 2rem;
-    height: 2.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
     align-items: center;
     justify-content: center;
     padding: 0;
     cursor: pointer;
     user-select: none;
-    touch-action: none;
     color: currentColor;
     background: transparent;
-    border: 0;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    transition: background-color 220ms ease, border-color 220ms ease;
   }
 
-  .theme-toggle svg { overflow: visible; }
-  .axis-segment,
-  .axis-spine,
-  .toggle-stem {
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: square;
+  .theme-toggle:hover {
+    background: var(--color-signal-soft);
+    border-color: var(--color-line-soft);
   }
-  .axis-segment { stroke-width: 1.25; transition: transform 380ms var(--ease-align), opacity 240ms ease; }
-  .axis-spine { stroke-width: 1; opacity: .38; }
-  .axis-signal {
-    fill: var(--color-silver);
-    stroke: currentColor;
-    stroke-width: 1;
-    transition: fill 300ms ease, transform 420ms var(--ease-align);
+
+  .theme-toggle:active svg {
+    transform: scale(.88);
+  }
+
+  .theme-toggle svg {
+    overflow: visible;
+    transition: transform 260ms var(--ease-align);
+  }
+
+  .theme-icon {
     transform-box: fill-box;
     transform-origin: center;
+    transition: opacity 260ms ease, transform 420ms var(--ease-align);
   }
-  .axis-halo {
-    fill: none;
-    stroke: var(--color-signal);
-    stroke-width: 1;
+
+  .theme-icon--moon {
+    fill: currentColor;
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  .theme-icon--sun {
     opacity: 0;
-    transform: scale(.65);
-    transform-box: fill-box;
-    transform-origin: center;
-    transition: opacity 300ms ease, transform 420ms var(--ease-align);
+    transform: rotate(-45deg) scale(.65);
   }
-  .toggle-stem {
-    stroke-width: 1.25;
-    opacity: .68;
-    transform-box: fill-box;
-    transform-origin: top center;
-  }
-  .toggle-handle {
-    fill: var(--color-background);
-    stroke: currentColor;
-    stroke-width: 1.25;
-    cursor: grab;
-    transition: fill 300ms ease;
-  }
-  .theme-toggle[data-dragging] .toggle-handle { cursor: grabbing; }
 
-  :global(:root:not([data-theme='dark'])) .axis-segment--top { transform: translateX(2px); }
-  :global(:root:not([data-theme='dark'])) .axis-segment--middle { transform: translateX(-2px); }
-  :global(:root:not([data-theme='dark'])) .axis-signal {
-    fill: var(--color-signal);
-    transform: scale(.82);
+  .sun-core { fill: var(--color-signal); }
+  .sun-rays { fill: currentColor; opacity: .78; }
+
+  :global(:root[data-theme='dark']) .theme-icon--moon {
+    opacity: 0;
+    transform: rotate(45deg) scale(.65);
   }
-  :global(:root:not([data-theme='dark'])) .axis-halo {
-    opacity: .55;
-    transform: scale(1);
+
+  :global(:root[data-theme='dark']) .theme-icon--sun {
+    opacity: 1;
+    transform: rotate(0) scale(1);
   }
-  :global(:root:not([data-theme='dark'])) .toggle-handle { fill: var(--color-signal); }
 
   @media (prefers-reduced-motion: reduce) {
-    .axis-segment,
-    .axis-signal,
-    .axis-halo,
-    .toggle-handle { transition: none; }
+    .theme-toggle,
+    .theme-toggle svg,
+    .theme-icon { transition: none; }
   }
 </style>
 
@@ -96,13 +91,6 @@
   const setupThemeToggle = (button: HTMLButtonElement) => {
     if (button.dataset.ready) return;
     button.dataset.ready = 'true';
-
-    const stem = button.querySelector<SVGLineElement>('.toggle-stem');
-    const handle = button.querySelector<SVGCircleElement>('.toggle-handle');
-    let dragging = false;
-    let startY = 0;
-    let distance = 0;
-    let suppressClick = false;
 
     const sync = () => {
       const dark = document.documentElement.dataset.theme === 'dark';
@@ -145,53 +133,7 @@
       }
     };
 
-    const resetHandle = () => {
-      if (!stem || !handle) return;
-      const options: KeyframeAnimationOptions = {
-        duration: 450,
-        easing: 'cubic-bezier(.2, 1.8, .4, 1)',
-        fill: 'forwards',
-      };
-      stem.animate([{ transform: `scaleY(${1 + distance / 10})` }, { transform: 'scaleY(1)' }], options);
-      handle.animate([{ transform: `translateY(${distance}px)` }, { transform: 'translateY(0)' }], options);
-      stem.style.transform = '';
-      handle.style.transform = '';
-    };
-
-    handle?.addEventListener('pointerdown', (event) => {
-      event.preventDefault();
-      dragging = true;
-      startY = event.clientY;
-      distance = 0;
-      button.dataset.dragging = '';
-      handle.setPointerCapture(event.pointerId);
-    });
-
-    handle?.addEventListener('pointermove', (event) => {
-      if (!dragging || !stem || !handle) return;
-      distance = Math.max(0, Math.min(event.clientY - startY, 16));
-      stem.style.transform = `scaleY(${1 + distance / 10})`;
-      handle.style.transform = `translateY(${distance}px)`;
-    });
-
-    handle?.addEventListener('pointerup', (event) => {
-      if (!dragging) return;
-      dragging = false;
-      delete button.dataset.dragging;
-      resetHandle();
-      if (distance > 8) {
-        suppressClick = true;
-        const rect = button.getBoundingClientRect();
-        changeTheme(rect.left + rect.width / 2, rect.top + rect.height / 2);
-      }
-      handle.releasePointerCapture(event.pointerId);
-    });
-
     button.addEventListener('click', (event) => {
-      if (suppressClick) {
-        suppressClick = false;
-        return;
-      }
       changeTheme(
         event.clientX || button.getBoundingClientRect().left + button.offsetWidth / 2,
         event.clientY || button.getBoundingClientRect().top + button.offsetHeight / 2,
