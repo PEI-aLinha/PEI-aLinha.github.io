@@ -150,6 +150,7 @@ body > footer { position: relative; z-index: 3; }
   ul { list-style: disc; } ol { list-style: decimal; }
   li + li { margin-top: .5rem; }
   a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 4px; }
+  img { display: block; width: 100%; height: auto; margin-block: 1.75rem; border: 1px solid var(--color-line); background: #fff; }
 }
 
 /* Motion supports the alignment idea but is never required to understand content. */

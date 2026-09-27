@@ -60,7 +60,7 @@ The platform currently considers two main user types:
 
 **Client** — the SME and its designated responsible person, who uses the platform to understand obligations, complete assessments and follow compliance progress.
 
-
+![Service Provider and Client actors](/images/content/m1-actors.png)
 
 ## Epic Modules
 
@@ -83,7 +83,7 @@ The platform currently considers two main user types:
 
 ## State of the Art Analysis
 
-
+![Comparison of OneTrust, DataGuard, Cynomi, traditional consulting and aLinha across NIS2 support, conversational interface, national context, CISO/HITL assistance and low budget](/images/content/m1-state-of-the-art.png)
 
 Our analysis compared aLinha with solutions such as **OneTrust, DataGuard and Cynomi**, as well as traditional cybersecurity consultancy.
 
@@ -91,7 +91,7 @@ aLinha differentiates itself through its combination of **Portuguese regulatory 
 
 ## High-Level Architecture
 
-
+![High-level architecture: frontend and reverse proxy in front of the system core with plugins, connected to the database and an external AI provider](/images/content/m1-architecture.png)
 
 The initial architecture separates the platform into a frontend, core services, data layer and external AI provider.
 

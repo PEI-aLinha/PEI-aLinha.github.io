@@ -11,6 +11,12 @@ media:
     output: /images/team
     rename: safe
     categories: [image]
+  - name: content-images
+    label: Content images
+    input: public/images/content
+    output: /images/content
+    rename: safe
+    categories: [image]
 
 settings:
   content:
@@ -92,7 +98,7 @@ content:
             label: Notes
             type: rich-text
             options:
-              media: false
+              media: content-images
 
       - name: minutes
         label: Meeting minutes
@@ -155,7 +161,7 @@ content:
             label: Minutes
             type: rich-text
             options:
-              media: false
+              media: content-images
 
       - name: milestones
         label: Milestones
@@ -272,8 +278,9 @@ content:
           - name: body
             label: Description
             type: rich-text
+            description: Use the image button in the toolbar to insert figures between paragraphs.
             options:
-              media: false
+              media: content-images
 
       - name: team
         label: Team
