@@ -15,7 +15,12 @@ const { number, title, status, summary } = entry.data;
     <p class="font-mono text-xs font-medium tracking-[.1em] text-brand md:hidden">Phase {String(number).padStart(2,'0')}</p>
     <span class="sr-only">Phase {String(number).padStart(2,'0')}</span>
   </div>
-  <p class:list={['font-display text-xl font-semibold tracking-[-0.025em]', status === 'planned' && 'text-text-soft']}>{title}<span class="ml-2 inline-block text-brand transition-transform group-hover:translate-x-1" aria-hidden="true">↗</span></p>
+  <p class:list={['font-display text-xl font-semibold tracking-[-0.025em]', status === 'planned' && 'text-text-soft']}>
+    {title}
+    <svg class="ml-2 inline-block h-[0.8em] w-[0.8em] text-brand transition-transform group-hover:translate-x-1" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 13 13 3M6 3h7v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter" />
+    </svg>
+  </p>
   <p class="text-sm leading-relaxed text-text-soft">{summary}</p>
 </a>
 
