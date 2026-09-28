@@ -2,7 +2,7 @@
 name: Inês Lourenço
 group: student
 initials: I
-image: /images/team/bf368aeb-abe1-4c7d-b20a-3d73027f5bdf.jpg
+image: /images/team/22b1d112-32a8-4f65-b575-b943b10d4e8b.jpg
 imageAlt: Inês Lourenço outdoors in a green field
 role: Team member
 order: 2
