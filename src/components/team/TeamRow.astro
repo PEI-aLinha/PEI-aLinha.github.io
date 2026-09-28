@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 interface Props { entry: CollectionEntry<'team'>; }
 const { entry } = Astro.props;
-const { name, initials, image, imageAlt, role, github, linkedin } = entry.data;
+const { name, initials, image, imageAlt, role, github, linkedin, studentNumber } = entry.data;
 ---
 <li data-reveal class="group min-w-0">
   <div class="relative aspect-[4/5] overflow-hidden border border-line bg-brand-soft">
@@ -15,7 +15,7 @@ const { name, initials, image, imageAlt, role, github, linkedin } = entry.data;
     )}
   </div>
   <h2 class="mt-4 font-display text-[clamp(1.35rem,2vw,2rem)] font-semibold leading-tight tracking-[-0.035em]">{name}</h2>
-  <p class="meta mt-2">{role}</p>
+  <p class="meta mt-2">{role}{studentNumber ? ` · NMec ${studentNumber}` : ''}</p>
   {(github || linkedin) && <div class="mt-4 flex flex-wrap gap-2">
     {github && (
       <a

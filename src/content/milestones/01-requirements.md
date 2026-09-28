@@ -7,20 +7,26 @@ canvaPresentation:
   title: MS1 presentation
   embedUrl: https://www.canva.com/design/DAHWDUVlkxI/N4CuObnXdJv7pJVgNEWScg/view?embed
 deliverables:
-  - title: What a CISO does — requirements, flows, use cases
-    status: Done
-  - title: State of the art and use-case comparison table
-    status: Done
-  - title: Functional requirements for provider and client
-    status: Done
-  - title: Visual identity
-    status: Done
   - title: Project website
+    status: Done
+  - title: GitHub organisation
+    status: Done
+  - title: Jira project
+    status: Done
+  - title: State of the art and context
+    status: Done
+  - title: Regulatory research
+    status: Done
+  - title: Initial actors and use cases
+    status: Done
+  - title: Project calendar
+    status: Done
+  - title: Initial architecture design
     status: Done
   - title: MS1 presentation
     status: Done
-start: 2026-09-27
-end: 2026-09-27
+start: 2026-09-22
+end: 2026-09-29
 ---
 ## Goal
 
@@ -49,8 +55,8 @@ aLinha aims to provide:
 - **Maturity & Gap Assessment** — assess the organisation's current cybersecurity maturity and identify gaps.
 - **Prioritised Remediation** — transform assessment results into clear and actionable priorities.
 - **Policy & Evidence Management** — centralise compliance documentation and supporting evidence.
-- **Incident Reporting Support** — assist organisations in preparing the information required for regulatory reporting.
-- **AI-assisted Guidance** — explain, draft and prioritise compliance work while maintaining human validation.
+- **Incident Reporting Support** — assist organisations in preparing the information required for regulatory reporting within NIS2 deadlines.
+- **AI-assisted Guidance** — reduce manual effort by explaining, drafting and prioritising compliance work while maintaining human validation.
 
 ## Actors
 
@@ -66,7 +72,7 @@ The platform currently considers two main user types:
 
 **Client & Organisation Management**
 
-- Organisation profile and regulatory context
+- Organisation profile, regulatory context and definition of NIS2 scope
 - Secure access and organisation management
 
 **Maturity & Gap Assessment**
@@ -80,6 +86,22 @@ The platform currently considers two main user types:
 - Compliance indicators and dashboards
 - Evidence and policy management
 - Incident reporting assistance
+
+## Functional Requirements
+
+- **Organisation Management** — manage client organisations, users, regulatory context and NIS2 scope.
+- **Compliance & Maturity Assessment** — assess each organisation, identify gaps and establish its current state.
+- **Remediation & Evidence** — provide a prioritised action plan and manage compliance evidence.
+- **AI-assisted CISO** — explain requirements, support decisions and help generate documentation.
+- **Monitoring & Incident Support** — track compliance status, deadlines and incident-reporting processes.
+
+## Non-Functional Requirements
+
+- **Security** — the platform must have no critical or high-severity OWASP Top 10 vulnerabilities.
+- **Availability** — the platform should provide at least 99% availability.
+- **Multi-tenancy** — client organisations and their data must remain completely isolated from one another.
+- **Human oversight** — critical AI-generated outputs require human validation before they are used.
+- **Safe AI access** — AI components have read-only access to authoritative client data.
 
 ## State of the Art Analysis
 

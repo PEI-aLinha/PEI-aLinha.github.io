@@ -50,6 +50,7 @@ const team = defineCollection({
     focus: z.string().optional(),
     github: z.string().url().optional(),
     linkedin: z.string().url().optional(),
+    studentNumber: z.number().int().optional(),
     order: z.number(),
   }),
 });

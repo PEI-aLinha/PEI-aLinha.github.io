@@ -7,5 +7,6 @@ imageAlt: Martim Gil
 github: https://github.com/martimgil
 linkedin: https://www.linkedin.com/in/martim-gil/
 role: Team member
+studentNumber: 124833
 order: 1
 ---
