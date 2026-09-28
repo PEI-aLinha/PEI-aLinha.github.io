@@ -2,7 +2,7 @@
 name: Íris Lucas
 group: student
 initials: I
-image: /images/team/1d15e15e-7d95-4e5d-a041-b4ed93eaf57c-1.jpg
+image: /images/team/80636e2b-c58c-4b15-bff7-ac0afad6dd41.jpg
 imageAlt: Íris Lucas standing indoors with her arms crossed
 role: Team member
 order: 4
