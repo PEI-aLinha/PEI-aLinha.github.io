@@ -2,7 +2,7 @@
 name: Inês Lourenço
 group: student
 initials: I
-image: /images/team/22b1d112-32a8-4f65-b575-b943b10d4e8b.jpg
+image: /images/team/fb0e1e58-1ee6-434e-9ce5-a8091ab9bca8.jpg
 imageAlt: Inês Lourenço
 role: Team member
 order: 2
