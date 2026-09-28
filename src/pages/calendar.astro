@@ -1,122 +1,10 @@
 ---
 import BaseLayout from '../components/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const schedule = [
-  {
-    milestone: 'M1',
-    periods: [
-      {
-        date: '22/09 – 29/09',
-        tasks: [
-          ['Project Website', 'Martim'],
-          ['GitHub Organization', 'Inês'],
-          ['Jira Project', 'Everyone'],
-          ['State-of-the-art and Context', 'Íris'],
-          ['Regulatory Research', 'Everyone'],
-          ['Initial Actors and Use Cases', 'Inês, Xavier'],
-          ['Project Calendar', 'Martim, Afonso'],
-          ['Initial Architecture Design', 'Martim, Afonso'],
-          ['Presentation', 'Everyone'],
-        ],
-      },
-    ],
-  },
-  {
-    milestone: 'M2',
-    periods: [
-      {
-        date: '30/09 – 06/10',
-        tasks: [
-          ['Requirements Gathering'],
-          ['Actors and Use Cases'],
-          ['User Stories'],
-          ['Architecture Design'],
-        ],
-      },
-      {
-        date: '07/10 – 13/10',
-        tasks: [
-          ['Functional and Non-Functional Requirements'],
-          ['System Architecture'],
-          ['Data Model'],
-          ['Security and AI Architecture'],
-          ['Presentation'],
-        ],
-      },
-    ],
-  },
-  {
-    milestone: 'M3',
-    periods: [
-      {
-        date: '14/10 – 20/10',
-        tasks: [
-          ['Initial Mockups'],
-          ['Main User Flows'],
-          ['Design System'],
-        ],
-      },
-      {
-        date: '21/10 – 03/11',
-        tasks: [
-          ['Interactive Prototype'],
-          ['Accessibility and Usability'],
-          ['Design Improvements'],
-          ['Presentation'],
-        ],
-      },
-    ],
-  },
-  {
-    milestone: 'M4',
-    periods: [
-      {
-        date: '04/11 – 24/11',
-        tasks: [
-          ['Core — Authentication & Organization Management'],
-          ['Core — Backend / Database'],
-          ['Core — Frontend Foundation'],
-          ['MVP — Organization Security Profile'],
-          ['MVP — Maturity & Gap Assessment'],
-          ['MVP — Initial AI-assisted Analysis'],
-        ],
-      },
-      {
-        date: '25/11 – 14/12',
-        tasks: [
-          ['MVP — Gap and Risk Prioritisation'],
-          ['MVP — AI Recommendations and Explanations'],
-          ['MVP — Remediation Roadmap'],
-          ['Dashboard'],
-          ['Initial Evidence Support'],
-          ['Integration & Testing'],
-          ['Presentation'],
-        ],
-      },
-    ],
-  },
-  {
-    milestone: 'Extended development',
-    periods: [
-      { date: '16/12 – 22/12', start: 1, tasks: [['Stabilizing and Improvements of the MVP'], ['Planning of Extended Features']] },
-      { date: '23/12 – 31/12', start: 3, tasks: [['Refactoring & Code Cleanup']] },
-      { date: '10/02 – 23/02', start: 4, tasks: [['Policy & Evidence Management']] },
-      { date: '24/02 – 09/03', start: 5, tasks: [['Risk & Compliance Management']] },
-      { date: '10/03 – 23/03', start: 6, tasks: [['AI CISO Capabilities']] },
-      { date: '24/03 – 02/04', start: 7, tasks: [['Refactoring & Code Cleanup']] },
-      { date: '04/04 – 20/04', start: 8, tasks: [['Technical Security & Continuous Compliance'], ['CISO Operations']] },
-      { date: '21/04 – 09/05', start: 10, tasks: [['Testing & Bug Fixing'], ['User Testing']] },
-      { date: '10/05 – 23/05', start: 12, tasks: [['Apply Improvements'], ['Data Collection & Evaluation'], ['Stabilize Final Product']] },
-      { date: '31/05 – 03/06', start: 15, tasks: [['Prepare Final Presentation']] },
-    ],
-  },
-  {
-    milestone: 'STUDENTS@DETI',
-    periods: [
-      { date: '04/06', tasks: [['Demo'], ['Poster'], ['Video'], ['Technical Report']] },
-    ],
-  },
-] as const;
+const schedule = (await getCollection('calendar'))
+  .map(({ data }) => data)
+  .sort((a, b) => a.order - b.order);
 ---
 
 <BaseLayout title="Calendar" description="The aLinha project calendar, from initial planning through the interactive prototype.">
@@ -150,15 +38,15 @@ const schedule = [
         </div>
 
         {schedule.map((phase, phaseIndex) => (
-          <section class="milestone-group" aria-labelledby={`milestone-${phase.milestone.toLowerCase()}`}>
-            <div class:list={['milestone-label bg-brand-deep px-5 py-4 text-white md:bg-surface md:text-text', phase.milestone === 'STUDENTS@DETI' && 'milestone-label--event']} style={`--periods:${phase.periods.length}`}>
+          <section class="milestone-group" aria-labelledby={`milestone-${phase.order}`}>
+            <div class:list={['milestone-label bg-brand-deep px-5 py-4 text-white md:bg-surface md:text-text', phase.image && 'milestone-label--event']} style={`--periods:${phase.periods.length}`}>
               <span class="meta text-current md:hidden">Milestone</span>
-              {phase.milestone === 'STUDENTS@DETI' ? (
-                <h3 id="milestone-students@deti" class="students-deti-logo">
-                  <img src={`${import.meta.env.BASE_URL}images/logos/students-deti.png`} width="99" height="112" alt="STUDENTS@DETI" />
+              {phase.image ? (
+                <h3 id={`milestone-${phase.order}`} class="milestone-logo">
+                  <img src={`${import.meta.env.BASE_URL}${phase.image.replace(/^\//, '')}`} width="99" height="112" alt={phase.imageAlt || phase.milestone} />
                 </h3>
               ) : (
-                <h3 id={`milestone-${phase.milestone.toLowerCase()}`} class="font-display text-3xl font-semibold tracking-[-0.04em] md:text-2xl">{phase.milestone}</h3>
+                <h3 id={`milestone-${phase.order}`} class="font-display text-3xl font-semibold tracking-[-0.04em] md:text-2xl">{phase.milestone}</h3>
               )}
               <span class="hidden font-mono text-[.68rem] uppercase tracking-[.12em] text-muted md:block">{String(phaseIndex + 1).padStart(2, '0')}</span>
             </div>
@@ -175,10 +63,10 @@ const schedule = [
                   <div class="px-5 py-5 md:px-8 md:py-7">
                     <span class="meta md:hidden">Task list</span>
                     <ol class="mt-3 grid gap-2 md:mt-0">
-                      {period.tasks.map(([task, owner], index) => (
+                      {period.tasks.map((task, index) => (
                         <li class="grid grid-cols-[1.75rem_minmax(0,1fr)] text-sm leading-relaxed md:text-base">
-                          <span class="font-mono text-xs text-signal" aria-hidden="true">{String(('start' in period ? period.start : 1) + index).padStart(2, '0')}</span>
-                          <span><strong class="font-semibold">{task}</strong>{owner && <span class="text-text-soft"> · {owner}</span>}</span>
+                          <span class="font-mono text-xs text-signal" aria-hidden="true">{String(period.start + index).padStart(2, '0')}</span>
+                          <span><strong class="font-semibold">{task.title}</strong>{task.owner && <span class="text-text-soft"> · {task.owner}</span>}</span>
                         </li>
                       ))}
                     </ol>
@@ -201,7 +89,7 @@ const schedule = [
   .milestone-group { display: grid; grid-template-columns: 1fr; }
   .milestone-label { border-bottom: 1px solid var(--color-line); }
   .milestone-label h3 { overflow-wrap: anywhere; text-align: center; }
-  .students-deti-logo img { width: 5rem; height: auto; }
+  .milestone-logo img { width: 5rem; height: auto; }
   .milestone-label--event { background: var(--color-surface); color: var(--color-text); }
   .periods { min-width: 0; }
 

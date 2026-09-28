@@ -68,4 +68,22 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { milestones, minutes, team, docs };
+const calendar = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/calendar' }),
+  schema: z.object({
+    milestone: z.string(),
+    order: z.number(),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
+    periods: z.array(z.object({
+      date: z.string(),
+      start: z.number().default(1),
+      tasks: z.array(z.object({
+        title: z.string(),
+        owner: z.string().optional(),
+      })),
+    })),
+  }),
+});
+
+export const collections = { milestones, minutes, team, docs, calendar };

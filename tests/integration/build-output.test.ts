@@ -47,6 +47,7 @@ describe('production build', () => {
   it('generates every expected content route', () => {
     const expectedRoutes = [
       '/',
+      '/calendar',
       '/documentation',
       '/milestones',
       '/minutes',

@@ -45,6 +45,7 @@ npm run test:e2e        # run after npm run build
 Content is stored in `src/content/`:
 
 - `docs/` — project documents and references
+- `calendar/` — calendar phases, periods and tasks
 - `milestones/` — project lifecycle and deliverables
 - `minutes/` — meeting minutes
 - `team/` — students, advisors and collaborators

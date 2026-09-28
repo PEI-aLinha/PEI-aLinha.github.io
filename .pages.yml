@@ -17,6 +17,12 @@ media:
     output: /images/content
     rename: safe
     categories: [image]
+  - name: calendar-images
+    label: Calendar images
+    input: public/images/calendar
+    output: /images/calendar
+    rename: safe
+    categories: [image]
 
 settings:
   content:
@@ -281,6 +287,76 @@ content:
             description: Use the image button in the toolbar to insert figures between paragraphs.
             options:
               media: content-images
+
+      - name: calendar
+        label: Calendar
+        type: collection
+        path: src/content/calendar
+        format: yaml-frontmatter
+        filename:
+          template: "{primary}.md"
+          field: create
+        view:
+          fields: [milestone, order]
+          primary: milestone
+          sort: [order, milestone]
+          search: [milestone]
+          default:
+            sort: order
+            order: asc
+        fields:
+          - name: milestone
+            label: Milestone or phase
+            type: string
+            required: true
+          - name: order
+            label: Display order
+            type: number
+            required: true
+          - name: image
+            label: Milestone image
+            type: image
+            description: Optional image shown instead of the milestone name.
+            options:
+              media: calendar-images
+              rename: safe
+          - name: imageAlt
+            label: Image description
+            type: string
+            description: Required when a milestone image is used.
+          - name: periods
+            label: Date periods
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{date}"
+            fields:
+              - name: date
+                label: Date or date range
+                type: string
+                required: true
+                description: "For example: 22/09 – 29/09"
+              - name: start
+                label: First task number
+                type: number
+                required: true
+                default: 1
+              - name: tasks
+                label: Tasks
+                type: object
+                list:
+                  collapsible:
+                    collapsed: true
+                    summary: "{title}"
+                fields:
+                  - name: title
+                    label: Task
+                    type: string
+                    required: true
+                  - name: owner
+                    label: Owner
+                    type: string
 
       - name: team
         label: Team

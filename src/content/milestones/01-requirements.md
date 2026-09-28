@@ -22,7 +22,7 @@ deliverables:
 start: 2026-09-27
 end: 2026-09-27
 ---
-# Goal
+## Goal
 
 **Develop a CISO-as-a-Service platform that helps Portuguese SMEs achieve and maintain cybersecurity and data protection compliance.**
 

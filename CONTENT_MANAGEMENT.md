@@ -27,9 +27,17 @@ file from **Document files** too when it is no longer used anywhere else.
 
 ## Other editable content
 
-The same panel can create and update meeting minutes, milestones and team profiles. Milestones
+The same panel can create and update the project calendar, meeting minutes, milestones and team profiles. Milestones
 cannot be deleted from the panel accidentally, but their dates, status, deliverables,
 presentations and reports can be edited.
+
+### Update the calendar
+
+Open **Project content → Calendar**. Each entry represents one milestone or project phase. Within
+an entry, add or reorder date periods and edit their task lists. **First task number** controls the
+number assigned to the first task in that period; following tasks are numbered automatically.
+The optional milestone image replaces the phase name visually, while the name remains available
+to screen readers through the image description.
 
 To embed a Canva presentation in a milestone, add the following to its frontmatter using
 Canva's public embed URL:
