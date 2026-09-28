@@ -6,6 +6,7 @@ const primaryPages = [
   ['/project', 'What is aLinha?'],
   ['/minutes', 'Minutes'],
   ['/milestones', 'Milestones'],
+  ['/calendar', 'Calendar'],
   ['/team', 'Team'],
   ['/documentation', 'Documentation'],
 ] as const;
@@ -82,7 +83,7 @@ test.describe('browser behaviour', () => {
   });
 
   test('representative pages have no automatically detectable accessibility violations', async ({ page }) => {
-    for (const path of ['/', '/milestones/01-requirements', '/minutes/2026-09-21']) {
+    for (const path of ['/', '/calendar', '/milestones/01-requirements', '/minutes/2026-09-21']) {
       await page.goto(path);
       // The Canva embed is a third-party document whose markup we do not control.
       // Its host iframe has a descriptive title in the milestone component.

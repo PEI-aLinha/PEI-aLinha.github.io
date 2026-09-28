@@ -6,6 +6,7 @@ const links = [
   { label: 'Project', href: '/project' },
   { label: 'Minutes', href: '/minutes' },
   { label: 'Milestones', href: '/milestones' },
+  { label: 'Calendar', href: '/calendar' },
   { label: 'Team', href: '/team' },
   { label: 'Documentation', href: '/documentation' },
 ];
@@ -24,7 +25,7 @@ const isActive = (path: string) => {
   <nav aria-label="Main" class="shell flex h-[4.5rem] items-center gap-14 md:h-24">
     <a href={url('/')} class="text-2xl text-brand" aria-label="aLinha — home"><Logo /></a>
 
-    <div class="hidden flex-1 items-center gap-9 md:flex">
+    <div class="hidden flex-1 items-center gap-5 md:flex lg:gap-9">
       {links.map((link) => (
         <a href={url(link.href)} aria-current={isActive(link.href) ? 'page' : undefined} class="nav-link relative py-2 text-sm">
           {link.label}
@@ -100,6 +101,7 @@ const isActive = (path: string) => {
   #nav-panel[data-open] .mobile-menu-link:nth-child(3) { transition-delay: 130ms; }
   #nav-panel[data-open] .mobile-menu-link:nth-child(4) { transition-delay: 165ms; }
   #nav-panel[data-open] .mobile-menu-link:nth-child(5) { transition-delay: 200ms; }
+  #nav-panel[data-open] .mobile-menu-link:nth-child(6) { transition-delay: 235ms; }
   .nav-toggle-line { transform-origin: right center; transition: transform 350ms var(--ease-align), width 350ms var(--ease-align), background-color 250ms ease; }
   #nav-toggle[aria-expanded='true'] .nav-toggle-line:nth-of-type(2) { transform: translateY(3.75px) rotate(45deg); }
   #nav-toggle[aria-expanded='true'] .nav-toggle-line:nth-of-type(3) { width: 1.5rem; transform: translateY(-3.75px) rotate(-45deg); }
