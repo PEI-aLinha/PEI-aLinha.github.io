@@ -52,4 +52,4 @@ attendees:
 
 ## Next Meeting
 
-To be confirmed
+**5 October 2026 · 21:00 · Online**
