@@ -19,7 +19,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.6",
+    "@astrojs/react": "^7.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@tsparticles/react": "^4.4.0",
     "@tsparticles/slim": "^4.4.0",
