@@ -9,9 +9,9 @@ attendees:
   - Íris Lucas
   - Afonso Santos
   - Daniel Ferreira (advisor)
-summary: The meeting reviewed feedback on the presentation, clarified the system’s
-  compliance and maturity assessment, revisited use cases and personas, and set
-  priorities for the next milestone.
+summary: The meeting reviewed feedback on the presentation, clarified the
+  system’s compliance and maturity assessment, revisited use cases and personas,
+  and set priorities for the next milestone.
 scheduled: false
 mode: hybrid
 pdf: /documents/04-reuniao.pdf
@@ -65,4 +65,4 @@ pdf: /documents/04-reuniao.pdf
 
 ## Next Meeting
 
-**5 October 2026 · 21:00 · In person**
+**2 October 2026 · 21:00 · Online**
