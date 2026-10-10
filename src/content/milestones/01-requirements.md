@@ -1,7 +1,7 @@
 ---
 number: 1
 title: Requirements & Planning
-status: in-progress
+status: done
 summary: Understand what SMEs need to comply with, and fix the scope of the MVP.
 canvaPresentation:
   title: MS1 presentation
