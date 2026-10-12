@@ -6,25 +6,6 @@ summary: Understand what SMEs need to comply with, and fix the scope of the MVP.
 canvaPresentation:
   title: MS1 presentation
   embedUrl: https://www.canva.com/design/DAHWDUVlkxI/N4CuObnXdJv7pJVgNEWScg/view?embed
-deliverables:
-  - title: Project website
-    status: Done
-  - title: GitHub organisation
-    status: Done
-  - title: Jira project
-    status: Done
-  - title: State of the art and context
-    status: Done
-  - title: Regulatory research
-    status: Done
-  - title: Initial actors and use cases
-    status: Done
-  - title: Project calendar
-    status: Done
-  - title: Initial architecture design
-    status: Done
-  - title: MS1 presentation
-    status: Done
 start: 2026-09-22
 end: 2026-09-29
 ---

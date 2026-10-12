@@ -6,27 +6,6 @@ summary: Detail who uses aLinha and what it must do, and design the plugin-based
 canvaPresentation:
   title: MS2 presentation
   embedUrl: https://www.canva.com/design/DAHXPiw5Ifo/cZIdusJOwMi6goEKZXJUTg/view?embed
-deliverables:
-  - title: Actors and personas
-    status: Done
-  - title: Scenarios
-    status: Done
-  - title: User stories
-    status: Done
-  - title: Functional requirements
-    status: Done
-  - title: Non-functional requirements
-    status: Done
-  - title: Technology choices
-    status: Done
-  - title: Logical, deployment and component views
-    status: Done
-  - title: Data model
-    status: Done
-  - title: Figma prototype (Scenario #1)
-    status: Done
-  - title: MS2 presentation
-    status: Done
 start: 2026-09-30
 end: 2026-10-13
 ---
@@ -90,6 +69,14 @@ Regulates AI systems with a risk-based approach. Most SMEs are *deployers*, so t
 - **Time** — events triggered by the passage of time: incident deadline countdowns and compliance reminders.
 
 **CNCS** (via MyCiber) and **CNPD** receive notifications but do not interact with aLinha — the platform prepares them and the Designated Officer submits them — so they are not actors.
+
+### Use Case Diagram
+
+![Use case diagram: the Cybersecurity Officer (Designated Officer), the Analyst and the Consultant and the main use cases of each](/images/content/m2-use-case-diagram.png)
+
+- The **Cybersecurity Officer** (the Designated Officer) registers the organisation, which includes determining its legal scope, manages analysts, views results and roadmap and manages policies.
+- The **Analyst** completes the assessment, manages evidence and reports incidents. The Cybersecurity Officer inherits these use cases.
+- The **Consultant** validates results, reviews policies and evidence, manages risks and prepares incident notifications.
 
 ## Personas
 
@@ -337,7 +324,7 @@ The core is built in **Kotlin with Spring Boot and Spring Modulith**. Each plugi
 
 ### Deployment View
 
-![Deployment view: the Docker containers that make up the platform and how they communicate](/images/content/m2-deployment-view.jpg)
+![Deployment view: the Docker containers that make up the platform and how they communicate](/images/content/m2-deployment-view.png)
 
 - The user reaches the **React** frontend over HTTPS (TLS 1.2+) through **Nginx**, the single entry point.
 - The **BFF** (Spring Cloud Gateway) logs in with **Keycloak** (OIDC with MFA), stores the session in **Redis** and rate-limits requests. Tokens never reach the browser: the BFF forwards each request with the user's access token.
@@ -355,6 +342,26 @@ The core is built in **Kotlin with Spring Boot and Spring Modulith**. Each plugi
 - **Evidence** — uploaded by users or collected automatically by Provider plugins running in the Worker Runtime with read-only access. In the MVP, evidence comes from the code repository and external surface providers and feeds the Assessment through `EvidenceCollected`. Strength is classified as self-declared, verified document, technically verified or continuously verified.
 - **Artificial intelligence** — every AI request goes through the core's AI Gateway to the AI Service, which handles context and RAG over legislation, strips personal data before inference and records provenance. The output is always a draft; in the MVP it enters the Assessment roadmap and only becomes visible after the consultant validates it (`RoadmapValidated`).
 - **Isolation and audit** — every request passes RBAC and tenant context, and every write lands in the append-only audit log in the same transaction. The Designated Officer and Analyst only access their organisation; the Consultant only the ones assigned to them.
+
+### Architecture Workflow — Maturity Assessment: From Team to Results
+
+How a request travels through the platform in Scenario #1: the Designated Officer invites an analyst and then answers and resumes the maturity assessment. Every request enters through the reverse proxy, passes role and access control in the core and is recorded by the audit and logging system.
+
+**1 · Role and access control.** The frontend asks to invite an analyst. The request goes through the reverse proxy to *Role and Access Control*, which queries the database for the user's permissions before anything else happens.
+
+![Architecture workflow, step 1: the permission check before inviting an analyst](/images/content/m2-flow-1-permissions.png)
+
+**2 · Client and entity management + audit.** With permission granted, the invite is posted to *Client and Entity Management*, which saves it to the database. The *Audit and Logging System* records the action.
+
+![Architecture workflow, step 2: inviting the analyst and recording it in the audit log](/images/content/m2-flow-2-invite.png)
+
+**3 · Maturity and gap assessment.** The Designated Officer answers the maturity assessment. Each answer is posted to the *Maturity and Gap Assessment* plugin, which saves it to the database, and the audit log records the change.
+
+![Architecture workflow, step 3: answering the maturity assessment](/images/content/m2-flow-3-answer.png)
+
+**4 · Resuming the assessment.** When the questionnaire is reopened, the plugin loads the saved progress and returns the current question with the previous answers. The resume (`Assessment Resumed`) is also recorded in the audit log.
+
+![Architecture workflow, step 4: reopening the assessment with saved progress](/images/content/m2-flow-4-resume.png)
 
 ### AI Request Flow
 

@@ -214,22 +214,6 @@ content:
             label: Summary
             type: text
             required: true
-          - name: deliverables
-            label: Deliverables
-            type: object
-            list:
-              collapsible:
-                collapsed: true
-                summary: "{title} — {status}"
-            fields:
-              - name: title
-                label: Title
-                type: string
-                required: true
-              - name: status
-                label: Status
-                type: string
-                required: true
           - name: presentations
             label: Presentations
             type: object

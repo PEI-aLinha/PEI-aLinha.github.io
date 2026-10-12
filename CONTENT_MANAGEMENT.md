@@ -28,7 +28,7 @@ file from **Document files** too when it is no longer used anywhere else.
 ## Other editable content
 
 The same panel can create and update the project calendar, meeting minutes, milestones and team profiles. Milestones
-cannot be deleted from the panel accidentally, but their dates, status, deliverables,
+cannot be deleted from the panel accidentally, but their dates, status,
 presentations and reports can be edited.
 
 ### Update the calendar

@@ -6,7 +6,7 @@ import MilestoneRow from '../../components/milestones/MilestonesRow.astro';
 const milestones = (await getCollection('milestones')).sort((a,b) => a.data.number - b.data.number);
 ---
 <BaseLayout title="Milestones" description="Published milestones for the aLinha project.">
-  <PageHeader label="Project progress" title="Milestones" lead="Milestones and deliverables confirmed by the project team." />
+  <PageHeader label="Project progress" title="Milestones" lead="Milestones confirmed by the project team." />
   <section class="py-[var(--space-section)]">
     <div class="shell">
       <div class="mb-5 hidden grid-cols-[90px_minmax(0,1fr)_minmax(240px,1.2fr)] gap-7 px-0 md:grid">
