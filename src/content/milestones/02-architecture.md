@@ -2,8 +2,7 @@
 number: 2
 title: Requirements & Architecture
 status: done
-summary: Detail who uses aLinha and what it must do, and design the plugin-based
-  architecture, data model and AI pipeline behind the MVP.
+summary: Detail who uses aLinha and what it must do, and design the plugin-based architecture, data model and AI pipeline behind the MVP.
 canvaPresentation:
   title: MS2 presentation
   embedUrl: https://www.canva.com/design/DAHXPiw5Ifo/cZIdusJOwMi6goEKZXJUTg/view?embed
@@ -110,9 +109,8 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 
 **39 user stories**, each with a priority and Given / When / Then acceptance criteria.
 
-
 | ID | User story | Priority |
-| ---- | -------------------------------------------------------------------------------- | -------- |
+| --- | --- | --- |
 | US01 | Automatic assignment of new clients to the consultant with fewest active clients | High |
 | US02 | Validate results and roadmap before the client sees them | High |
 | US03 | Edit and approve a policy draft requested by the client | Medium |
@@ -153,14 +151,12 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 | US38 | See evidence strength | Medium |
 | US39 | Consult compliance traceability | Medium |
 
-
 ## Functional Requirements
 
 ### Organisation Management
 
-
 | ID | Requirement | Stories |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| --- | --- | --- |
 | FR01 | Designated Officer creates an account and registers the organisation with the data needed for classification: name, NIF, CAE code, sector and subsector, services, employees, turnover, head office and contacts | US10 |
 | FR02 | Suggest an indicative classification (essential, important or not in scope) with a plain explanation, and record the official CNCS qualification | US11 |
 | FR03 | Determine the regulatory scope, identifying which frameworks (NIS2, GDPR, AI Act) apply | US34 |
@@ -168,12 +164,10 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 | FR05 | Designated Officer invites analysts by email, creating restricted-access accounts | US12 |
 | FR06 | Designated Officer assigns questions, evidence and tasks to analysts | US14 |
 
-
 ### Maturity & Compliance Assessment
 
-
 | ID | Requirement | Stories |
-| ---- | ---------------------------------------------------------------------------- | ---------- |
+| --- | --- | --- |
 | FR07 | Maturity questionnaire adapted to the regulatory scope, with save and resume | US13 |
 | FR08 | Analysts answer assigned technical questions, integrated into the assessment | US28 |
 | FR09 | Plain-language explanation with an example for every question | US33 |
@@ -181,12 +175,10 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 | FR11 | Results only available to the client after consultant validation | US02, US15 |
 | FR12 | Export the results report to PDF | US17 |
 
-
 ### Remediation & Evidence
 
-
 | ID | Requirement | Stories |
-| ---- | -------------------------------------------------------------------------------------------------------------- | ---------- |
+| --- | --- | --- |
 | FR13 | Prioritised roadmap where each action states legal obligation, priority, deadline, owner and required evidence | US02, US16 |
 | FR14 | Consultant adjusts and validates the roadmap before it is visible to the client | US02 |
 | FR15 | Evidence submission by the Designated Officer and by analysts (only for evidence assigned to them) | US20, US29 |
@@ -196,24 +188,20 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 | FR19 | Record training completion as organisational evidence | US30 |
 | FR20 | Designated Officer formally accepts approved policies, attaching proof of board approval | US19 |
 
-
 ### AI-assisted CISO
 
-
 | ID | Requirement | Stories |
-| ---- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| --- | --- | --- |
 | FR21 | AI assistant explains legal requirements in plain language based only on the platform's reference legislation, labels answers as AI-generated and lets the user ask the consultant | US11, US33 |
 | FR22 | AI proposes the prioritisation of roadmap actions | US02, US16 |
 | FR23 | Designated Officer asks the AI assistant for policy drafts based on questions about the organisation | US18 |
 | FR24 | All AI drafts go to the consultant, who can edit and approve them before the client sees them | US03 |
 | FR25 | AI generates drafts of legal incident notifications to CNCS and, when personal data is affected, to CNPD | US06 |
 
-
 ### Monitoring & Incident Support
 
-
 | ID | Requirement | Stories |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| --- | --- | --- |
 | FR26 | Consultant dashboard with all clients sorted by compliance status, highlighting those needing attention | US08 |
 | FR27 | Designated Officer dashboard with compliance coverage, open gaps and upcoming deadlines | US25 |
 | FR28 | Email alerts when a deadline approaches | US26 |
@@ -224,83 +212,68 @@ The three personas are related: Rui and Pedro work for the same SME, and Marta i
 | FR33 | Consultant validates each notification and makes it available, ready to submit to MyCiber or CNPD | US07, US24 |
 | FR34 | Show the consultant's emergency contact on the dashboard and in alert emails, so incidents can be reported when the platform is down | US22, US31 |
 
-
 ### Asset & Risk Management
 
-
 | ID | Requirement | Stories |
-| ---- | --------------------------------------------------------------------------------------------------------------------- | ------- |
+| --- | --- | --- |
 | FR35 | Register the inventory of critical services and assets, with owner and criticality (Regulation 756/2026 — Asset List) | US35 |
 | FR36 | Maintain an ISO/IEC 27005 risk register with affected asset, likelihood, impact, risk level and treatment | US36 |
 
-
 ### Evidence & Traceability
 
-
 | ID | Requirement | Stories |
-| ---- | ------------------------------------------------------------------------------------------------------------- | ------- |
+| --- | --- | --- |
 | FR37 | Collect technical evidence automatically through read-only Provider plugins connected to client systems | US37 |
 | FR38 | Classify evidence strength as self-declared, verified document, technically verified or continuously verified | US38 |
 | FR39 | Keep traceability between legal requirement, control, gap, action and evidence | US39 |
-
 
 ## Non-Functional Requirements
 
 ### Availability & Reliability
 
-
 | ID | Requirement |
-| ----- | --------------------------------------------------------------------- |
+| --- | --- |
 | NFR01 | 99% monthly availability (at most ~7 h 12 min of downtime per month) |
 | NFR02 | No background job is lost if a component fails (transactional outbox) |
 
-
 ### Multi-tenancy & Auditability
 
-
 | ID | Requirement |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --- | --- |
 | NFR03 | No tenant can read or change data belonging to another tenant |
 | NFR04 | 100% of writes to assessments, results and generated documents are recorded in an immutable Audit Trail (who, when, what, tenant) |
 | NFR05 | Assessment results are computed strictly from the Compliance Engine's versioned rules — same input and catalogue version always give the same result |
 
-
 ### Security
 
-
 | ID | Requirement |
-| ----- | -------------------------------------------------------------------------------------------------------------------- |
+| --- | --- |
 | NFR06 | No high or critical vulnerabilities in the OWASP Top 10 categories |
 | NFR07 | 100% of endpoints, except login and health check, require a valid OIDC token |
 | NFR08 | Every endpoint is bound to explicit roles; no user accesses operations outside their role |
 | NFR09 | All external traffic uses TLS 1.2+; no secrets in code or versioned configuration |
 | NFR10 | Uploaded files are untrusted: processed in the Document Sandbox, with no internet access and only allowed file types |
 
-
 ### Artificial Intelligence
 
-
 | ID | Requirement |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --- | --- |
 | NFR11 | The AI Service has no write access to data; all AI access goes through the AI Gateway |
 | NFR12 | No client-facing AI output (policies, roadmaps, results, notifications) is published without recorded consultant approval; users always know they are interacting with AI and AI content is labelled (AI Act) |
 | NFR13 | Personal data is removed or anonymised before any request to the external LLM, and the provider processes data in the EU |
 | NFR14 | Every AI output records the model, prompt version, sources used and date |
 | NFR15 | Personal data hosted in the EU and minimised; deleted from database and backups within 30 days of termination; audit trails kept for 1 year and then anonymised |
 
-
 ### Performance, Extensibility & Operation
 
-
 | ID | Requirement |
-| ----- | --------------------------------------------------------------------------------------------------------------------------- |
+| --- | --- |
 | NFR16 | With 50 concurrent users: p95 below 500 ms for API reads and below 2 s for assessment submission (excluding LLM calls) |
 | NFR17 | Adding a plugin requires no Core changes, and no plugin accesses another plugin's internals |
 | NFR18 | A new framework catalogue version (e.g. NIS2, SOC-CMM) is loaded as data, without recompiling or redeploying |
 | NFR19 | Core and plugins have at least 70% test coverage; CI runs on every pull request and blocks the merge on failure |
 | NFR20 | All services expose centralised metrics and logs (Prometheus and Loki) with tenant and correlation IDs and no personal data |
 | NFR21 | The full system starts with a single Docker command in a clean environment in under 15 minutes |
-
 
 The interface must be in Portuguese and use plain language accessible to users without technical or legal training, verified through usability tests with representative users.
 
@@ -322,13 +295,11 @@ Three principles guide the architecture:
 
 The core concentrates what all plugins share: role-based access control (RBAC), tenant context, module registry, event bus, compliance engine, logging, job dispatch and the AI Gateway. The business is split into three plugin types:
 
-
 | Type | Responsibility | Examples |
-| --------- | ---------------------------------------- | ------------------------------------------------------------------------------------- |
+| --- | --- | --- |
 | Feature | Features used by users | Organisation, assessment, roadmap, risks & assets, evidence, dashboard, notifications |
 | Framework | Legal frameworks | NIS2, GDPR, AI Act, QNRCS, SOC-CMM |
 | Provider | Read-only connection to external systems | Code repository, external surface (DNS, TLS, headers), identity and cloud, SIEM |
-
 
 ### Technology Choices
 
@@ -336,9 +307,8 @@ The core is built in **Kotlin with Spring Boot and Spring Modulith**. Each plugi
 
 **Python** is used only where needed: in the AI Service (FastAPI), where the language-model ecosystem lives, and in the Worker Runtime, which collects evidence and analyses documents. Everything else uses existing solutions, and all services run in Docker containers.
 
-
 | Component | Technology |
-| ---------------- | ---------------------------------------------------------------------------- |
+| --- | --- |
 | Core | Kotlin, Spring Boot, Spring Modulith |
 | AI and workers | Python (FastAPI for the AI Service) |
 | Frontend | React, Vite, TypeScript |
@@ -351,7 +321,6 @@ The core is built in **Kotlin with Spring Boot and Spring Modulith**. Each plugi
 | Files | MinIO (S3 API), post-MVP |
 | Secrets | OpenBao |
 | Monitoring | Prometheus, Grafana, Loki (post-MVP) |
-
 
 ### Deployment View
 
@@ -375,8 +344,6 @@ The core is built in **Kotlin with Spring Boot and Spring Modulith**. Each plugi
 - **Isolation and audit** — every request passes RBAC and tenant context, and every write lands in the append-only audit log in the same transaction. The Designated Officer and Analyst only access their organisation; the Consultant only the ones assigned to them.
 
 ### Architecture Workflow — Maturity Assessment: From Team to Results
-
-![](/images/content/alinha-m2.png)
 
 How a request travels through the platform in Scenario #1: the Designated Officer invites an analyst and then answers and resumes the maturity assessment. Every request enters through the reverse proxy, passes role and access control in the core and is recorded by the audit and logging system.
 
@@ -417,5 +384,6 @@ The data model is organised by module: each module owns its own PostgreSQL schem
 
 The first interactive prototype covers **Scenario #1 — Onboarding**: organisation registration, suggested NIS2 classification, inviting the team and the maturity questionnaire with saved progress.
 
+<iframe class="figma-embed" title="aLinha Scenario #1 mockups in Figma" src="https://embed.figma.com/design/0YtW5kerG2lrgwJrmvJ32U/aLinha-%E2%80%93-Mockup-Cen%C3%A1rio-1?node-id=0-1&t=McLjU01l9sqdT9q0-1&embed-host=share" loading="lazy" allowfullscreen></iframe>
 
 [Open the prototype in Figma ↗](https://www.figma.com/design/0YtW5kerG2lrgwJrmvJ32U/aLinha-%E2%80%93-Mockup-Cen%C3%A1rio-1?node-id=0-1&t=McLjU01l9sqdT9q0-1)
