@@ -384,6 +384,6 @@ The data model is organised by module: each module owns its own PostgreSQL schem
 
 The first interactive prototype covers **Scenario #1 — Onboarding**: organisation registration, suggested NIS2 classification, inviting the team and the maturity questionnaire with saved progress.
 
-<iframe class="figma-embed" title="aLinha Scenario #1 mockups in Figma" src="https://embed.figma.com/design/0YtW5kerG2lrgwJrmvJ32U/aLinha-%E2%80%93-Mockup-Cen%C3%A1rio-1?node-id=0-1&t=McLjU01l9sqdT9q0-1&embed-host=share" loading="lazy" allowfullscreen></iframe>
+<iframe class="figma-embed" title="aLinha Scenario #1 mockups in Figma" src="https://www.figma.com/embed?embed_host=astro&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2F0YtW5kerG2lrgwJrmvJ32U%2FaLinha-%25E2%2580%2593-Mockup-Cen%25C3%25A1rio-1%3Fnode-id%3D0-1" loading="lazy" allowfullscreen></iframe>
 
 [Open the prototype in Figma ↗](https://www.figma.com/design/0YtW5kerG2lrgwJrmvJ32U/aLinha-%E2%80%93-Mockup-Cen%C3%A1rio-1?node-id=0-1&t=McLjU01l9sqdT9q0-1)
