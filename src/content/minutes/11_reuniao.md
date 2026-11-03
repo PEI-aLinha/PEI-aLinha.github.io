@@ -1,7 +1,7 @@
 ---
 index: 11
 date: 2026-10-22
-subject: Minute 10
+subject: Minute 11
 attendees:
   - Inês
   - Íris
@@ -16,25 +16,17 @@ mode: hybrid
 # Agenda
 
 1. Review the prototype.
-
 2. Split the work.
-
 3. Usability.
 
 # Notes
 
 - Work split:
-
   - Each member handles their own pages:
-
     - Onboarding.
-
     - Semantic HTML.
-
     - Visual hierarchy.
-
 - Usability:
-
   - Target audience: 15 people.
 
 | Audience | Participant | Responsible |
@@ -70,43 +62,26 @@ mode: hybrid
 |  | 14. Afonso's coach | Afonso |
 
 - Usability test tasks:
-
   1. Register the organisation and add an analyst.
-
   2. Check which compliance area applies (GDPR, NIS2, AI Act).
-
   3. Delegate the technical part.
-
   4. Ask the assistant a legal question.
-
   5. Request a policy draft.
-
   6. Get help with a policy draft.
-
   7. Complete an assigned task.
-
   8. Assign a task to a team member.
-
   9. Delegate the technical questionnaire question to the analyst.
-
   10. View and distinguish the consultant's answer in the AI chat.
-
   11. Analyse the roadmap and its priorities (Rui).
-
   12. Register a risk.
-
   13. Review and validate the AI-proposed roadmap.
-
   14. Identify the most severe risk.
-
 - Responsible for cleaning up the script and creating the templates: Inês, Íris.
 
 # Tasks
 
 - Review Nielsen's heuristics.
-
 - Everyone reviews the usability scenarios from the user's perspective.
-
 - Tomás adds the minutes to the microsite.
 
 # Next Meeting
