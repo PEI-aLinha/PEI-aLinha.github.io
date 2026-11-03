@@ -8,7 +8,7 @@ summary: Defined aLinha's data protection framework under the GDPR, added the
   related requirements, and drafted the service's Terms and Conditions.
 canvaPresentation:
   title: MS3 Presentation
-  embedUrl: https://canva.link/znjce7ho6sodty0
+  embedUrl: https://www.canva.com/design/DAHZHyoO9wU/eUmHIuINBD8RJTnq1IHF9Q/view?embed
 ---
 In this milestone we defined aLinha's data protection framework and the service's Terms and Conditions.
 
