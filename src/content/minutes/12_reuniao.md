@@ -15,7 +15,7 @@ scheduled: false
 mode: hybrid
 pdf: /documents/12-reuniao.pdf
 ---
-# Agenda
+## Agenda
 
 1. Legal requirements.
 
@@ -25,7 +25,7 @@ pdf: /documents/12-reuniao.pdf
 
 4. Presentation.
 
-# Notes
+## Notes
 
 - Legal requirements:
 
@@ -81,10 +81,10 @@ pdf: /documents/12-reuniao.pdf
 
     - The 3 to 5 most severe problems on each screen and the proposed fix.
 
-# Tasks
+## Tasks
 
 - Add the tasks to the GitHub Project.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.

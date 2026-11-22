@@ -14,11 +14,11 @@ scheduled: false
 mode: hybrid
 pdf: /documents/9-reuniao.pdf
 ---
-# Agenda
+## Agenda
 
 1. Assign tasks.
 
-# Notes
+## Notes
 
 - Task assignment by plugin:
   - Organisation: Inês.
@@ -29,10 +29,10 @@ pdf: /documents/9-reuniao.pdf
 - Have a frontend base ready by Monday.
 - Update the microsite: Xavier.
 
-# Tasks
+## Tasks
 
 - To be defined.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.

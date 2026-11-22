@@ -13,13 +13,13 @@ summary: Split the improvement work by page, defined the usability test audience
 scheduled: false
 mode: hybrid
 ---
-# Agenda
+## Agenda
 
 1. Review the prototype.
 2. Split the work.
 3. Usability.
 
-# Notes
+## Notes
 
 - Work split:
   - Each member handles their own pages:
@@ -78,12 +78,12 @@ mode: hybrid
   14. Identify the most severe risk.
 - Responsible for cleaning up the script and creating the templates: Inês, Íris.
 
-# Tasks
+## Tasks
 
 - Review Nielsen's heuristics.
 - Everyone reviews the usability scenarios from the user's perspective.
 - Tomás adds the minutes to the microsite.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.
