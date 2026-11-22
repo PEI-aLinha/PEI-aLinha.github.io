@@ -15,11 +15,11 @@ scheduled: false
 mode: hybrid
 pdf: /documents/13-reuniao.pdf
 ---
-# Agenda
+## Agenda
 
 1. Show the changes to the mockups.
 
-# Notes
+## Notes
 
 - Mockup changes:
   - Semantic HTML.
@@ -43,7 +43,7 @@ pdf: /documents/13-reuniao.pdf
   - Map the 4 or 5 main components and create interactive components to present and explain those flows more simply.
   - Keep it where it currently is.
 
-# Tasks
+## Tasks
 
 - Remind Daniel to get a Mobbin account.
 - Review the usability tests.
@@ -52,6 +52,6 @@ pdf: /documents/13-reuniao.pdf
 - Consider a chatbot textbox on the home page (GitHub-style).
 - Responsiveness.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.

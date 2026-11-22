@@ -14,7 +14,7 @@ summary: Reviewed the remaining work for the milestone (slides, usability tests
 scheduled: false
 mode: hybrid
 ---
-# Agenda
+## Agenda
 
 1. Review what is left to do:
 
@@ -28,12 +28,12 @@ mode: hybrid
 
 2. Distribute tasks.
 
-# Notes.
+## Notes.
 
-# Tasks
+## Tasks
 
 - To be defined.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.

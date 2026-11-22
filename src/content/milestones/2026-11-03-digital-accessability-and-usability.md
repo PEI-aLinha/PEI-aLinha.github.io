@@ -12,16 +12,16 @@ canvaPresentation:
 ---
 In this milestone we defined aLinha's data protection framework and the service's Terms and Conditions.
 
-# GDPR
+## GDPR
 
-## Roles
+### Roles
 
 aLinha has two roles:
 
 - **Controller** for account data, audit logs and conversations with the AI assistant.
 - **Processor** for the data each SME puts on the platform, such as evidence, minutes, inventory and incidents. For this reason, each organisation accepts a DPA when it joins.
 
-## Purpose limitation
+### Purpose limitation
 
 We built a purpose table. For each item of personal data it states:
 
@@ -31,25 +31,25 @@ We built a purpose table. For each item of personal data it states:
 
 Anything that does not fit in this table is not collected.
 
-## Pseudonymisation and anonymisation
+### Pseudonymisation and anonymisation
 
 - Within the platform, data is pseudonymised: the modules and the Audit Trail store only UUIDs.
 - Before any request to the LLM, personal data is anonymised and replaced with labels using Microsoft Presidio.
 
-## Right to erasure
+### Right to erasure
 
 1. The account is deactivated immediately and the `PersonalDataErasureRequested` event is published.
 2. Each plugin implements the Plugin API's export and erase operations.
 3. Erasure is completed within 30 days, backups included.
 4. When the contract ends, the tenant is deleted through crypto-shredding.
 
-## Privacy policy
+### Privacy policy
 
 - Covers everything required by Art. 13.
 - Only three processors, all processing data within the EU.
 - No transfers outside the EEA.
 
-## Security measures
+### Security measures
 
 - TLS.
 - Per-tenant encryption with OpenBao.
@@ -58,7 +58,7 @@ Anything that does not fit in this table is not collected.
 - Row-Level Security.
 - A 72-hour breach response process.
 
-# New requirements
+## New requirements
 
 - **NFR22 to NFR25:**
   - NFR22: erasure per plugin.
@@ -68,7 +68,7 @@ Anything that does not fit in this table is not collected.
 - **FR40:** view, correct, export and delete personal data from the user profile.
 - With NFR23 in place, the exception in NFR04 is no longer needed.
 
-# Terms and Conditions
+## Terms and Conditions
 
 27 clauses, written for a B2B service under Decree-Law 446/85. Highlights:
 

@@ -15,11 +15,11 @@ scheduled: false
 mode: hybrid
 pdf: /documents/10-reuniao.pdf
 ---
-# Agenda
+## Agenda
 
 1. Review the prototype.
 
-# Notes
+## Notes
 
 - Prototype review:
   - Integrations:
@@ -45,10 +45,10 @@ pdf: /documents/10-reuniao.pdf
 - Add colour-blind modes to fix the lack of contrast.
 - Presentation: show how we will improve based on the usability test feedback.
 
-# Tasks
+## Tasks
 
 - Review Nielsen's heuristics.
 
-# Next Meeting
+## Next Meeting
 
 To be defined.

@@ -30,17 +30,24 @@ test.describe('published content', () => {
   test('published milestones open their detail page', async ({ page }) => {
     await page.goto('/milestones');
     const phases = page.locator('main a[href^="/milestones/"]');
-    await expect(phases).toHaveCount(1);
     await expect(phases.first()).toContainText('01');
+    const phaseCount = await phases.count();
 
     await phases.first().click();
     await expect(page.getByRole('heading', { level: 1, name: 'Requirements & Planning' })).toBeVisible();
-    await expect(page.getByRole('navigation', { name: 'Milestone navigation' }).getByRole('link')).toHaveCount(0);
+    const milestoneNavigation = page.getByRole('navigation', { name: 'Milestone navigation' });
+    await expect(milestoneNavigation.getByRole('link', { name: /←/ })).toHaveCount(0);
+    await expect(milestoneNavigation.getByRole('link', { name: /→/ })).toHaveCount(phaseCount > 1 ? 1 : 0);
   });
 
   test('hybrid minutes expose both web content and their published PDF', async ({ page, request }) => {
     await page.goto('/minutes');
-    await page.getByRole('link', { name: 'View online' }).first().click();
+    const hybridMinute = page
+      .locator('main li')
+      .filter({ has: page.getByRole('link', { name: 'View online' }) })
+      .filter({ has: page.getByRole('link', { name: /PDF/ }) })
+      .first();
+    await hybridMinute.getByRole('link', { name: 'View online' }).click();
 
     await expect(page.locator('article')).toBeVisible();
     const pdfLink = page.getByRole('link', { name: /Open PDF/ });
