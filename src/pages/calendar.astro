@@ -10,11 +10,10 @@ const schedule = (await getCollection('calendar'))
 <BaseLayout title="Calendar" description="The aLinha project calendar, from initial planning through the interactive prototype.">
   <header class="border-b border-line py-14 md:py-20">
     <div class="shell">
-      <p class="meta text-signal">September 2026 – June 2027</p>
-      <div class="mt-4 grid items-end gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)]">
+      <div class="grid items-end gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,28rem)]">
         <h1 data-reveal class="font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">Calendar</h1>
         <p class="max-w-md text-base leading-[1.7] text-text-soft lg:justify-self-end">
-          The complete project plan, from initial planning to the final STUDENTS@DETI presentation.
+          September 2026 to June 2027: the complete project plan, from initial planning to the final STUDENTS@DETI presentation.
         </p>
       </div>
     </div>
@@ -24,8 +23,7 @@ const schedule = (await getCollection('calendar'))
     <div class="shell">
       <div class="mb-8 flex items-end justify-between gap-6">
         <div>
-          <p class="meta text-signal">Project plan</p>
-          <h2 id="schedule-heading" class="mt-2 font-display text-2xl font-semibold tracking-[-0.03em]">Milestones and tasks</h2>
+          <h2 id="schedule-heading" class="font-display text-2xl font-semibold tracking-[-0.03em]">Milestones and tasks</h2>
         </div>
         <p class="meta hidden text-right sm:block">13 October 2026</p>
       </div>
@@ -48,7 +46,7 @@ const schedule = (await getCollection('calendar'))
               ) : (
                 <h3 id={`milestone-${phase.order}`} class="font-display text-3xl font-semibold tracking-[-0.04em] md:text-2xl">{phase.milestone}</h3>
               )}
-              <span class="hidden font-mono text-[.68rem] uppercase tracking-[.12em] text-muted md:block">{String(phaseIndex + 1).padStart(2, '0')}</span>
+              <span class="meta hidden md:block">{String(phaseIndex + 1).padStart(2, '0')}</span>
             </div>
 
             <div class="periods">
@@ -57,7 +55,7 @@ const schedule = (await getCollection('calendar'))
                   <div class="date-cell flex items-center border-b border-line bg-surface px-5 py-4 md:border-b-0 md:border-r md:px-7 md:py-8">
                     <div>
                       <span class="meta md:hidden">Date</span>
-                      <p class="mt-1 font-mono text-sm font-medium tracking-[-0.02em] md:mt-0">{period.date}</p>
+                      <p class="mt-1 text-sm font-semibold tabular-nums md:mt-0">{period.date}</p>
                     </div>
                   </div>
                   <div class="px-5 py-5 md:px-8 md:py-7">
@@ -65,7 +63,7 @@ const schedule = (await getCollection('calendar'))
                     <ol class="mt-3 grid gap-2 md:mt-0">
                       {period.tasks.map((task, index) => (
                         <li class="grid grid-cols-[1.75rem_minmax(0,1fr)] text-sm leading-relaxed md:text-base">
-                          <span class="font-mono text-xs text-signal" aria-hidden="true">{String(period.start + index).padStart(2, '0')}</span>
+                          <span class="text-xs font-semibold tabular-nums text-signal" aria-hidden="true">{String(period.start + index).padStart(2, '0')}</span>
                           <span><strong class="font-semibold">{task.title}</strong>{task.owner && <span class="text-text-soft"> · {task.owner}</span>}</span>
                         </li>
                       ))}
