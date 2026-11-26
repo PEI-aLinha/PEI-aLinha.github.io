@@ -16,12 +16,12 @@ const formatted = date.toLocaleDateString('en-GB',{day:'2-digit',month:'long',ye
 const pdfHref = pdf ? (pdf.startsWith('http') ? pdf : url(pdf)) : undefined;
 const showWebContent = mode !== 'pdf';
 ---
-<BaseLayout title={`#${String(index).padStart(2,'0')} — ${subject}`} description={`Meeting minute #${String(index).padStart(2,'0')}: ${subject}.`}>
+<BaseLayout title={`Meeting ${index}: ${subject}`} description={`Minutes of meeting ${index}: ${subject}.`}>
   <section class="py-12 md:py-16">
     <div class="shell grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-14">
       <aside>
         <a href={url('/minutes')} class="axis-link text-sm font-medium text-brand">← Minutes</a>
-        <p class="meta mt-8 text-signal">#{String(index).padStart(2,'0')}</p>
+        <p class="meta mt-8 text-signal">Meeting {index}</p>
         <p class="mt-3 text-sm text-text-soft">{formatted}</p>
         {attendees.length > 0 && <div class="mt-8"><p class="meta">Attendees</p><p class="mt-3 text-sm leading-relaxed text-text-soft">{attendees.join(' · ')}</p></div>}
       </aside>

@@ -22,11 +22,11 @@ const resourceGroups = [
 ].filter((group) => group.items.length > 0);
 const hasResources = resourceGroups.length > 0;
 ---
-<BaseLayout title={`Phase ${String(number).padStart(2,'0')} — ${title}`} description={summary}>
+<BaseLayout title={`Phase ${number}: ${title}`} description={summary}>
   <header class="border-b border-line py-12 md:py-18">
     <div class="shell">
       <a href={url('/milestones')} class="axis-link meta meta-on">← Milestones</a>
-      <div class="mt-8 flex flex-wrap items-center gap-5"><p class="meta text-signal">Phase {String(number).padStart(2,'0')}</p><StatusDot status={status} /></div>
+      <div class="mt-8 flex flex-wrap items-center gap-5"><p class="meta text-signal">Phase {number}</p><StatusDot status={status} /></div>
       <h1 data-reveal class="mt-4 max-w-5xl font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">{title}</h1>
       <p class="mt-6 max-w-3xl text-lg leading-relaxed text-text-soft">{summary}</p>
     </div>
@@ -71,8 +71,8 @@ const hasResources = resourceGroups.length > 0;
   </section>
 
   <nav aria-label="Milestone navigation" class="shell grid grid-cols-2 gap-8 border-t border-line py-10">
-    <div>{previous && <a href={url(`/milestones/${previous.id}`)} class="axis-link text-sm">← {previous.data.title}</a>}</div>
-    <div class="text-right">{next && <a href={url(`/milestones/${next.id}`)} class="axis-link text-sm">{next.data.title} →</a>}</div>
+    <div>{previous && <a href={url(`/milestones/${previous.id}`)} class="axis-link text-sm"><span class="meta block">Previous</span>{previous.data.title}</a>}</div>
+    <div class="text-right">{next && <a href={url(`/milestones/${next.id}`)} class="axis-link text-sm"><span class="meta block">Next</span>{next.data.title}</a>}</div>
   </nav>
 </BaseLayout>
 

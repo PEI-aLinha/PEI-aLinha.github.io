@@ -12,14 +12,12 @@ const supervision = [
 ].filter((section) => section.entries.length > 0);
 ---
 <BaseLayout title="Team" description="The students, advisors and collaborators behind aLinha.">
-  <PageHeader label="People" title="Team" lead="The students building aLinha, supported by the project advisors and collaborators." />
+  <PageHeader title="Team" lead="The students building aLinha, supported by the project advisors and collaborators." />
 
   <section class="py-[var(--space-section)]">
     <div class="shell">
-      <div class="grid gap-4 md:grid-cols-[200px_minmax(0,1fr)] md:gap-12">
-        <p class="meta text-signal">Students · {String(students.length).padStart(2,'0')}</p>
-        <h2 class="font-display font-semibold tracking-[-0.04em]" style="font-size:var(--text-section);line-height:1.05">The project team.</h2>
-      </div>
+      <h2 class="font-display font-semibold tracking-[-0.04em]" style="font-size:var(--text-section);line-height:1.05">The project team</h2>
+      <p class="meta mt-3">{students.length} students</p>
 
       <ul class="mt-10 grid min-w-0 grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {students.map((entry) => <TeamRow entry={entry} />)}
