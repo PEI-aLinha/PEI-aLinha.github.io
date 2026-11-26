@@ -18,8 +18,7 @@ const flow = [
 <BaseLayout title="Project" description="What aLinha is: a CISO-as-a-Service platform for cybersecurity compliance workflows in Portuguese SMEs.">
   <header class="border-b border-line py-14 md:py-20">
     <div class="shell">
-      <p class="meta text-signal">Project</p>
-      <h1 data-reveal class="mt-4 max-w-5xl font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">What is aLinha?</h1>
+      <h1 data-reveal class="max-w-5xl font-display font-semibold tracking-[-0.055em]" style="font-size:var(--text-title);line-height:.96">What is aLinha?</h1>
     </div>
   </header>
 
@@ -39,7 +38,7 @@ const flow = [
           <div class="flex items-center pr-6"><p class="meta text-signal">Service model</p></div>
           {flow.map(([number, title, body], i) => (
             <article data-reveal class="relative min-h-[170px] border-t border-line p-5 lg:border-l lg:border-t-0 lg:p-6">
-              <span class="font-mono text-xs font-medium tracking-[.1em] text-signal">{number}</span>
+              <span class="meta text-signal">Step {Number(number)}</span>
               <h2 class="mt-11 font-display text-xl font-semibold tracking-[-0.025em]">{title}</h2>
               <p class="mt-2 text-sm leading-relaxed text-text-soft">{body}</p>
               {i < flow.length - 1 && <span class="absolute -right-2 top-1/2 z-10 hidden h-[2px] w-4 -translate-y-1/2 bg-brand lg:block" aria-hidden="true"></span>}
